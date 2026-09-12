@@ -12,12 +12,16 @@ if (!process.env.ANTHROPIC_API_KEY) {
 
 const rl = createInterface({ input: stdin, output: stdout });
 let history: ChatMessage[] = [];
+let closed = false;
+rl.on("close", () => {
+  closed = true;
+});
 
 console.log("Agent autonome prêt. Tape ta demande (ou 'exit' pour quitter).\n");
 
-while (true) {
-  const input = await rl.question("> ");
-  if (input.trim().toLowerCase() === "exit") break;
+while (!closed) {
+  const input = await rl.question("> ").catch(() => null);
+  if (input === null || input.trim().toLowerCase() === "exit") break;
   if (!input.trim()) continue;
 
   try {
