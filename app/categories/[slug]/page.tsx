@@ -115,7 +115,7 @@ export default async function CategoryPage({
   if (!category) notFound()
 
   const categoryArticles = getArticlesByCategoryName(category.name)
-  const { noSubcategory, subcategoryGroups } = groupBySubcategory(categoryArticles)
+  const { subcategoryGroups } = groupBySubcategory(categoryArticles)
   const url = `${siteUrl}/categories/${category.slug}`
 
   const jsonLd = {
@@ -171,7 +171,6 @@ export default async function CategoryPage({
         <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           {categoryArticles.length > 0 ? (
             <div className="space-y-16">
-              {noSubcategory.length > 0 && <ArticleGrid articles={noSubcategory} />}
               {subcategoryGroups.map(([subcategory, articles]) => (
                 <div key={subcategory}>
                   <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-border/60 pb-3">
