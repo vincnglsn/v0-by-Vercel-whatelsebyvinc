@@ -12,6 +12,7 @@ export type Article = {
   title: string
   excerpt: string
   category: string
+  subcategory?: string
   readingTime: number
   date: string
   image: string
@@ -169,6 +170,7 @@ export const articles: Article[] = [
     excerpt:
       'Écran OLED Super Retina XDR de 6,3 pouces à 120 Hz adaptatif, puce A19 Pro gravée en 3 nm et 12 Go de RAM.',
     category: 'High-Tech',
+    subcategory: 'Téléphonie',
     readingTime: 2,
     date: '2026-08-25',
     image: '/images/apple-iphone-17-pro-256-go.jpg',
@@ -183,6 +185,7 @@ export const articles: Article[] = [
     excerpt:
       'Format compact assumé : 6,3 pouces Dynamic AMOLED 2X en 120 Hz adaptatif, puce Exynos 2600 gravée en 2 nm et 12 Go de RAM.',
     category: 'High-Tech',
+    subcategory: 'Téléphonie',
     readingTime: 2,
     date: '2026-08-22',
     image: '/images/samsung-galaxy-s26.jpg',
@@ -197,6 +200,7 @@ export const articles: Article[] = [
     excerpt:
       'Écran Super Actua OLED 6,3 pouces 120 Hz, puce Tensor G5 et 16 Go de RAM — la RAM est là pour faire tourner les modèles d\'IA en local, pas pour le multitâche.',
     category: 'High-Tech',
+    subcategory: 'Téléphonie',
     readingTime: 2,
     date: '2026-08-19',
     image: '/images/google-pixel-10-pro.jpg',
@@ -211,6 +215,7 @@ export const articles: Article[] = [
     excerpt:
       'Le rapport fiche technique / prix le plus agressif de la sélection.',
     category: 'High-Tech',
+    subcategory: 'Téléphonie',
     readingTime: 2,
     date: '2026-08-16',
     image: '/images/xiaomi-poco-f8-ultra.jpg',
@@ -225,6 +230,7 @@ export const articles: Article[] = [
     excerpt:
       'Le modèle costaud de la gamme, avec la plus grosse autonomie jamais atteinte par une Apple Watch : jusqu\'à 42 heures en usage normal, 72 heures en mode économie d\'énergie.',
     category: 'High-Tech',
+    subcategory: 'Montres & bracelets connectés',
     readingTime: 2,
     date: '2026-08-13',
     image: '/images/apple-watch-ultra-3.jpg',
@@ -239,6 +245,7 @@ export const articles: Article[] = [
     excerpt:
       'La génération qui a apporté deux vraies nouveautés santé : les notifications d\'hypertension, qui alertent en cas de signes de tension élevée chronique, et le…',
     category: 'High-Tech',
+    subcategory: 'Montres & bracelets connectés',
     readingTime: 2,
     date: '2026-08-10',
     image: '/images/apple-watch-series-11.jpg',
@@ -253,6 +260,7 @@ export const articles: Article[] = [
     excerpt:
       'L\'anti-smartwatch : une vraie montre analogique avec aiguilles, un petit écran OLED discret, et jusqu\'à 35 jours d\'autonomie pour une recharge complète en 2 heures.',
     category: 'High-Tech',
+    subcategory: 'Montres & bracelets connectés',
     readingTime: 2,
     date: '2026-08-07',
     image: '/images/withings-scanwatch-2.jpg',
@@ -267,6 +275,7 @@ export const articles: Article[] = [
     excerpt:
       'Grande dalle AMOLED de 2,07 pouces montant à 2 000 nits, boîtier aluminium de 9,9 mm seulement, double GPS L1 et étanchéité 5 ATM.',
     category: 'High-Tech',
+    subcategory: 'Montres & bracelets connectés',
     readingTime: 2,
     date: '2026-08-04',
     image: '/images/xiaomi-redmi-watch-6.jpg',
@@ -281,6 +290,7 @@ export const articles: Article[] = [
     excerpt:
       'Le bracelet d\'entrée de gamme qui fait 80 % du travail pour une fraction du prix : jusqu\'à 21 jours d\'autonomie, charge rapide, suivi du sommeil et de la…',
     category: 'High-Tech',
+    subcategory: 'Montres & bracelets connectés',
     readingTime: 2,
     date: '2026-08-01',
     image: '/images/xiaomi-smart-band-10.jpg',
@@ -295,6 +305,7 @@ export const articles: Article[] = [
     excerpt:
       '165 cm de diagonale en 4K UHD avec HDR10, finition métallique et cadre fin, le tout sous Fire OS 8 avec le contrôle vocal Alexa et la compatibilité Apple AirPlay.',
     category: 'High-Tech',
+    subcategory: 'TV & divertissement',
     readingTime: 2,
     date: '2026-07-29',
     image: '/images/xiaomi-tv-f-65-pouces.jpg',
@@ -309,6 +320,7 @@ export const articles: Article[] = [
     excerpt:
       'Projecteur compact sous Google TV, certifié Netflix — ce qui n\'est pas anodin, beaucoup de projecteurs chinois ne le sont pas et obligent à bricoler.',
     category: 'High-Tech',
+    subcategory: 'TV & divertissement',
     readingTime: 2,
     date: '2026-07-26',
     image: '/images/tcl-c1-videoprojecteur.jpg',
@@ -323,6 +335,7 @@ export const articles: Article[] = [
     excerpt:
       'La clé HDMI la plus rapide de la gamme Fire TV : 4K HDR avec Dolby Vision et Dolby Atmos, Wi-Fi 6E pour aller chercher la bande passante sur la fréquence 6…',
     category: 'High-Tech',
+    subcategory: 'TV & divertissement',
     readingTime: 2,
     date: '2026-07-23',
     image: '/images/amazon-fire-tv-stick-4k-max.jpg',
@@ -337,6 +350,7 @@ export const articles: Article[] = [
     excerpt:
       'La clé qui a démocratisé Google TV : 4K HDR, Dolby Vision, télécommande vocale avec Assistant Google, et une interface qui agrège les catalogues de toutes les…',
     category: 'High-Tech',
+    subcategory: 'TV & divertissement',
     readingTime: 2,
     date: '2026-07-20',
     image: '/images/chromecast-with-google-tv-4k.jpg',
@@ -351,6 +365,7 @@ export const articles: Article[] = [
     excerpt:
       'Un kit complet plutôt qu\'une simple barre : la barre principale, un caisson de basses sans fil avec haut-parleur de 5,25 pouces orienté vers le bas, et deux…',
     category: 'High-Tech',
+    subcategory: 'TV & divertissement',
     readingTime: 2,
     date: '2026-07-17',
     image: '/images/ultimea-poseidon-d60.jpg',
@@ -365,6 +380,7 @@ export const articles: Article[] = [
     excerpt:
       'L\'enceinte connectée de référence sur le segment compact : deux tweeters pour une vraie scène stéréo, un woofer plus généreux que la génération précédente, et…',
     category: 'High-Tech',
+    subcategory: 'Audio & enceintes connectées',
     readingTime: 2,
     date: '2026-07-14',
     image: '/images/sonos-era-100.jpg',
@@ -379,6 +395,7 @@ export const articles: Article[] = [
     excerpt:
       'Une enceinte nomade avec poignée, certifiée résistante à l\'eau, qui diffuse à 360° et embarque Alexa et l\'Assistant Google directement.',
     category: 'High-Tech',
+    subcategory: 'Audio & enceintes connectées',
     readingTime: 2,
     date: '2026-07-11',
     image: '/images/bose-portable-smart-speaker.jpg',
@@ -393,6 +410,7 @@ export const articles: Article[] = [
     excerpt:
       'La sphère haut de gamme de la gamme Dot : un tweeter de 20 mm et un woofer de 63 mm pour une réponse annoncée à partir de 53 Hz, du Wi-Fi 6E et surtout un hub…',
     category: 'High-Tech',
+    subcategory: 'Audio & enceintes connectées',
     readingTime: 2,
     date: '2026-07-08',
     image: '/images/amazon-echo-dot-max.jpg',
@@ -407,6 +425,7 @@ export const articles: Article[] = [
     excerpt:
       'La version standard de la sphère, en coloris anthracite : son plus riche que les générations précédentes dans le même format compact, Bluetooth et Wi-Fi, avec…',
     category: 'High-Tech',
+    subcategory: 'Audio & enceintes connectées',
     readingTime: 2,
     date: '2026-07-05',
     image: '/images/amazon-echo-dot-nouvelle-generation.jpg',
@@ -421,6 +440,7 @@ export const articles: Article[] = [
     excerpt:
       'Le retour du réveil connecté : un écran circulaire partiel qui affiche l\'heure, la météo et le titre en cours, posé sur une enceinte au grave nettement plus…',
     category: 'High-Tech',
+    subcategory: 'Audio & enceintes connectées',
     readingTime: 2,
     date: '2026-07-02',
     image: '/images/amazon-echo-spot.jpg',
@@ -435,6 +455,7 @@ export const articles: Article[] = [
     excerpt:
       'Tablette 12 pouces avec dalle OLED PaperMatte antireflet, résolution 2800×1840, 144 Hz et 1200 nits de luminosité maximale.',
     category: 'High-Tech',
+    subcategory: 'PC & Portables',
     readingTime: 2,
     date: '2026-06-29',
     image: '/images/huawei-matepad-air-12-oled.jpg',
@@ -449,6 +470,7 @@ export const articles: Article[] = [
     excerpt:
       'Ultrabook 14 pouces avec écran OLED WUXGA (1920×1200, 16:10), certifié VESA HDR True Black 600.',
     category: 'High-Tech',
+    subcategory: 'PC & Portables',
     readingTime: 2,
     date: '2026-06-26',
     image: '/images/asus-zenbook-14-ryzen7.jpg',
@@ -463,6 +485,7 @@ export const articles: Article[] = [
     excerpt:
       'Chromebook convertible 14 pouces tactile à 360°, utilisable en PC, tablette ou mode tente.',
     category: 'High-Tech',
+    subcategory: 'PC & Portables',
     readingTime: 2,
     date: '2026-06-23',
     image: '/images/acer-chromebook-spin-314.jpg',
@@ -477,6 +500,7 @@ export const articles: Article[] = [
     excerpt:
       'PC portable 15,6 pouces Full HD, processeur AMD Ryzen 5, 16 Go de RAM, SSD 512 Go, sous Windows 11 Home.',
     category: 'High-Tech',
+    subcategory: 'PC & Portables',
     readingTime: 2,
     date: '2026-06-20',
     image: '/images/lenovo-ideapad-slim-3-15amn8.jpg',
@@ -491,6 +515,7 @@ export const articles: Article[] = [
     excerpt:
       'Lot de 6 sous-verres ronds de 10 cm en liège naturel, épais d\'1 cm pour protéger la table de la chaleur et de l\'humidité des verres, tasses ou mugs.',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-06-17',
     image: '/images/generique-dessous-plat-liege.jpg',
@@ -505,6 +530,7 @@ export const articles: Article[] = [
     excerpt:
       'Service de 6 verres en verre soufflé de 250 ml signé Krosno, verrier polonais fondé en 1923.',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-06-14',
     image: '/images/krosno-glasmark-1992-verres.jpg',
@@ -519,6 +545,7 @@ export const articles: Article[] = [
     excerpt:
       'Lot de 6 verres à eau de 440 ml, toujours chez Krosno, avec une contenance plus généreuse que le service précédent — pensé pour l\'eau et les boissons fraîches…',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-06-11',
     image: '/images/krosno-verres-a-eau.jpg',
@@ -533,6 +560,7 @@ export const articles: Article[] = [
     excerpt:
       '24 pièces en inox pour 6 personnes (couteaux, fourchettes, cuillères à soupe et à café) signées Pradel.',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-06-08',
     image: '/images/pradel-essentiel-rising-sun.jpg',
@@ -547,6 +575,7 @@ export const articles: Article[] = [
     excerpt:
       '24 pièces en inox 18/10 pour 6 personnes avec une finition martelée plaquée titane noir, couteau à lame dentelée 2-en-1.',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-06-05',
     image: '/images/xideman-couverts-de-table-24-pieces.jpg',
@@ -561,6 +590,7 @@ export const articles: Article[] = [
     excerpt:
       'Lot de 6 assiettes plates de 26 cm, collection Peixe de La Mediterránea, en grès émaillé avec un motif inspiré du bord de mer.',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-06-02',
     image: '/images/la-mediterranea-assiette-plate-peixe.jpg',
@@ -575,6 +605,7 @@ export const articles: Article[] = [
     excerpt:
       'Service complet de 24 pièces en grès de style méditerranéen pour 6 personnes (assiettes plates, creuses et à dessert), coloris bleu fumé.',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-05-30',
     image: '/images/pure-living-service-de-table-24-pieces.jpg',
@@ -589,6 +620,7 @@ export const articles: Article[] = [
     excerpt:
       '18 pièces pour 6 personnes signées Moritz & Moritz (assiettes plates, creuses et à dessert), collection VIDA en porcelaine blanche unie — un format plus…',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-05-27',
     image: '/images/moritz-moritz-vida-service-de-table.jpg',
@@ -603,6 +635,7 @@ export const articles: Article[] = [
     excerpt:
       '6 sets de table de 30 x 43,5 cm en vinyle tissé, résistants à la chaleur et antidérapants.',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-05-24',
     image: '/images/myir-jun-sets-de-table-tisse.jpg',
@@ -617,6 +650,7 @@ export const articles: Article[] = [
     excerpt:
       '6 sets de table rectangulaires de 45 x 30 cm en PVC, résistants à la chaleur et lavables à l\'éponge.',
     category: 'Maison',
+    subcategory: 'Arts de la table',
     readingTime: 2,
     date: '2026-05-21',
     image: '/images/chaochi-set-de-table-pvc.jpg',
@@ -631,6 +665,7 @@ export const articles: Article[] = [
     excerpt:
       'Blender 2-en-1 avec la technologie BlendSense : détecte automatiquement les ingrédients, leur quantité et la présence de glace pour ajuster vitesse, temps et pulsations.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-05-18',
     image: '/images/ninja-detect-power-blender-pro.jpg',
@@ -645,6 +680,7 @@ export const articles: Article[] = [
     excerpt:
       'Machine à café automatique avec 41 spécialités possibles, de l\'espresso classique au Cold Brew et au Latte Macchiato XL.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-05-15',
     image: '/images/siemens-eq700-iaroma.jpg',
@@ -659,6 +695,7 @@ export const articles: Article[] = [
     excerpt:
       'Machine 3-en-1 (espresso, infusion à froid, café filtre) avec broyeur à grains, tasseur et mousseur à lait intégrés.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-05-12',
     image: '/images/ninja-machine-cafe-luxe-pro.jpg',
@@ -673,6 +710,7 @@ export const articles: Article[] = [
     excerpt:
       'Machine à café à grain avec broyeur céramique et système LatteGo (2 pièces, sans tuyaux, présenté comme le système à lait le plus rapide à nettoyer par Philips).',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-05-09',
     image: '/images/philips-5400-machine-a-cafe-grain.jpg',
@@ -687,6 +725,7 @@ export const articles: Article[] = [
     excerpt:
       'Robot-cuiseur multifonction (le concurrent Lidl du Thermomix) : bol inox 4,5 L, 10 vitesses, 1000 W, fonctions de broyage, hachage, pétrissage, cuisson et émulsion.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-05-06',
     image: '/images/silvercrest-monsieur-cuisine-connect.jpg',
@@ -701,6 +740,7 @@ export const articles: Article[] = [
     excerpt:
       'Robot cuiseur connecté 4,5 L pour 10 personnes, écran tactile avec recettes guidées pas à pas et nouvelles recettes ajoutées chaque mois via Wi-Fi.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-05-03',
     image: '/images/moulinex-icompanion-touch-pro.jpg',
@@ -715,6 +755,7 @@ export const articles: Article[] = [
     excerpt:
       'Friteuse à air 9,5 L avec 2 tiroirs indépendants pilotables séparément, pour cuire deux aliments différents en même temps et synchroniser la fin de cuisson.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-30',
     image: '/images/ninja-foodi-max-dual-zone.jpg',
@@ -729,6 +770,7 @@ export const articles: Article[] = [
     excerpt:
       'Multicuiseur 7,5 L avec Smart Lid et 14 fonctions de cuisson sous un seul couvercle : cuisson sous pression, friture à l\'air, cuisson lente, grill, cuisson…',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-27',
     image: '/images/ninja-foodi-max-multicuiseur-ol750.jpg',
@@ -743,6 +785,7 @@ export const articles: Article[] = [
     excerpt:
       'Multicuiseur connecté 6 L avec 150 recettes intégrées et accès à des milliers d\'autres via l\'application MyMoulinex en Wi-Fi.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-24',
     image: '/images/moulinex-cookeo-wifi.jpg',
@@ -757,6 +800,7 @@ export const articles: Article[] = [
     excerpt:
       'Cocotte-minute à induction pour 5 à 6 personnes, ouverture facile d\'une seule main, poignées rabattables pour un rangement compact.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-21',
     image: '/images/seb-autocuiseur-clipsominut-easy.jpg',
@@ -771,6 +815,7 @@ export const articles: Article[] = [
     excerpt:
       'Set de 3 planches en bambou 3 couches (33x22, 28x22 et 22x15 cm), sans plastique, avec pieds antidérapants — une conception multicouche pensée pour ne pas se…',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-18',
     image: '/images/larhn-planches-a-decouper-bambou.jpg',
@@ -785,6 +830,7 @@ export const articles: Article[] = [
     excerpt:
       'Barre aimantée de 40 cm avec 3 crochets additionnels et aimant extra-fort, installation sans perçage possible (bande adhésive) ou avec vis pour une fixation plus durable.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-15',
     image: '/images/dmore-porte-couteaux-aimante.jpg',
@@ -799,6 +845,7 @@ export const articles: Article[] = [
     excerpt:
       'Set de 3 couteaux (office 9 cm, universel et chef) en acier inoxydable avec revêtement antiadhésif et manche ergonomique.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-12',
     image: '/images/masterchef-set-couteau-cuisine.jpg',
@@ -813,6 +860,7 @@ export const articles: Article[] = [
     excerpt:
       'Petit composteur de comptoir avec couvercle, cuve de 5 L compatible lave-vaisselle, filtre anti-odeurs et tamis intérieur pour égoutter les déchets avant la collecte.',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-09',
     image: '/images/yourcasa-poubelle-cuisine.jpg',
@@ -827,6 +875,7 @@ export const articles: Article[] = [
     excerpt:
       'Composteur électrique de cuisine, cuve amovible de 3 L compatible lave-vaisselle, couvercle imitation bambou, cycle automatique de 4 à 8h pour réduire le…',
     category: 'Maison',
+    subcategory: 'Cuisine',
     readingTime: 2,
     date: '2026-04-06',
     image: '/images/rivierabar-reducteur-biodechets.jpg',
@@ -841,6 +890,7 @@ export const articles: Article[] = [
     excerpt:
       '19 000 Pa d\'aspiration annoncés et une station tout-en-un qui vide le bac, lave les serpillières et les sèche.',
     category: 'Maison',
+    subcategory: 'Entretiens',
     readingTime: 2,
     date: '2026-04-03',
     image: '/images/dreame-l40s-pro-ultra.jpg',
@@ -855,6 +905,7 @@ export const articles: Article[] = [
     excerpt:
       '18 500 Pa annoncés, brosse latérale anti-enchevêtrement, et surtout une station qui lave les serpillières à 75 °C puis les sèche à l\'air chaud à 45 °C.',
     category: 'Maison',
+    subcategory: 'Entretiens',
     readingTime: 2,
     date: '2026-03-31',
     image: '/images/roborock-qrevo-s-pro.jpg',
@@ -869,6 +920,7 @@ export const articles: Article[] = [
     excerpt:
       '20 000 Pa d\'aspiration et deux patins rotatifs DualClean à 200 tours/minute, avec un mode SmartScrub qui appuie davantage sur les taches récalcitrantes.',
     category: 'Maison',
+    subcategory: 'Entretiens',
     readingTime: 2,
     date: '2026-03-28',
     image: '/images/irobot-roomba-plus-415-combo.jpg',
@@ -883,6 +935,7 @@ export const articles: Article[] = [
     excerpt:
       'L\'entrée de gamme sérieuse : 6 000 Pa, serpillières relevables pour ne pas mouiller les tapis, et une station tout-en-un qui vide le bac de 350 ml en dix…',
     category: 'Maison',
+    subcategory: 'Entretiens',
     readingTime: 2,
     date: '2026-03-25',
     image: '/images/xiaomi-robot-vacuum-x20-plus.jpg',
@@ -897,6 +950,7 @@ export const articles: Article[] = [
     excerpt:
       'Diffuseur par bâtonnets (reed diffuser) de 200 ml, sans électricité ni pile : le parfum remonte le long de 8 bâtonnets en coton et se diffuse passivement dans la pièce.',
     category: 'Maison',
+    subcategory: 'Bien-être',
     readingTime: 2,
     date: '2026-03-22',
     image: '/images/cocorrina-diffuseur-parfum-maison.jpg',
@@ -911,6 +965,7 @@ export const articles: Article[] = [
     excerpt:
       'Réservoir 3 L à remplissage par le haut, brume froide ultrasonique à 250 ml/h via une buse rotative à 360°, jusqu\'à 30 heures d\'autonomie en mode sommeil et…',
     category: 'Maison',
+    subcategory: 'Bien-être',
     readingTime: 2,
     date: '2026-03-19',
     image: '/images/dreo-humidificateur-silencieux-3l.jpg',
@@ -925,6 +980,7 @@ export const articles: Article[] = [
     excerpt:
       'Purificateur d\'air avec filtre HEPA à 99,97 % d\'efficacité de filtration annoncée (testé par un laboratoire indépendant sur des particules en suspension de 0,1…',
     category: 'Maison',
+    subcategory: 'Bien-être',
     readingTime: 2,
     date: '2026-03-16',
     image: '/images/levoit-purificateur-air-core-200s.jpg',
@@ -939,6 +995,7 @@ export const articles: Article[] = [
     excerpt:
       'Caméra autonome sans Wi-Fi ni électricité : carte SIM 4G incluse, batterie 14 000 mAh rechargée par le panneau solaire fourni, jusqu\'à 6 mois d\'autonomie même…',
     category: 'Maison',
+    subcategory: 'Sécurités',
     readingTime: 2,
     date: '2026-03-13',
     image: '/images/vosker-vkx-camera-surveillance-exterieure.jpg',
@@ -953,6 +1010,7 @@ export const articles: Article[] = [
     excerpt:
       'Le renouvellement complet de la gamme : nouveau moteur trois fois plus rapide, format le plus compact jamais proposé par Nuki, et surtout un cylindre universel…',
     category: 'Maison',
+    subcategory: 'Sécurités',
     readingTime: 2,
     date: '2026-03-10',
     image: '/images/nuki-smart-lock-ultra.jpg',
@@ -967,6 +1025,7 @@ export const articles: Article[] = [
     excerpt:
       'Résolution 2K (3 Mpx) avec un objectif 118° et une rotation motorisée 355° à l\'horizontale et 80° à la verticale pour une couverture à 360° sans angle mort.',
     category: 'Maison',
+    subcategory: 'Sécurités',
     readingTime: 2,
     date: '2026-03-07',
     image: '/images/imou-2k-camera-interieure.jpg',
@@ -981,6 +1040,7 @@ export const articles: Article[] = [
     excerpt:
       'Organisateur de bureau habillé de cuir PU, intérieur et fond en flanelle douce, imperméable et anti-humidité.',
     category: 'Maison',
+    subcategory: 'Bureau',
     readingTime: 2,
     date: '2026-03-04',
     image: '/images/kingfom-organisateur-bureau.jpg',
@@ -995,6 +1055,7 @@ export const articles: Article[] = [
     excerpt:
       'Organisateur de bureau en bois massif (26,5 x 15 x 18,5 cm), finition brun naturel, avec emplacements dédiés pour téléphone, montre, lunettes, clés et…',
     category: 'Maison',
+    subcategory: 'Bureau',
     readingTime: 2,
     date: '2026-03-01',
     image: '/images/teslyar-organisateur-bureau-bois.jpg',
@@ -1009,6 +1070,7 @@ export const articles: Article[] = [
     excerpt:
       'Imprimante Wi-Fi tout-en-un (impression, copie, numérisation) au format A4, livrée avec l\'équivalent de trois ans d\'encre.',
     category: 'Maison',
+    subcategory: 'Bureau',
     readingTime: 2,
     date: '2026-02-26',
     image: '/images/epson-ecotank-et-2862.jpg',
@@ -1023,6 +1085,7 @@ export const articles: Article[] = [
     excerpt:
       'Module intérieur et extérieur pour suivre 12 données en temps réel : température, humidité, qualité de l\'air, CO₂, pression, indice UV, pollens.',
     category: 'Extérieur',
+    subcategory: 'Autres',
     readingTime: 2,
     date: '2026-02-23',
     image: '/images/netatmo-station-meteo.jpg',
@@ -1037,6 +1100,7 @@ export const articles: Article[] = [
     excerpt:
       'Prise extérieure IP44 (16 A, 230 V) pilotable via l\'application Smart Life (Tuya), avec suivi de la consommation électrique en temps réel et génération de…',
     category: 'Extérieur',
+    subcategory: 'Autres',
     readingTime: 2,
     date: '2026-02-20',
     image: '/images/greensun-prise-connectee-wifi-exterieure.jpg',
@@ -1051,6 +1115,7 @@ export const articles: Article[] = [
     excerpt:
       'Visiophone 100 % sans fil : la platine de rue fonctionne sur batterie rechargeable, sans perçage ni électricien, et le moniteur intérieur à écran tactile 7…',
     category: 'Extérieur',
+    subcategory: 'Caméras',
     readingTime: 2,
     date: '2026-02-17',
     image: '/images/philips-welcomeeye-wireless.jpg',
@@ -1065,6 +1130,7 @@ export const articles: Article[] = [
     excerpt:
       'Robot tondeuse sans fil périphérique — pas besoin d\'enterrer de câble de délimitation.',
     category: 'Extérieur',
+    subcategory: 'Jardins',
     readingTime: 2,
     date: '2026-02-14',
     image: '/images/sunseeker-s4-robot-tondeuse.jpg',
@@ -1079,6 +1145,7 @@ export const articles: Article[] = [
     excerpt:
       'Multiprise 5 prises avec interrupteur, clapets de protection contre l\'eau et la poussière (IP44), pensée pour un usage extérieur (jardin, terrasse, atelier).',
     category: 'Extérieur',
+    subcategory: 'Jardins',
     readingTime: 2,
     date: '2026-02-11',
     image: '/images/zenitech-bloc-etanche-ip44.jpg',
@@ -1093,6 +1160,7 @@ export const articles: Article[] = [
     excerpt:
       '30 mètres de LED RGBICW étanches IP65, chaque ampoule pilotable individuellement pour des effets multicolores.',
     category: 'Extérieur',
+    subcategory: 'Lumières',
     readingTime: 2,
     date: '2026-02-08',
     image: '/images/govee-guirlande-lumineuse-exterieure.jpg',
@@ -1107,6 +1175,7 @@ export const articles: Article[] = [
     excerpt:
       'Arbre à chat haut de 137,7 cm avec plusieurs plateformes, griffoirs en sisal et niches pour se cacher.',
     category: 'Animalerie',
+    subcategory: 'Chat',
     readingTime: 2,
     date: '2026-02-05',
     image: '/images/feandrea-arbre-a-chat.jpg',
@@ -1121,6 +1190,7 @@ export const articles: Article[] = [
     excerpt:
       'Distributeur automatique piloté par WiFi 2,4 GHz : programmation des repas à distance depuis l\'application, portions ajustables, idéal pour garder un rythme…',
     category: 'Animalerie',
+    subcategory: 'Chat',
     readingTime: 2,
     date: '2026-02-02',
     image: '/images/oneisall-distributeur-croquettes-chat.jpg',
@@ -1135,6 +1205,7 @@ export const articles: Article[] = [
     excerpt:
       'Fontaine à eau de 2,6 L en inox avec détecteur de mouvement : elle se déclenche à l\'approche de l\'animal plutôt que de couler en continu, sur batterie…',
     category: 'Animalerie',
+    subcategory: 'Chat',
     readingTime: 2,
     date: '2026-01-30',
     image: '/images/generique-fontaine-a-eau-chat.jpg',
@@ -1149,6 +1220,7 @@ export const articles: Article[] = [
     excerpt:
       'Lot de 6 colliers réglables avec boucle de sécurité qui s\'ouvre automatiquement en cas de traction excessive, pour éviter l\'étranglement si le chat reste coincé.',
     category: 'Animalerie',
+    subcategory: 'Chat',
     readingTime: 2,
     date: '2026-01-27',
     image: '/images/dr-jieer-collier-chat-anti-etranglement.jpg',
@@ -1163,6 +1235,7 @@ export const articles: Article[] = [
     excerpt:
       'Brosse de toilettage double face : un côté à picots métalliques pour démêler, l\'autre plus doux pour lisser le poil, avec un bouton d\'éjection en un clic pour…',
     category: 'Animalerie',
+    subcategory: 'Chat',
     readingTime: 2,
     date: '2026-01-24',
     image: '/images/candure-brosse-chien-chat.jpg',
@@ -1177,6 +1250,7 @@ export const articles: Article[] = [
     excerpt:
       'Gamelle surélevée en inox avec 5 hauteurs réglables pour s\'adapter à la taille du chien en grandissant ou selon la race.',
     category: 'Animalerie',
+    subcategory: 'Chien',
     readingTime: 2,
     date: '2026-01-21',
     image: '/images/xben-gamelle-chien-surelevee.jpg',
@@ -1191,6 +1265,7 @@ export const articles: Article[] = [
     excerpt:
       'Grand panier orthopédique en mousse à mémoire de forme (112 x 81 x 16,5 cm), housse lavable en machine, pensé pour soulager les articulations des chiens de…',
     category: 'Animalerie',
+    subcategory: 'Chien',
     readingTime: 2,
     date: '2026-01-18',
     image: '/images/eheyciga-panier-chien-orthopedique.jpg',
@@ -1205,6 +1280,7 @@ export const articles: Article[] = [
     excerpt:
       'Harnais anti-traction avec poignée de contrôle sur le dessus, bandes réfléchissantes pour les sorties en soirée, et maille respirante pour le confort en été.',
     category: 'Animalerie',
+    subcategory: 'Chien',
     readingTime: 2,
     date: '2026-01-15',
     image: '/images/eagloo-harnais-anti-traction-chien.jpg',
