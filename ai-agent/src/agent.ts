@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import type { ChatCompletionMessageParam, ChatCompletionTool } from "openai/resources/index.js";
+import type { ChatCompletionMessageParam, ChatCompletionTool, ChatCompletionContentPart } from "openai/resources/index.js";
 import { allTools, type ToolDef } from "./tools.js";
 
 const client = new OpenAI({
@@ -46,7 +46,7 @@ export type ChatMessage = ChatCompletionMessageParam;
  */
 export async function runAgentTurn(
   history: ChatMessage[],
-  userInput: string,
+  userInput: string | ChatCompletionContentPart[],
 ): Promise<{ text: string; history: ChatMessage[] }> {
   // Rebuild the system message fresh every turn (it carries today's date) —
   // never trust a persisted copy, which could be days stale.

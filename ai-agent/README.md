@@ -40,6 +40,22 @@ Chaque conversation est sauvegardée dans son propre fichier sous
 Un ancien `memory/history.json` (format à une seule conversation) est migré
 automatiquement au premier lancement, sous l'id `cli`.
 
+**Pièces jointes** — bouton 📎 à côté du champ de saisie (interface web
+uniquement) :
+- **Images** (png, jpg, webp...) : envoyées telles quelles au modèle pour
+  analyse visuelle — ne fonctionne que si le modèle actif supporte la vision ;
+  le routeur `openrouter/free` peut retomber sur un modèle qui ne la supporte
+  pas, auquel cas passe sur un modèle vision via `OPENROUTER_MODEL` (voir plus bas).
+- **PDF** : texte extrait automatiquement (`pdf-parse`) et transmis au modèle
+  — extraction basique, sans mise en page ni OCR sur du PDF scanné en image.
+- **Texte / code** (.txt, .md, .csv, .json, .py, .js, .html...) : contenu
+  inséré tel quel dans le message.
+- Autres formats (docx, zip...) : rejetés avec un message clair.
+- Taille max : 8 Mo. Contenu texte/PDF tronqué à 12 000 caractères.
+
+En ligne de commande, dépose plutôt le fichier dans `knowledge/` et demande à
+l'agent de le lire avec `read_file` — pas de bouton pièce jointe en terminal.
+
 ## Architecture
 
 - `src/tools.ts` — définition des 4 outils (format JSON Schema, appel de
@@ -63,6 +79,8 @@ automatiquement au premier lancement, sous l'id `cli`.
 - `src/server.ts` + `public/index.html` — serveur HTTP minimal (sans
   framework) et interface web à panneau latéral (HTML/CSS/JS inline, sans
   build), multi-conversations
+- `src/attachments.ts` — traitement des pièces jointes (image → vision,
+  PDF → extraction de texte, texte/code → inséré tel quel)
 
 ## Étendre l'agent
 

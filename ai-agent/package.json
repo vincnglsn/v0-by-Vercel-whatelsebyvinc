@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "dotenv": "^17.2.3",
-    "openai": "^5.5.0"
+    "openai": "^5.5.0",
+    "pdf-parse": "^2.4.5"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

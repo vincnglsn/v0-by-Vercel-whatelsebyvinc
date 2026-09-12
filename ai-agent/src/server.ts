@@ -2,6 +2,7 @@ import "dotenv/config";
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import type { ChatCompletionContentPart } from "openai/resources/index.js";
 import { runAgentTurn, MODEL } from "./agent.js";
 import {
   listConversations,
@@ -10,6 +11,7 @@ import {
   deleteConversation,
   newConversationId,
 } from "./memory.js";
+import { buildAttachmentParts, type AttachmentInput } from "./attachments.js";
 
 if (!process.env.OPENROUTER_API_KEY) {
   console.error("OPENROUTER_API_KEY manquante. Copie .env.example vers .env et renseigne ta clé.");
@@ -24,9 +26,20 @@ const PORT = Number(process.env.PORT ?? 3939);
 
 const PUBLIC_DIR = path.resolve(import.meta.dirname, "../public");
 
+// Generous enough for a base64-encoded attachment (attachments.ts caps the
+// decoded file at 8 MB; base64 adds ~33% overhead) plus JSON framing.
+const MAX_BODY_BYTES = 12 * 1024 * 1024;
+
 async function readJsonBody(req: import("node:http").IncomingMessage): Promise<unknown> {
   const chunks: Buffer[] = [];
-  for await (const chunk of req) chunks.push(chunk as Buffer);
+  let total = 0;
+  for await (const chunk of req) {
+    total += (chunk as Buffer).length;
+    if (total > MAX_BODY_BYTES) {
+      throw new Error(`Requête trop volumineuse (max ${MAX_BODY_BYTES / (1024 * 1024)} Mo).`);
+    }
+    chunks.push(chunk as Buffer);
+  }
   const raw = Buffer.concat(chunks).toString("utf-8");
   return raw ? JSON.parse(raw) : {};
 }
@@ -72,19 +85,37 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && url.pathname === "/api/chat") {
-      const body = (await readJsonBody(req)) as { conversationId?: string; message?: string };
+      const body = (await readJsonBody(req)) as {
+        conversationId?: string;
+        message?: string;
+        attachment?: AttachmentInput;
+      };
       const conversationId = body.conversationId;
       const message = (body.message ?? "").trim();
       if (!conversationId) {
         sendJson(res, 400, { error: "conversationId manquant." });
         return;
       }
-      if (!message) {
-        sendJson(res, 400, { error: "Message vide." });
+      if (!message && !body.attachment) {
+        sendJson(res, 400, { error: "Message ou pièce jointe requis." });
         return;
       }
+
+      let userContent: string | ChatCompletionContentPart[] = message;
+      if (body.attachment) {
+        const built = await buildAttachmentParts(body.attachment);
+        if ("error" in built) {
+          sendJson(res, 400, { error: built.error });
+          return;
+        }
+        const parts: ChatCompletionContentPart[] = [];
+        if (message) parts.push({ type: "text", text: message });
+        parts.push(...built.parts);
+        userContent = parts;
+      }
+
       const history = await loadConversation(conversationId);
-      const { text, history: updated } = await runAgentTurn(history, message);
+      const { text, history: updated } = await runAgentTurn(history, userContent);
       await saveConversation(conversationId, updated);
       sendJson(res, 200, { text });
       return;

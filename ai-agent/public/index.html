@@ -140,12 +140,55 @@
   }
   .msg.pending { color: var(--muted); font-style: italic; }
   .msg.error { border-color: #7a3030; color: #ff9b9b; }
+  .msg img.attachment-thumb {
+    display: block;
+    max-width: 240px;
+    max-height: 240px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+  }
+  #attachment-chip {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    margin: 0 4px 8px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--muted);
+    width: fit-content;
+  }
+  #attachment-chip.visible { display: flex; }
+  #attachment-remove {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+  }
+  #attachment-remove:hover { color: #ff9b9b; }
   form {
     display: flex;
+    align-items: flex-end;
     gap: 8px;
-    padding: 12px 4px 16px;
+    padding: 0 4px 16px;
     border-top: 1px solid var(--border);
+    padding-top: 12px;
   }
+  #attach-btn {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  #attach-btn:hover { color: var(--text); }
   textarea {
     flex: 1;
     resize: none;
@@ -165,6 +208,7 @@
     border: none;
     border-radius: 8px;
     padding: 0 18px;
+    height: 40px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -193,7 +237,14 @@
     <h1>Agent autonome</h1>
   </header>
   <div id="log"></div>
+  <div id="attachment-chip">
+    <span id="attachment-name"></span>
+    <button id="attachment-remove" type="button" title="Retirer">×</button>
+  </div>
   <form id="form">
+    <input id="file-input" type="file" hidden
+      accept="image/*,.pdf,.txt,.md,.csv,.json,.js,.ts,.tsx,.jsx,.py,.html,.css,.yaml,.yml,.xml,.log" />
+    <button id="attach-btn" type="button" title="Joindre un fichier">📎</button>
     <textarea id="input" rows="1" placeholder="Écris ta demande…" autofocus></textarea>
     <button type="submit">Envoyer</button>
   </form>
@@ -204,6 +255,14 @@
   const log = document.getElementById("log");
   const form = document.getElementById("form");
   const input = document.getElementById("input");
+  const fileInput = document.getElementById("file-input");
+  const attachBtn = document.getElementById("attach-btn");
+  const attachmentChip = document.getElementById("attachment-chip");
+  const attachmentNameEl = document.getElementById("attachment-name");
+  const attachmentRemoveBtn = document.getElementById("attachment-remove");
+
+  const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
+  let pendingFile = null;
 
   let currentId = localStorage.getItem("ai-agent:lastConversation") || null;
 
@@ -213,18 +272,40 @@
     else localStorage.removeItem("ai-agent:lastConversation");
   }
 
-  function textFromContent(content) {
-    if (typeof content === "string") return content;
-    if (Array.isArray(content)) {
-      return content.map((c) => (typeof c === "string" ? c : c.text ?? "")).join("");
-    }
-    return "";
+  function hasVisibleContent(content) {
+    if (typeof content === "string") return content.trim().length > 0;
+    if (Array.isArray(content)) return content.length > 0;
+    return false;
   }
 
-  function addMessage(role, text, extraClass) {
+  // Renders either plain text or an array of OpenAI-style content parts
+  // (text / image_url) into a message bubble.
+  function renderContent(el, content) {
+    el.innerHTML = "";
+    if (typeof content === "string") {
+      el.textContent = content;
+      return;
+    }
+    if (!Array.isArray(content)) return;
+    for (const part of content) {
+      if (part.type === "image_url" && part.image_url && part.image_url.url) {
+        const img = document.createElement("img");
+        img.className = "attachment-thumb";
+        img.src = part.image_url.url;
+        el.appendChild(img);
+      } else if (typeof part.text === "string") {
+        const div = document.createElement("div");
+        div.style.whiteSpace = "pre-wrap";
+        div.textContent = part.text;
+        el.appendChild(div);
+      }
+    }
+  }
+
+  function addMessage(role, content, extraClass) {
     const el = document.createElement("div");
     el.className = "msg " + role + (extraClass ? " " + extraClass : "");
-    el.textContent = text;
+    renderContent(el, content);
     log.appendChild(el);
     log.scrollTop = log.scrollHeight;
     return el;
@@ -261,9 +342,9 @@
     const res = await fetch("/api/conversations/" + encodeURIComponent(id));
     const { messages } = await res.json();
     for (const m of messages) {
-      if (m.role === "user") addMessage("user", textFromContent(m.content));
-      else if (m.role === "assistant" && textFromContent(m.content)) {
-        addMessage("assistant", textFromContent(m.content));
+      if (m.role === "user") addMessage("user", m.content);
+      else if (m.role === "assistant" && hasVisibleContent(m.content)) {
+        addMessage("assistant", m.content);
       }
     }
     renderSidebar();
@@ -279,10 +360,41 @@
 
   newChatBtn.addEventListener("click", startNewConversation);
 
+  attachBtn.addEventListener("click", () => fileInput.click());
+
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    if (file.size > MAX_ATTACHMENT_BYTES) {
+      alert("Fichier trop volumineux (max 8 Mo).");
+      fileInput.value = "";
+      return;
+    }
+    pendingFile = file;
+    attachmentNameEl.textContent = "📎 " + file.name;
+    attachmentChip.classList.add("visible");
+  });
+
+  attachmentRemoveBtn.addEventListener("click", () => {
+    pendingFile = null;
+    fileInput.value = "";
+    attachmentChip.classList.remove("visible");
+  });
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+  }
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const message = input.value.trim();
-    if (!message) return;
+    const file = pendingFile;
+    if (!message && !file) return;
 
     if (!currentId) {
       const res = await fetch("/api/conversations", { method: "POST" });
@@ -292,16 +404,40 @@
 
     input.value = "";
     input.style.height = "auto";
-    addMessage("user", message);
+    pendingFile = null;
+    fileInput.value = "";
+    attachmentChip.classList.remove("visible");
+
+    const fileBase64 = file ? await fileToBase64(file) : null;
+
+    // Local preview: full text for text/PDF files goes to the model, but
+    // showing that whole blob back in the bubble would be noisy — just
+    // show the filename, except images which render as an inline thumbnail.
+    const previewParts = [];
+    if (message) previewParts.push({ type: "text", text: message });
+    if (file) {
+      if (file.type.startsWith("image/")) {
+        previewParts.push({ type: "image_url", image_url: { url: "data:" + file.type + ";base64," + fileBase64 } });
+      } else {
+        previewParts.push({ type: "text", text: "📎 " + file.name });
+      }
+    }
+    addMessage("user", previewParts.length === 1 && previewParts[0].type === "text" ? previewParts[0].text : previewParts);
+
     const pending = addMessage("assistant", "…", "pending");
     input.disabled = true;
-    form.querySelector("button").disabled = true;
+    attachBtn.disabled = true;
+    form.querySelector("button[type=submit]").disabled = true;
 
     try {
+      const payload = { conversationId: currentId, message };
+      if (file) {
+        payload.attachment = { name: file.name, mimeType: file.type || "application/octet-stream", dataBase64: fileBase64 };
+      }
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ conversationId: currentId, message }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       pending.classList.remove("pending");
@@ -317,7 +453,8 @@
       pending.textContent = "Erreur réseau : " + err.message;
     } finally {
       input.disabled = false;
-      form.querySelector("button").disabled = false;
+      attachBtn.disabled = false;
+      form.querySelector("button[type=submit]").disabled = false;
       input.focus();
       renderSidebar();
     }
