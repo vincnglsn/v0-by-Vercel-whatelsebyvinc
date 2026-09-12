@@ -7,11 +7,11 @@ echo Installation des dependances - premiere execution...
 call npm install
 :after_install
 
-findstr /C:"20128" .env >nul 2>&1
+powershell -NoProfile -Command "if ((Test-Path .env) -and ((Get-Content .env -Raw) -match '20128')) { exit 0 } else { exit 1 }"
 if errorlevel 1 goto :after_omniroute
 echo Demarrage d'Omniroute...
 start "Omniroute" cmd /k "omniroute"
-timeout /t 8 /nobreak >nul
+timeout /t 12 /nobreak >nul
 :after_omniroute
 
 echo Demarrage de l'agent...
