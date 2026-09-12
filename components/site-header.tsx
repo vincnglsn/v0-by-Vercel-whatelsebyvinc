@@ -5,12 +5,12 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const navLinks = [
-  { label: 'High-Tech', href: '#high-tech' },
-  { label: 'Maison', href: '#maison' },
-  { label: 'Extérieur', href: '#exterieur' },
-  { label: 'Animalerie', href: '#animalerie' },
-  { label: 'Le blog', href: '#blog' },
-  { label: 'À propos', href: '#a-propos' },
+  { label: 'High-Tech', href: '/#high-tech' },
+  { label: 'Maison', href: '/#maison' },
+  { label: 'Extérieur', href: '/#exterieur' },
+  { label: 'Animalerie', href: '/#animalerie' },
+  { label: 'Le blog', href: '/#blog' },
+  { label: 'À propos', href: '/#a-propos' },
 ]
 
 export function SiteHeader() {
@@ -19,7 +19,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <a href="#top" className="flex items-baseline gap-2">
+        <a href="/" className="flex items-baseline gap-2">
           <span className="font-serif text-xl font-semibold tracking-tight text-foreground">
             What Else
           </span>
@@ -42,7 +42,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:block">
-          <Button render={<a href="#newsletter" />} nativeButton={false} size="sm">
+          <Button render={<a href="/#newsletter" />} nativeButton={false} size="sm">
             S&apos;abonner
           </Button>
         </div>
@@ -77,7 +77,7 @@ export function SiteHeader() {
             ))}
             <li className="pt-2">
               <Button
-                render={<a href="#newsletter" onClick={() => setOpen(false)} />}
+                render={<a href="/#newsletter" onClick={() => setOpen(false)} />}
                 nativeButton={false}
                 className="w-full"
               >

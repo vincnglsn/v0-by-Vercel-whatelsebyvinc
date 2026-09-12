@@ -2,18 +2,18 @@ const footerNav = [
   {
     title: 'Univers',
     links: [
-      { label: 'High-Tech', href: '#high-tech' },
-      { label: 'Maison', href: '#maison' },
-      { label: 'Extérieur', href: '#exterieur' },
-      { label: 'Animalerie', href: '#animalerie' },
+      { label: 'High-Tech', href: '/#high-tech' },
+      { label: 'Maison', href: '/#maison' },
+      { label: 'Extérieur', href: '/#exterieur' },
+      { label: 'Animalerie', href: '/#animalerie' },
     ],
   },
   {
     title: 'Le site',
     links: [
-      { label: 'Le blog', href: '#blog' },
-      { label: 'À propos', href: '#a-propos' },
-      { label: 'Newsletter', href: '#newsletter' },
+      { label: 'Le blog', href: '/#blog' },
+      { label: 'À propos', href: '/#a-propos' },
+      { label: 'Newsletter', href: '/#newsletter' },
     ],
   },
   {
@@ -68,7 +68,7 @@ export function SiteFooter() {
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             <a href="#" className="hover:text-foreground">Mentions légales</a>
             <a href="#" className="hover:text-foreground">Politique de confidentialité</a>
-            <a href="#a-propos" className="hover:text-foreground">Politique d&apos;affiliation</a>
+            <a href="/#a-propos" className="hover:text-foreground">Politique d&apos;affiliation</a>
           </div>
         </div>
       </div>
