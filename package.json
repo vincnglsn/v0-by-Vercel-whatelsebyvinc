@@ -30,6 +30,7 @@
     "directory": ".next/static"
   }
 }
-"pnpm": {
-  "onlyBuiltDependencies": ["esbuild", "workerd"]
+"pnpm": { "onlyBuiltDependencies": ["esbuild", "workerd"] }
+{
+npx opennextjs-cloudflare build && npx opennextjs-cloudflare deploy
 }
