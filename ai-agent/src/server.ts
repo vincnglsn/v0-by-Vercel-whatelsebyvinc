@@ -21,10 +21,22 @@ if (!process.env.OPENROUTER_API_KEY) {
 // Bound to localhost by default: this exposes tools (call_api, code_execution)
 // that run with your local machine's privileges — don't put it on a public
 // or shared network interface without adding real authentication first.
+// To reach it from another device (e.g. a phone) without exposing it to the
+// public internet, set HOST=0.0.0.0 and connect over a private network such
+// as Tailscale (see README) rather than port-forwarding on your router.
 const HOST = process.env.HOST ?? "127.0.0.1";
 const PORT = Number(process.env.PORT ?? 3939);
 
 const PUBLIC_DIR = path.resolve(import.meta.dirname, "../public");
+
+// Small explicit allowlist for PWA assets — avoids resolving arbitrary
+// request paths against the filesystem.
+const STATIC_FILES: Record<string, string> = {
+  "/manifest.json": "application/json",
+  "/icons/apple-touch-icon.png": "image/png",
+  "/icons/icon-192.png": "image/png",
+  "/icons/icon-512.png": "image/png",
+};
 
 // Generous enough for a base64-encoded attachment (attachments.ts caps the
 // decoded file at 8 MB; base64 adds ~33% overhead) plus JSON framing.
@@ -57,6 +69,14 @@ const server = createServer(async (req, res) => {
       const html = await readFile(path.join(PUBLIC_DIR, "index.html"), "utf-8");
       res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       res.end(html);
+      return;
+    }
+
+    const staticContentType = STATIC_FILES[url.pathname];
+    if (req.method === "GET" && staticContentType) {
+      const data = await readFile(path.join(PUBLIC_DIR, url.pathname));
+      res.writeHead(200, { "Content-Type": staticContentType });
+      res.end(data);
       return;
     }
 

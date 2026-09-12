@@ -72,6 +72,40 @@ uniquement) :
 En ligne de commande, dépose plutôt le fichier dans `knowledge/` et demande à
 l'agent de le lire avec `read_file` — pas de bouton pièce jointe en terminal.
 
+## Sur iPhone (PWA + Tailscale)
+
+Pas d'app iOS native (ça demande Xcode + Mac + compte développeur Apple).
+À la place : l'interface web s'installe comme une app sur l'écran d'accueil
+(icône dédiée, plein écran), et [Tailscale](https://tailscale.com) (gratuit)
+lui donne un accès privé et sécurisé depuis n'importe où, sans exposer ton PC
+sur l'internet public.
+
+**1. Installer Tailscale** sur ton PC (tailscale.com/download) et sur ton
+iPhone (App Store), se connecter avec le même compte sur les deux. Une fois
+connectés, ton PC a une adresse Tailscale stable du genre `pc-family.tail1234.ts.net`
+(visible dans l'appli Tailscale sur PC, ou avec `tailscale status`).
+
+**2. Autoriser l'accès Tailscale au serveur** — dans `ai-agent/.env`, ajoute :
+
+```
+HOST=0.0.0.0
+```
+
+`0.0.0.0` écoute sur toutes les interfaces réseau de ta machine, Tailscale
+inclus — mais reste inatteignable depuis l'internet public tant que tu ne
+fais pas de redirection de port sur ta box, donc l'accès reste limité aux
+appareils connectés à ton compte Tailscale. Relance `npm run web` (ou
+`start-web.bat`) après ce changement.
+
+**3. Sur l'iPhone**, dans Safari (pas Chrome — "Ajouter à l'écran d'accueil"
+plein écran ne marche que dans Safari), va sur
+`http://<nom-tailscale-du-pc>:3939`, puis bouton Partager → **Ajouter à
+l'écran d'accueil**. Une icône "Agent" apparaît, s'ouvre en plein écran sans
+barre d'adresse.
+
+Ton PC doit rester allumé avec le serveur lancé pour que ça réponde — ce
+n'est pas un service hébergé en permanence quelque part.
+
 ## Architecture
 
 - `src/tools.ts` — définition des 4 outils (format JSON Schema, appel de
@@ -99,6 +133,8 @@ l'agent de le lire avec `read_file` — pas de bouton pièce jointe en terminal.
   PDF → extraction de texte, texte/code → inséré tel quel)
 - `start-web.bat` + `create-desktop-shortcut.ps1` — lancement en 1 clic sous
   Windows (voir "Raccourci Bureau" ci-dessus)
+- `public/manifest.json` + `public/icons/` — installation en PWA sur iPhone
+  (voir "Sur iPhone" ci-dessus)
 
 ## Étendre l'agent
 
