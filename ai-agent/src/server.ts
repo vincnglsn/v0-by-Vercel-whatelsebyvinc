@@ -2,7 +2,7 @@ import "dotenv/config";
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { runAgentTurn, type ChatMessage } from "./agent.js";
+import { runAgentTurn, MODEL, type ChatMessage } from "./agent.js";
 import { loadHistory, saveHistory, clearHistory } from "./memory.js";
 
 if (!process.env.OPENROUTER_API_KEY) {
@@ -76,5 +76,6 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, HOST, () => {
+  console.log(`Modèle : ${MODEL}`);
   console.log(`Agent autonome disponible sur http://${HOST}:${PORT}`);
 });

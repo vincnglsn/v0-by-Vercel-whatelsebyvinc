@@ -69,7 +69,15 @@ tableau `allTools`.
 Utilise `openrouter/free` par défaut : le routeur d'OpenRouter qui sélectionne
 automatiquement un modèle gratuit compatible avec l'appel d'outils (évite de
 coder en dur un modèle précis, la liste des modèles gratuits change souvent).
-Pour fixer un modèle précis, remplace la constante `MODEL` dans
-`src/agent.ts` par un ID exact, ex. `"meta-llama/llama-3.3-70b-instruct:free"`
-(voir [openrouter.ai/models](https://openrouter.ai/models) pour la liste à
-jour).
+Le modèle actif s'affiche au démarrage (`npm run chat` / `npm run web`).
+
+Pour passer sur un modèle payant plus capable, ajoute dans `.env` :
+
+```
+OPENROUTER_MODEL=openai/gpt-4o-mini
+```
+
+Vérifie l'ID exact et le tarif actuels sur
+[openrouter.ai/models](https://openrouter.ai/models) avant d'activer un
+modèle payant — les prix évoluent et un ID mal orthographié échoue à l'appel.
+Sans cette variable, le gratuit reste utilisé.

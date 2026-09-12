@@ -12,9 +12,10 @@ const client = new OpenAI({
   },
 });
 
-// Auto-router to a zero-cost model that supports tool calling — avoids
-// hardcoding one specific free model, which OpenRouter's free lineup churns.
-const MODEL = "openrouter/free";
+// Defaults to the zero-cost auto-router (avoids hardcoding one specific free
+// model, which OpenRouter's free lineup churns). Override with OPENROUTER_MODEL
+// in .env to use a paid model — see README for how to pick one.
+export const MODEL = process.env.OPENROUTER_MODEL ?? "openrouter/free";
 const MAX_TOOL_ITERATIONS = 8;
 
 function buildSystemPrompt(): string {

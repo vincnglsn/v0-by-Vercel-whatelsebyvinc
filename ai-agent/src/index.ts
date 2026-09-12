@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { createInterface } from "node:readline/promises";
 import { stdin, stdout } from "node:process";
-import { runAgentTurn, type ChatMessage } from "./agent.js";
+import { runAgentTurn, MODEL, type ChatMessage } from "./agent.js";
 import { loadHistory, saveHistory, clearHistory } from "./memory.js";
 
 if (!process.env.OPENROUTER_API_KEY) {
@@ -22,6 +22,7 @@ rl.on("close", () => {
   closed = true;
 });
 
+console.log(`Modèle : ${MODEL}`);
 console.log(
   history.length > 0
     ? `Agent autonome prêt (mémoire chargée : ${history.length} messages). Tape ta demande ('reset' pour oublier, 'exit' pour quitter).\n`
