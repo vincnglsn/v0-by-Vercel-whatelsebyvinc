@@ -16,9 +16,9 @@ export function Hero() {
             <span className="text-primary">vraiment</span> le coup.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Je m&apos;appelle Vinc. Je teste des objets connectés pour la maison,
-            l&apos;extérieur et les animaux, puis je vous dis honnêtement ce que
-            je garde&nbsp;— et ce qui finit au fond d&apos;un tiroir.
+            Je m&apos;appelle Vinc. Je teste des objets pour améliorer votre
+            quotidien, puis je vous dis honnêtement ce que je garde&nbsp;— et ce
+            qui finit au fond d&apos;un tiroir.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button render={<a href="#blog" />} nativeButton={false} size="lg">
