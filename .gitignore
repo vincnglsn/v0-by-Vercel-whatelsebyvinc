@@ -15,5 +15,6 @@ node_modules
 .next/
 .DS_Store
 
-# ai-agent debug dumps
+# ai-agent debug dumps and persisted conversation memory
 ai-agent/debug/
+ai-agent/memory/

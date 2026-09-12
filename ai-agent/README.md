@@ -15,8 +15,10 @@ cp .env.example .env
 npm run chat
 ```
 
-Tape ta demande dans le prompt `>`. `exit` pour quitter. La conversation
-garde son historique tant que tu ne relances pas le process.
+Tape ta demande dans le prompt `>`. `reset` pour effacer la mémoire, `exit`
+pour quitter. La conversation est sauvegardée dans `memory/history.json` et
+rechargée au prochain lancement — l'agent se souvient d'une session à
+l'autre (limité aux 60 derniers messages pour rester borné).
 
 ## Architecture
 
@@ -32,7 +34,11 @@ garde son historique tant que tu ne relances pas le process.
     un agent exposé à des entrées non fiables
 - `src/agent.ts` — boucle agentique (ReAct) manuelle : appelle le modèle,
   exécute les outils demandés, renvoie les résultats, jusqu'à ce qu'il n'y
-  ait plus d'appel d'outil (ou 8 itérations max, garde-fou anti-boucle)
+  ait plus d'appel d'outil (ou 8 itérations max, garde-fou anti-boucle).
+  Le prompt système (avec la date du jour) est régénéré à chaque tour, même
+  avec un historique chargé depuis le disque.
+- `src/memory.ts` — persistance de l'historique de conversation
+  (`memory/history.json`, non versionné — données personnelles)
 - `src/index.ts` — REPL en ligne de commande
 
 ## Étendre l'agent

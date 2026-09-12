@@ -47,8 +47,11 @@ export async function runAgentTurn(
   history: ChatMessage[],
   userInput: string,
 ): Promise<{ text: string; history: ChatMessage[] }> {
+  // Rebuild the system message fresh every turn (it carries today's date) —
+  // never trust a persisted copy, which could be days stale.
   const messages: ChatMessage[] = [
-    ...(history.length === 0 ? [{ role: "system", content: buildSystemPrompt() } as ChatMessage] : history),
+    { role: "system", content: buildSystemPrompt() },
+    ...history.filter((m) => m.role !== "system"),
     { role: "user", content: userInput },
   ];
 
@@ -67,7 +70,7 @@ export async function runAgentTurn(
     messages.push(message);
 
     if (!message.tool_calls || message.tool_calls.length === 0) {
-      return { text: message.content ?? "", history: messages };
+      return { text: message.content ?? "", history: messages.filter((m) => m.role !== "system") };
     }
 
     for (const call of message.tool_calls) {
@@ -93,6 +96,6 @@ export async function runAgentTurn(
 
   return {
     text: "L'agent a atteint la limite d'itérations d'outils sans conclure.",
-    history: messages,
+    history: messages.filter((m) => m.role !== "system"),
   };
 }
