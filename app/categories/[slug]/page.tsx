@@ -36,6 +36,34 @@ function groupBySubcategory(articles: Article[]) {
   return { noSubcategory, subcategoryGroups: [...bySubcategory.entries()] }
 }
 
+function SubcategoryBanner({ name, articles }: { name: string; articles: Article[] }) {
+  const thumbnails = articles.slice(0, 3)
+
+  return (
+    <div className="mb-6 flex items-center gap-4 overflow-hidden rounded-2xl border border-border bg-muted/40 p-4">
+      <div className="flex shrink-0 -space-x-4">
+        {thumbnails.map((article, index) => (
+          <div
+            key={article.slug}
+            className="relative size-16 overflow-hidden rounded-xl border-2 border-background shadow-sm sm:size-20"
+            style={{ zIndex: thumbnails.length - index }}
+          >
+            <Image src={article.image} alt="" fill sizes="80px" className="object-cover" />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-1 items-baseline justify-between gap-4">
+        <h2 className="font-serif text-2xl font-semibold tracking-tight text-foreground">
+          {name}
+        </h2>
+        <span className="whitespace-nowrap text-sm text-muted-foreground">
+          {articles.length} {articles.length > 1 ? 'objets' : 'objet'}
+        </span>
+      </div>
+    </div>
+  )
+}
+
 function ArticleGrid({ articles }: { articles: Article[] }) {
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -173,14 +201,7 @@ export default async function CategoryPage({
             <div className="space-y-16">
               {subcategoryGroups.map(([subcategory, articles]) => (
                 <div key={subcategory}>
-                  <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-border/60 pb-3">
-                    <h2 className="font-serif text-2xl font-semibold tracking-tight text-foreground">
-                      {subcategory}
-                    </h2>
-                    <span className="text-sm text-muted-foreground">
-                      {articles.length} {articles.length > 1 ? 'objets' : 'objet'}
-                    </span>
-                  </div>
+                  <SubcategoryBanner name={subcategory} articles={articles} />
                   <ArticleGrid articles={articles} />
                 </div>
               ))}
