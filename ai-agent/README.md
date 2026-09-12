@@ -20,20 +20,25 @@ npm run web    # ou : interface web sur http://127.0.0.1:3939
 ### En ligne de commande (`npm run chat`)
 
 Tape ta demande dans le prompt `>`. `reset` pour effacer la mémoire, `exit`
-pour quitter.
+pour quitter. Une seule conversation (`cli`) — pas de panneau latéral en
+terminal, réservé à l'interface web.
 
 ### Interface web (`npm run web`)
 
-Ouvre http://127.0.0.1:3939 dans ton navigateur. Bouton "Oublier (reset)"
-pour effacer la mémoire. Le serveur n'écoute que sur `127.0.0.1` par défaut
-(pas accessible depuis le réseau) — normal, puisque l'agent peut exécuter du
-code et appeler des API avec les droits de ta machine ; ne l'expose pas sur
-une interface réseau publique/partagée sans ajouter une vraie authentification.
-Port et adresse configurables via les variables d'env `PORT` / `HOST`.
+Ouvre http://127.0.0.1:3939 dans ton navigateur. Panneau latéral gauche façon
+plateforme de chat : "+ Nouvelle discussion" pour en démarrer une, clic sur
+une entrée pour y revenir, `×` pour la supprimer. Chaque conversation garde
+son propre historique et un titre auto-généré à partir de ton premier
+message. Le serveur n'écoute que sur `127.0.0.1` par défaut (pas accessible
+depuis le réseau) — normal, puisque l'agent peut exécuter du code et appeler
+des API avec les droits de ta machine ; ne l'expose pas sur une interface
+réseau publique/partagée sans ajouter une vraie authentification. Port et
+adresse configurables via les variables d'env `PORT` / `HOST`.
 
-Les deux modes partagent la même mémoire : sauvegardée dans
-`memory/history.json` et rechargée au lancement suivant — l'agent se souvient
-d'une session à l'autre (limité aux 60 derniers messages pour rester borné).
+Chaque conversation est sauvegardée dans son propre fichier sous
+`memory/conversations/` (limité aux 60 derniers messages pour rester borné).
+Un ancien `memory/history.json` (format à une seule conversation) est migré
+automatiquement au premier lancement, sous l'id `cli`.
 
 ## Architecture
 
@@ -52,11 +57,12 @@ d'une session à l'autre (limité aux 60 derniers messages pour rester borné).
   ait plus d'appel d'outil (ou 8 itérations max, garde-fou anti-boucle).
   Le prompt système (avec la date du jour) est régénéré à chaque tour, même
   avec un historique chargé depuis le disque.
-- `src/memory.ts` — persistance de l'historique de conversation
-  (`memory/history.json`, non versionné — données personnelles)
-- `src/index.ts` — REPL en ligne de commande
+- `src/memory.ts` — persistance des conversations, une par fichier sous
+  `memory/conversations/` (non versionné — données personnelles)
+- `src/index.ts` — REPL en ligne de commande (conversation unique `cli`)
 - `src/server.ts` + `public/index.html` — serveur HTTP minimal (sans
-  framework) et interface web à une page (HTML/CSS/JS inline, sans build)
+  framework) et interface web à panneau latéral (HTML/CSS/JS inline, sans
+  build), multi-conversations
 
 ## Étendre l'agent
 

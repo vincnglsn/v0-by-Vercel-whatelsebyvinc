@@ -2,8 +2,14 @@ import "dotenv/config";
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { runAgentTurn, MODEL, type ChatMessage } from "./agent.js";
-import { loadHistory, saveHistory, clearHistory } from "./memory.js";
+import { runAgentTurn, MODEL } from "./agent.js";
+import {
+  listConversations,
+  loadConversation,
+  saveConversation,
+  deleteConversation,
+  newConversationId,
+} from "./memory.js";
 
 if (!process.env.OPENROUTER_API_KEY) {
   console.error("OPENROUTER_API_KEY manquante. Copie .env.example vers .env et renseigne ta clé.");
@@ -25,53 +31,69 @@ async function readJsonBody(req: import("node:http").IncomingMessage): Promise<u
   return raw ? JSON.parse(raw) : {};
 }
 
-let history: ChatMessage[] = await loadHistory();
+function sendJson(res: import("node:http").ServerResponse, status: number, body: unknown): void {
+  res.writeHead(status, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(body));
+}
 
 const server = createServer(async (req, res) => {
   try {
-    if (req.method === "GET" && req.url === "/") {
+    const url = new URL(req.url ?? "/", "http://localhost");
+
+    if (req.method === "GET" && url.pathname === "/") {
       const html = await readFile(path.join(PUBLIC_DIR, "index.html"), "utf-8");
       res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       res.end(html);
       return;
     }
 
-    if (req.method === "GET" && req.url === "/api/history") {
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ history }));
+    if (req.method === "GET" && url.pathname === "/api/conversations") {
+      sendJson(res, 200, { conversations: await listConversations() });
       return;
     }
 
-    if (req.method === "POST" && req.url === "/api/reset") {
-      history = [];
-      await clearHistory();
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ ok: true }));
+    if (req.method === "POST" && url.pathname === "/api/conversations") {
+      sendJson(res, 200, { id: newConversationId() });
       return;
     }
 
-    if (req.method === "POST" && req.url === "/api/chat") {
-      const body = (await readJsonBody(req)) as { message?: string };
-      const message = (body.message ?? "").trim();
-      if (!message) {
-        res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "Message vide." }));
+    const convMatch = url.pathname.match(/^\/api\/conversations\/([^/]+)$/);
+    if (convMatch) {
+      const id = decodeURIComponent(convMatch[1]);
+      if (req.method === "GET") {
+        sendJson(res, 200, { messages: await loadConversation(id) });
         return;
       }
+      if (req.method === "DELETE") {
+        await deleteConversation(id);
+        sendJson(res, 200, { ok: true });
+        return;
+      }
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/chat") {
+      const body = (await readJsonBody(req)) as { conversationId?: string; message?: string };
+      const conversationId = body.conversationId;
+      const message = (body.message ?? "").trim();
+      if (!conversationId) {
+        sendJson(res, 400, { error: "conversationId manquant." });
+        return;
+      }
+      if (!message) {
+        sendJson(res, 400, { error: "Message vide." });
+        return;
+      }
+      const history = await loadConversation(conversationId);
       const { text, history: updated } = await runAgentTurn(history, message);
-      history = updated;
-      await saveHistory(history);
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ text }));
+      await saveConversation(conversationId, updated);
+      sendJson(res, 200, { text });
       return;
     }
 
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Not found");
+    sendJson(res, 404, { error: "Not found" });
   } catch (err) {
     console.error(err);
-    res.writeHead(500, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ error: (err as Error).message }));
+    sendJson(res, 500, { error: (err as Error).message });
   }
 });
 

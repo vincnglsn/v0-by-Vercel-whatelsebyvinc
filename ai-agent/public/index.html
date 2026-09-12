@@ -9,35 +9,97 @@
     color-scheme: dark;
     --bg: #0f1115;
     --panel: #171a21;
+    --sidebar: #14161c;
     --border: #2a2e38;
     --text: #e6e8ec;
     --muted: #8a8f9c;
     --accent: #4f8cff;
     --user-bubble: #2a3a5c;
     --assistant-bubble: #1f232c;
+    --hover: #1d212b;
   }
   * { box-sizing: border-box; }
+  html, body { height: 100%; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 16px;
   }
-  main {
-    width: 100%;
-    max-width: 720px;
+  #sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 32px);
+    padding: 12px;
+    gap: 8px;
   }
-  header {
+  #new-chat-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+  }
+  #conversations {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .conv-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .conv-item:hover { background: var(--hover); color: var(--text); }
+  .conv-item.active { background: var(--hover); color: var(--text); }
+  .conv-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .conv-delete {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    visibility: hidden;
+    flex-shrink: 0;
+  }
+  .conv-item:hover .conv-delete { visibility: visible; }
+  .conv-delete:hover { color: #ff9b9b; }
+  #empty-conversations {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100vh;
+    padding: 0 16px;
+  }
+  header {
     padding: 12px 4px;
     border-bottom: 1px solid var(--border);
   }
@@ -46,16 +108,6 @@
     font-weight: 600;
     margin: 0;
   }
-  #reset-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  #reset-btn:hover { color: var(--text); border-color: var(--muted); }
   #log {
     flex: 1;
     overflow-y: auto;
@@ -63,6 +115,11 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+  }
+  #log:empty::before {
+    content: "Nouvelle discussion — écris ton premier message.";
+    color: var(--muted);
+    font-size: 14px;
   }
   .msg {
     max-width: 85%;
@@ -86,7 +143,7 @@
   form {
     display: flex;
     gap: 8px;
-    padding: 12px 4px 4px;
+    padding: 12px 4px 16px;
     border-top: 1px solid var(--border);
   }
   textarea {
@@ -113,13 +170,27 @@
     cursor: pointer;
   }
   button:disabled { opacity: 0.5; cursor: default; }
+
+  @media (max-width: 640px) {
+    body { flex-direction: column; }
+    #sidebar {
+      width: 100%;
+      max-height: 40vh;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+    main { height: auto; flex: 1; }
+  }
 </style>
 </head>
 <body>
+<aside id="sidebar">
+  <button id="new-chat-btn" type="button">+ Nouvelle discussion</button>
+  <div id="conversations"></div>
+</aside>
 <main>
   <header>
     <h1>Agent autonome</h1>
-    <button id="reset-btn" type="button">Oublier (reset)</button>
   </header>
   <div id="log"></div>
   <form id="form">
@@ -128,18 +199,18 @@
   </form>
 </main>
 <script>
+  const sidebarEl = document.getElementById("conversations");
+  const newChatBtn = document.getElementById("new-chat-btn");
   const log = document.getElementById("log");
   const form = document.getElementById("form");
   const input = document.getElementById("input");
-  const resetBtn = document.getElementById("reset-btn");
 
-  function addMessage(role, text, extraClass) {
-    const el = document.createElement("div");
-    el.className = "msg " + role + (extraClass ? " " + extraClass : "");
-    el.textContent = text;
-    log.appendChild(el);
-    log.scrollTop = log.scrollHeight;
-    return el;
+  let currentId = localStorage.getItem("ai-agent:lastConversation") || null;
+
+  function setCurrentId(id) {
+    currentId = id;
+    if (id) localStorage.setItem("ai-agent:lastConversation", id);
+    else localStorage.removeItem("ai-agent:lastConversation");
   }
 
   function textFromContent(content) {
@@ -150,22 +221,75 @@
     return "";
   }
 
-  async function loadHistory() {
-    const res = await fetch("/api/history");
-    const { history } = await res.json();
+  function addMessage(role, text, extraClass) {
+    const el = document.createElement("div");
+    el.className = "msg " + role + (extraClass ? " " + extraClass : "");
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  async function renderSidebar() {
+    const res = await fetch("/api/conversations");
+    const { conversations } = await res.json();
+    sidebarEl.innerHTML = "";
+    if (conversations.length === 0) {
+      sidebarEl.innerHTML = '<div id="empty-conversations">Aucune discussion pour l’instant.</div>';
+      return;
+    }
+    for (const conv of conversations) {
+      const item = document.createElement("div");
+      item.className = "conv-item" + (conv.id === currentId ? " active" : "");
+      item.innerHTML =
+        '<span class="conv-title"></span><button class="conv-delete" type="button" title="Supprimer">×</button>';
+      item.querySelector(".conv-title").textContent = conv.title;
+      item.addEventListener("click", () => openConversation(conv.id));
+      item.querySelector(".conv-delete").addEventListener("click", async (e) => {
+        e.stopPropagation();
+        await fetch("/api/conversations/" + encodeURIComponent(conv.id), { method: "DELETE" });
+        if (conv.id === currentId) startNewConversation();
+        renderSidebar();
+      });
+      sidebarEl.appendChild(item);
+    }
+  }
+
+  async function openConversation(id) {
+    setCurrentId(id);
     log.innerHTML = "";
-    for (const m of history) {
+    const res = await fetch("/api/conversations/" + encodeURIComponent(id));
+    const { messages } = await res.json();
+    for (const m of messages) {
       if (m.role === "user") addMessage("user", textFromContent(m.content));
       else if (m.role === "assistant" && textFromContent(m.content)) {
         addMessage("assistant", textFromContent(m.content));
       }
     }
+    renderSidebar();
+    input.focus();
   }
+
+  function startNewConversation() {
+    setCurrentId(null);
+    log.innerHTML = "";
+    renderSidebar();
+    input.focus();
+  }
+
+  newChatBtn.addEventListener("click", startNewConversation);
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const message = input.value.trim();
     if (!message) return;
+
+    if (!currentId) {
+      const res = await fetch("/api/conversations", { method: "POST" });
+      const { id } = await res.json();
+      setCurrentId(id);
+    }
+
     input.value = "";
     input.style.height = "auto";
     addMessage("user", message);
@@ -177,7 +301,7 @@
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ conversationId: currentId, message }),
       });
       const data = await res.json();
       pending.classList.remove("pending");
@@ -195,6 +319,7 @@
       input.disabled = false;
       form.querySelector("button").disabled = false;
       input.focus();
+      renderSidebar();
     }
   });
 
@@ -209,12 +334,19 @@
     input.style.height = input.scrollHeight + "px";
   });
 
-  resetBtn.addEventListener("click", async () => {
-    await fetch("/api/reset", { method: "POST" });
-    log.innerHTML = "";
-  });
-
-  loadHistory();
+  (async () => {
+    await renderSidebar();
+    if (currentId) {
+      // Verify the remembered conversation still exists before opening it.
+      const res = await fetch("/api/conversations/" + encodeURIComponent(currentId));
+      const { messages } = await res.json();
+      if (messages.length > 0) {
+        await openConversation(currentId);
+        return;
+      }
+    }
+    startNewConversation();
+  })();
 </script>
 </body>
 </html>

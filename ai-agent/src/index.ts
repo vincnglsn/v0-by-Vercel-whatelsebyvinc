@@ -2,7 +2,9 @@ import "dotenv/config";
 import { createInterface } from "node:readline/promises";
 import { stdin, stdout } from "node:process";
 import { runAgentTurn, MODEL, type ChatMessage } from "./agent.js";
-import { loadHistory, saveHistory, clearHistory } from "./memory.js";
+import { loadConversation, saveConversation, deleteConversation } from "./memory.js";
+
+const CONVERSATION_ID = "cli";
 
 if (!process.env.OPENROUTER_API_KEY) {
   console.error(
@@ -15,7 +17,7 @@ if (!process.env.OPENROUTER_API_KEY) {
 // createInterface() and the first question() risks losing already-buffered
 // input — readline emits 'line' events immediately, with nothing to catch
 // them until a question() is pending, and a dropped event is gone for good.
-let history: ChatMessage[] = await loadHistory();
+let history: ChatMessage[] = await loadConversation(CONVERSATION_ID);
 const rl = createInterface({ input: stdin, output: stdout });
 let closed = false;
 rl.on("close", () => {
@@ -35,7 +37,7 @@ while (!closed) {
   if (!input.trim()) continue;
   if (input.trim().toLowerCase() === "reset") {
     history = [];
-    await clearHistory();
+    await deleteConversation(CONVERSATION_ID);
     console.log("\nMémoire effacée.\n");
     continue;
   }
@@ -43,7 +45,7 @@ while (!closed) {
   try {
     const { text, history: updated } = await runAgentTurn(history, input);
     history = updated;
-    await saveHistory(history);
+    await saveConversation(CONVERSATION_ID, history);
     console.log(`\n${text}\n`);
   } catch (err) {
     console.error(`\nErreur : ${(err as Error).message}\n`);
