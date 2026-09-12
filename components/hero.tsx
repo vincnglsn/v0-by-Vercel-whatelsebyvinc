@@ -12,7 +12,7 @@ export function Hero() {
             Testé et sélectionné depuis le Vaucluse
           </p>
           <h1 className="mt-6 font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            Les objets high-tech qui valent{' '}
+            Les objets du quotidien qui valent{' '}
             <span className="text-primary">vraiment</span> le coup.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
