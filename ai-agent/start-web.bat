@@ -7,6 +7,13 @@ echo Installation des dependances - premiere execution...
 call npm install
 :after_install
 
+findstr /C:"20128" .env >nul 2>&1
+if errorlevel 1 goto :after_omniroute
+echo Demarrage d'Omniroute...
+start "Omniroute" cmd /k "omniroute"
+timeout /t 8 /nobreak >nul
+:after_omniroute
+
 echo Demarrage de l'agent...
 start "Agent autonome - serveur" cmd /k "npm run web"
 

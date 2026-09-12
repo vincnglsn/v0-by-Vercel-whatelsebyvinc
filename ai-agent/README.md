@@ -40,10 +40,12 @@ powershell -ExecutionPolicy Bypass -File create-desktop-shortcut.ps1
 ```
 
 Un raccourci "Agent autonome" apparaît sur ton Bureau. Double-clic dessus :
-ça installe les dépendances si besoin, lance le serveur dans une fenêtre
-(à laisser ouverte — la fermer arrête l'agent), et ouvre l'interface dans ton
-navigateur par défaut. Si tu as personnalisé `PORT`/`HOST` dans `.env`,
-modifie l'adresse en dur dans `start-web.bat`.
+ça installe les dépendances si besoin, lance [OmniRoute](https://omniroute.online)
+en plus si `.env` pointe dessus (détecté via la présence de `20128` dans
+`LLM_BASE_URL`), lance le serveur dans une fenêtre (à laisser ouverte — la
+fermer arrête l'agent), et ouvre l'interface dans ton navigateur par défaut.
+Si tu as personnalisé `PORT`/`HOST` dans `.env`, modifie l'adresse en dur
+dans `start-web.bat`.
 
 ### Interface web (`npm run web`)
 
@@ -180,21 +182,45 @@ LLM_MODEL=...      # défaut : openrouter/free
   (pas de `LLM_API_KEY` nécessaire, Ollama n'en demande pas)
 - **Un autre fournisseur cloud compatible OpenAI** (Google Gemini a un vrai
   palier gratuit bien plus généreux qu'OpenRouter — ~1500 requêtes/jour sur
-  Gemini 2.5 Flash, sans carte bancaire ; clé sur aistudio.google.com) :
+  le petit modèle Flash, sans carte bancaire ; clé sur aistudio.google.com).
+  Les noms de modèles Gemini changent souvent (`gemini-2.5-flash` a par
+  exemple été retiré) — vérifie le nom exact actuel sur
+  [ai.google.dev/gemini-api/docs/models](https://ai.google.dev/gemini-api/docs/models) :
   ```
   LLM_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
   LLM_API_KEY=...
-  LLM_MODEL=gemini-2.5-flash
+  LLM_MODEL=...   # ex: gemini-flash-latest, ou le nom exact en vigueur
   ```
-- **Un gateway comme [OmniRoute](https://omniroute.online)** pour combiner
-  plusieurs fournisseurs avec bascule automatique en cas de quota atteint —
-  utile seulement si tu configures plusieurs clés différentes dedans (une
-  seule ne fait que rajouter un intermédiaire, pas de nouveau quota) :
-  ```
-  LLM_BASE_URL=http://localhost:20128/v1
-  LLM_API_KEY=...   # clé générée dans le dashboard OmniRoute
-  LLM_MODEL=...     # ex: provider/model, ou le nom d'un "Combo"
-  ```
+- **[OmniRoute](https://omniroute.online)** — un gateway local qui combine
+  plusieurs fournisseurs avec bascule automatique quand l'un atteint son
+  quota. Utile seulement avec plusieurs clés différentes dedans (une seule
+  ne fait que rajouter un intermédiaire, pas de nouveau quota). Setup testé :
+  1. `npm install -g omniroute` puis `npm install -g --allow-scripts=omniroute,keytar,onnxruntime-node,tls-client-node,sharp,@parcel/watcher,@swc/core,protobufjs,koffi,esbuild` (autorise les scripts d'install des modules natifs)
+  2. Lance `omniroute` — **par défaut il écoute sur `0.0.0.0` sans clé
+     requise** (n'importe quel appareil du réseau pourrait l'utiliser à tes
+     frais) ; restreins-le tout de suite : ajoute `OMNIROUTE_SERVER_HOST=127.0.0.1`
+     dans `C:\Users\<toi>\.omniroute\.env`, relance
+  3. Dashboard sur http://localhost:20128 → **Fournisseurs** → connecte
+     chaque clé (OpenRouter, Gemini...) ; pour Gemini, active "Importer
+     uniquement les modèles gratuits"
+  4. **Combinaisons** → crée un combo, ajoute tes modèles dans l'ordre de
+     priorité voulu via la recherche texte (pas le menu déroulant "Fournisseur
+     → Modèle", qui liste tout sans filtre) ; décoche "repli uniquement sur
+     quota" si le repli automatique ne se déclenche pas sur un 429
+  5. **Gestionnaire d'API** → crée une clé pour l'agent
+  6. Dans `ai-agent/.env` :
+     ```
+     LLM_BASE_URL=http://localhost:20128/v1
+     LLM_API_KEY=...   # la clé créée à l'étape 5
+     LLM_MODEL=...     # le nom du combo créé à l'étape 4
+     ```
+
+  Les noms de modèles dans le catalogue d'OmniRoute peuvent être obsolètes
+  (ex. un modèle renommé côté fournisseur) — si l'agent renvoie une erreur
+  "not available in the active live catalog" ou "no longer available to
+  new users", retire ce modèle du combo et ajoute un autre choix de la liste.
+  Omniroute doit tourner **avant** l'agent (`start-web.bat` le fait
+  automatiquement si `LLM_BASE_URL` contient `20128`).
 
 Vérifie toujours l'ID exact et le tarif actuels du modèle choisi avant de
 l'activer — les prix/IDs affichés ailleurs datent vite.

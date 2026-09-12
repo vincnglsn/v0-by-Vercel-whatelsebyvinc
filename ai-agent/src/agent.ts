@@ -37,35 +37,52 @@ const toolSchemas: ChatCompletionTool[] = allTools.map((t) => ({
 export type ChatMessage = ChatCompletionMessageParam;
 
 /**
- * Best-effort startup check: for a local Ollama URL, is Ollama actually
- * running and is the configured model pulled? For anything else (a cloud
- * provider), is an API key set? Returns a human-readable problem
- * description, or null if everything looks fine.
+ * Best-effort startup check:
+ * - Local Ollama URL: is Ollama actually running, and is the model pulled?
+ * - Any other local URL (e.g. a gateway like OmniRoute on localhost): is
+ *   anything even listening there?
+ * - A remote/cloud URL: is an API key set?
+ * Returns a human-readable problem description, or null if all looks fine.
  */
 export async function checkBackendReady(): Promise<string | null> {
-  const isLocalOllama = /^https?:\/\/(localhost|127\.0\.0\.1):11434\//.test(BASE_URL);
-  if (!isLocalOllama) {
+  const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1):\d+\//.test(BASE_URL);
+  if (!isLocalhost) {
     return process.env.LLM_API_KEY
       ? null
       : "LLM_API_KEY manquante dans .env pour ce fournisseur cloud.";
   }
 
-  const tagsUrl = BASE_URL.replace(/\/v1\/?$/, "/api/tags");
-  let names: string[];
-  try {
-    const res = await fetch(tagsUrl);
-    if (!res.ok) return null;
-    const data = (await res.json()) as { models?: { name: string }[] };
-    names = (data.models ?? []).map((m) => m.name);
-  } catch {
-    return "Impossible de joindre Ollama sur localhost:11434. Installe/lance-le depuis https://ollama.com/download.";
+  const isOllama = /^https?:\/\/(localhost|127\.0\.0\.1):11434\//.test(BASE_URL);
+  if (isOllama) {
+    const tagsUrl = BASE_URL.replace(/\/v1\/?$/, "/api/tags");
+    let names: string[];
+    try {
+      const res = await fetch(tagsUrl);
+      if (!res.ok) return null;
+      const data = (await res.json()) as { models?: { name: string }[] };
+      names = (data.models ?? []).map((m) => m.name);
+    } catch {
+      return "Impossible de joindre Ollama sur localhost:11434. Installe/lance-le depuis https://ollama.com/download.";
+    }
+
+    const modelBase = MODEL.split(":")[0];
+    if (!names.some((n) => n === MODEL || n.startsWith(`${modelBase}:`))) {
+      return `Le modèle "${MODEL}" n'est pas installé. Lance : ollama pull ${MODEL}`;
+    }
+    return null;
   }
 
-  const modelBase = MODEL.split(":")[0];
-  if (!names.some((n) => n === MODEL || n.startsWith(`${modelBase}:`))) {
-    return `Le modèle "${MODEL}" n'est pas installé. Lance : ollama pull ${MODEL}`;
+  // Generic local endpoint (e.g. a gateway like OmniRoute): just confirm
+  // something answers. Any HTTP response counts — only a connection
+  // failure means the service isn't running.
+  try {
+    await fetch(BASE_URL.replace(/\/$/, "") + "/models", {
+      headers: process.env.LLM_API_KEY ? { Authorization: `Bearer ${process.env.LLM_API_KEY}` } : {},
+    });
+    return null;
+  } catch {
+    return `Impossible de joindre le service local sur ${BASE_URL}. Assure-toi qu'il est bien lancé.`;
   }
-  return null;
 }
 
 /**
