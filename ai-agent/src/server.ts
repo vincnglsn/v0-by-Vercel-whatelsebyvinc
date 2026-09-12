@@ -3,7 +3,7 @@ import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { ChatCompletionContentPart } from "openai/resources/index.js";
-import { runAgentTurn, MODEL } from "./agent.js";
+import { runAgentTurn, checkBackendReady, MODEL } from "./agent.js";
 import {
   listConversations,
   loadConversation,
@@ -13,8 +13,9 @@ import {
 } from "./memory.js";
 import { buildAttachmentParts, type AttachmentInput } from "./attachments.js";
 
-if (!process.env.OPENROUTER_API_KEY) {
-  console.error("OPENROUTER_API_KEY manquante. Copie .env.example vers .env et renseigne ta clé.");
+const backendProblem = await checkBackendReady();
+if (backendProblem) {
+  console.error(backendProblem);
   process.exit(1);
 }
 

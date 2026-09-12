@@ -1,15 +1,14 @@
 import "dotenv/config";
 import { createInterface } from "node:readline/promises";
 import { stdin, stdout } from "node:process";
-import { runAgentTurn, MODEL, type ChatMessage } from "./agent.js";
+import { runAgentTurn, checkBackendReady, MODEL, type ChatMessage } from "./agent.js";
 import { loadConversation, saveConversation, deleteConversation } from "./memory.js";
 
 const CONVERSATION_ID = "cli";
 
-if (!process.env.OPENROUTER_API_KEY) {
-  console.error(
-    "OPENROUTER_API_KEY manquante. Copie .env.example vers .env et renseigne ta clé.",
-  );
+const backendProblem = await checkBackendReady();
+if (backendProblem) {
+  console.error(backendProblem);
   process.exit(1);
 }
 

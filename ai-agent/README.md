@@ -1,21 +1,29 @@
 # Agent autonome
 
-Agent basé sur [OpenRouter](https://openrouter.ai) (API compatible OpenAI,
-passerelle vers de nombreux modèles — dont des modèles gratuits), avec appel
-d'outils : recherche web, exécution de code, lecture de fichiers locaux
-(`knowledge/`) et appels à des API externes. Deux façons de l'utiliser : en
-ligne de commande, ou via une petite interface web.
+Agent basé sur [Ollama](https://ollama.com) en local par défaut — gratuit,
+illimité, tourne sur ta propre machine — avec appel d'outils : recherche web,
+exécution de code, lecture de fichiers locaux (`knowledge/`) et appels à des
+API externes. Deux façons de l'utiliser : en ligne de commande, ou via une
+petite interface web. Peut aussi être reconfiguré vers un fournisseur cloud
+(OpenRouter, etc.) — voir "Modèle" plus bas.
 
 ## Démarrage
 
 ```bash
+# 1. Installe Ollama : https://ollama.com/download, puis :
+ollama pull qwen3:4b-instruct
+
+# 2. Installe et lance l'agent
 cd ai-agent
 npm install
-cp .env.example .env
-# renseigne OPENROUTER_API_KEY dans .env (clé sur openrouter.ai/keys)
 npm run chat   # en ligne de commande
 npm run web    # ou : interface web sur http://127.0.0.1:3939
 ```
+
+Rien à configurer dans `.env` pour ce cas d'usage — Ollama ne demande pas de
+clé. Au démarrage, l'agent vérifie qu'Ollama tourne et que le modèle est bien
+téléchargé, et te dit quoi faire sinon plutôt que de planter avec une erreur
+obscure.
 
 ### En ligne de commande (`npm run chat`)
 
@@ -25,8 +33,8 @@ terminal, réservé à l'interface web.
 
 ### Raccourci Bureau (Windows, 1 clic)
 
-Une fois `npm install` et `.env` faits (étape ci-dessus), crée le raccourci
-une seule fois :
+Une fois `npm install` fait (étape ci-dessus), crée le raccourci une seule
+fois :
 
 ```powershell
 cd ai-agent
@@ -59,9 +67,10 @@ automatiquement au premier lancement, sous l'id `cli`.
 **Pièces jointes** — bouton 📎 à côté du champ de saisie (interface web
 uniquement) :
 - **Images** (png, jpg, webp...) : envoyées telles quelles au modèle pour
-  analyse visuelle — ne fonctionne que si le modèle actif supporte la vision ;
-  le routeur `openrouter/free` peut retomber sur un modèle qui ne la supporte
-  pas, auquel cas passe sur un modèle vision via `OPENROUTER_MODEL` (voir plus bas).
+  analyse visuelle — ne fonctionne que si le modèle actif supporte la vision.
+  `qwen3:4b-instruct` (par défaut) ne la supporte pas ; pour analyser des
+  images, installe un modèle vision (ex. `ollama pull qwen3-vl:4b-instruct`)
+  et configure-le via `LLM_MODEL` (voir "Modèle" plus bas).
 - **PDF** : texte extrait automatiquement (`pdf-parse`) et transmis au modèle
   — extraction basique, sans mise en page ni OCR sur du PDF scanné en image.
 - **Texte / code** (.txt, .md, .csv, .json, .py, .js, .html...) : contenu
@@ -144,18 +153,29 @@ tableau `allTools`.
 
 ## Modèle
 
-Utilise `openrouter/free` par défaut : le routeur d'OpenRouter qui sélectionne
-automatiquement un modèle gratuit compatible avec l'appel d'outils (évite de
-coder en dur un modèle précis, la liste des modèles gratuits change souvent).
-Le modèle actif s'affiche au démarrage (`npm run chat` / `npm run web`).
+Par défaut : Ollama en local, modèle `qwen3:4b-instruct` (~2,5 Go, bon
+compromis vitesse/qualité pour l'appel d'outils, tourne correctement même
+sans carte graphique dédiée). Le modèle actif s'affiche au démarrage
+(`npm run chat` / `npm run web`).
 
-Pour passer sur un modèle payant plus capable, ajoute dans `.env` :
+**Changer de modèle Ollama** (plus capable si ta machine suit, ou avec
+vision) — télécharge-le d'abord, puis configure `.env` :
 
 ```
-OPENROUTER_MODEL=openai/gpt-4o-mini
+ollama pull llama3.1:8b
+```
+```
+LLM_MODEL=llama3.1:8b
 ```
 
-Vérifie l'ID exact et le tarif actuels sur
-[openrouter.ai/models](https://openrouter.ai/models) avant d'activer un
-modèle payant — les prix évoluent et un ID mal orthographié échoue à l'appel.
-Sans cette variable, le gratuit reste utilisé.
+**Utiliser un fournisseur cloud à la place** (OpenRouter, etc.), par exemple
+si tu préfères la rapidité du cloud à la gratuité locale :
+
+```
+LLM_BASE_URL=https://openrouter.ai/api/v1
+LLM_API_KEY=sk-or-v1-...
+LLM_MODEL=openrouter/free
+```
+
+Vérifie l'ID exact et le tarif actuels du modèle choisi avant de l'activer —
+les prix/IDs affichés ailleurs datent vite.

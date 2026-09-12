@@ -2,20 +2,16 @@ import OpenAI from "openai";
 import type { ChatCompletionMessageParam, ChatCompletionTool, ChatCompletionContentPart } from "openai/resources/index.js";
 import { allTools, type ToolDef } from "./tools.js";
 
+// Defaults to a local Ollama install (its OpenAI-compatible endpoint) — free,
+// unlimited, runs on your own machine. Point LLM_BASE_URL/LLM_API_KEY at a
+// cloud provider instead (OpenRouter, etc.) if you'd rather use one.
+export const BASE_URL = process.env.LLM_BASE_URL ?? "http://localhost:11434/v1";
+export const MODEL = process.env.LLM_MODEL ?? "qwen3:4b-instruct";
 const client = new OpenAI({
-  apiKey: process.env.OPENROUTER_API_KEY,
-  baseURL: "https://openrouter.ai/api/v1",
-  defaultHeaders: {
-    // Optional but recommended by OpenRouter for attribution/rate-limit fairness.
-    "HTTP-Referer": "https://github.com/",
-    "X-Title": "ai-agent-cli",
-  },
+  apiKey: process.env.LLM_API_KEY ?? "ollama", // Ollama ignores this; required by the SDK regardless.
+  baseURL: BASE_URL,
 });
 
-// Defaults to the zero-cost auto-router (avoids hardcoding one specific free
-// model, which OpenRouter's free lineup churns). Override with OPENROUTER_MODEL
-// in .env to use a paid model — see README for how to pick one.
-export const MODEL = process.env.OPENROUTER_MODEL ?? "openrouter/free";
 const MAX_TOOL_ITERATIONS = 8;
 
 function buildSystemPrompt(): string {
@@ -38,6 +34,34 @@ const toolSchemas: ChatCompletionTool[] = allTools.map((t) => ({
 }));
 
 export type ChatMessage = ChatCompletionMessageParam;
+
+/**
+ * Best-effort startup check for the common case (default local Ollama URL):
+ * is Ollama actually running, and is the configured model pulled? Returns a
+ * human-readable problem description, or null if everything looks fine (or
+ * the base URL isn't the local-Ollama shape, in which case we skip checking
+ * and let a real request surface any issue instead).
+ */
+export async function checkBackendReady(): Promise<string | null> {
+  if (!/^https?:\/\/(localhost|127\.0\.0\.1):11434\//.test(BASE_URL)) return null;
+
+  const tagsUrl = BASE_URL.replace(/\/v1\/?$/, "/api/tags");
+  let names: string[];
+  try {
+    const res = await fetch(tagsUrl);
+    if (!res.ok) return null;
+    const data = (await res.json()) as { models?: { name: string }[] };
+    names = (data.models ?? []).map((m) => m.name);
+  } catch {
+    return "Impossible de joindre Ollama sur localhost:11434. Installe/lance-le depuis https://ollama.com/download.";
+  }
+
+  const modelBase = MODEL.split(":")[0];
+  if (!names.some((n) => n === MODEL || n.startsWith(`${modelBase}:`))) {
+    return `Le modèle "${MODEL}" n'est pas installé. Lance : ollama pull ${MODEL}`;
+  }
+  return null;
+}
 
 /**
  * Runs one agent turn as a manual ReAct loop: ask the model, execute any
