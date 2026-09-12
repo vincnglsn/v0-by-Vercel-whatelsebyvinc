@@ -11,8 +11,12 @@ if (!process.env.OPENROUTER_API_KEY) {
   process.exit(1);
 }
 
-const rl = createInterface({ input: stdin, output: stdout });
+// Load history before creating the readline interface: any `await` between
+// createInterface() and the first question() risks losing already-buffered
+// input — readline emits 'line' events immediately, with nothing to catch
+// them until a question() is pending, and a dropped event is gone for good.
 let history: ChatMessage[] = await loadHistory();
+const rl = createInterface({ input: stdin, output: stdout });
 let closed = false;
 rl.on("close", () => {
   closed = true;
