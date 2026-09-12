@@ -1,36 +1,22 @@
 {
-  // Database configuration
-  "database": {
-    "host": "localhost",
-    "port": 5432,
-    "name": "myapp", // production uses 'myapp_prod'
-  },
-  
-  /*
-   * Feature flags
-   * Enable experimental features with caution
-   */
-  "features": {
-    "darkMode": true,
-    "betaFeatures": false,
-    "maxUploadSize": 10485760, // 10MB in bytes
-  },
-  
-  // Logging settings
-  "logging": {
-    "level": "info",
-    "format": "json",
-  }
-}
-{
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "v0-by-vercel-whatelsebyvinc",
-  "compatibility_date": "2026-09-12",
-  "assets": {
-    "directory": ".next/static"
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.3.3",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "latest",
+    "wrangler": "latest"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "workerd"]
   }
-}
-"pnpm": { "onlyBuiltDependencies": ["esbuild", "workerd"] }
-{
-npx opennextjs-cloudflare build && npx opennextjs-cloudflare deploy
 }
