@@ -1,28 +1,26 @@
 # Agent autonome
 
-Agent basé sur [Ollama](https://ollama.com) en local par défaut — gratuit,
-illimité, tourne sur ta propre machine — avec appel d'outils : recherche web,
-exécution de code, lecture de fichiers locaux (`knowledge/`) et appels à des
-API externes. Deux façons de l'utiliser : en ligne de commande, ou via une
-petite interface web. Peut aussi être reconfiguré vers un fournisseur cloud
-(OpenRouter, etc.) — voir "Modèle" plus bas.
+Agent basé sur [OpenRouter](https://openrouter.ai) par défaut (API compatible
+OpenAI, modèle gratuit `openrouter/free` — limité à ~50 requêtes/jour côté
+compte, voir "Modèle" plus bas pour les alternatives), avec appel d'outils :
+recherche web, exécution de code, lecture de fichiers locaux (`knowledge/`)
+et appels à des API externes. Deux façons de l'utiliser : en ligne de
+commande, ou via une petite interface web.
 
 ## Démarrage
 
 ```bash
-# 1. Installe Ollama : https://ollama.com/download, puis :
-ollama pull qwen3:4b-instruct
-
-# 2. Installe et lance l'agent
 cd ai-agent
 npm install
+cp .env.example .env
+# renseigne LLM_API_KEY dans .env (clé sur openrouter.ai/keys)
 npm run chat   # en ligne de commande
 npm run web    # ou : interface web sur http://127.0.0.1:3939
 ```
 
-Rien à configurer dans `.env` pour ce cas d'usage — Ollama ne demande pas de
-clé. Au démarrage, l'agent vérifie qu'Ollama tourne et que le modèle est bien
-téléchargé, et te dit quoi faire sinon plutôt que de planter avec une erreur
+Au démarrage, l'agent vérifie que le fournisseur configuré répond (clé
+présente pour un fournisseur cloud, ou Ollama lancé + modèle téléchargé en
+local) et te dit quoi faire sinon plutôt que de planter avec une erreur
 obscure.
 
 ### En ligne de commande (`npm run chat`)
@@ -67,10 +65,9 @@ automatiquement au premier lancement, sous l'id `cli`.
 **Pièces jointes** — bouton 📎 à côté du champ de saisie (interface web
 uniquement) :
 - **Images** (png, jpg, webp...) : envoyées telles quelles au modèle pour
-  analyse visuelle — ne fonctionne que si le modèle actif supporte la vision.
-  `qwen3:4b-instruct` (par défaut) ne la supporte pas ; pour analyser des
-  images, installe un modèle vision (ex. `ollama pull qwen3-vl:4b-instruct`)
-  et configure-le via `LLM_MODEL` (voir "Modèle" plus bas).
+  analyse visuelle — ne fonctionne que si le modèle actif supporte la vision ;
+  le routeur `openrouter/free` peut retomber sur un modèle qui ne la supporte
+  pas (voir "Modèle" plus bas pour fixer un modèle vision précis).
 - **PDF** : texte extrait automatiquement (`pdf-parse`) et transmis au modèle
   — extraction basique, sans mise en page ni OCR sur du PDF scanné en image.
 - **Texte / code** (.txt, .md, .csv, .json, .py, .js, .html...) : contenu
@@ -153,29 +150,51 @@ tableau `allTools`.
 
 ## Modèle
 
-Par défaut : Ollama en local, modèle `qwen3:4b-instruct` (~2,5 Go, bon
-compromis vitesse/qualité pour l'appel d'outils, tourne correctement même
-sans carte graphique dédiée). Le modèle actif s'affiche au démarrage
-(`npm run chat` / `npm run web`).
+Par défaut : OpenRouter, routeur `openrouter/free` (sélectionne
+automatiquement un modèle gratuit compatible avec l'appel d'outils). Limite
+connue : ~50 requêtes/jour par compte OpenRouter sans crédit ajouté (1000/jour
+si tu ajoutes 10$ de crédit une fois — non consommés par les modèles
+gratuits), partagée entre tous les modèles `:free`, donc changer de modèle
+gratuit ne contourne pas la limite. Le modèle/fournisseur actif s'affiche au
+démarrage (`npm run chat` / `npm run web`).
 
-**Changer de modèle Ollama** (plus capable si ta machine suit, ou avec
-vision) — télécharge-le d'abord, puis configure `.env` :
-
-```
-ollama pull llama3.1:8b
-```
-```
-LLM_MODEL=llama3.1:8b
-```
-
-**Utiliser un fournisseur cloud à la place** (OpenRouter, etc.), par exemple
-si tu préfères la rapidité du cloud à la gratuité locale :
+Le backend est générique (n'importe quel point de terminaison compatible
+OpenAI) via trois variables dans `.env` :
 
 ```
-LLM_BASE_URL=https://openrouter.ai/api/v1
-LLM_API_KEY=sk-or-v1-...
-LLM_MODEL=openrouter/free
+LLM_BASE_URL=...   # défaut : https://openrouter.ai/api/v1
+LLM_API_KEY=...    # défaut : aucun (requis pour un fournisseur cloud)
+LLM_MODEL=...      # défaut : openrouter/free
 ```
 
-Vérifie l'ID exact et le tarif actuels du modèle choisi avant de l'activer —
-les prix/IDs affichés ailleurs datent vite.
+**Alternatives testées :**
+- **Ollama en local** (gratuit, illimité, mais demande une machine correcte —
+  a fait planter un PC modeste pendant le test) :
+  ```
+  ollama pull qwen3:4b-instruct
+  ```
+  ```
+  LLM_BASE_URL=http://localhost:11434/v1
+  LLM_MODEL=qwen3:4b-instruct
+  ```
+  (pas de `LLM_API_KEY` nécessaire, Ollama n'en demande pas)
+- **Un autre fournisseur cloud compatible OpenAI** (Google Gemini a un vrai
+  palier gratuit bien plus généreux qu'OpenRouter — ~1500 requêtes/jour sur
+  Gemini 2.5 Flash, sans carte bancaire ; clé sur aistudio.google.com) :
+  ```
+  LLM_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+  LLM_API_KEY=...
+  LLM_MODEL=gemini-2.5-flash
+  ```
+- **Un gateway comme [OmniRoute](https://omniroute.online)** pour combiner
+  plusieurs fournisseurs avec bascule automatique en cas de quota atteint —
+  utile seulement si tu configures plusieurs clés différentes dedans (une
+  seule ne fait que rajouter un intermédiaire, pas de nouveau quota) :
+  ```
+  LLM_BASE_URL=http://localhost:20128/v1
+  LLM_API_KEY=...   # clé générée dans le dashboard OmniRoute
+  LLM_MODEL=...     # ex: provider/model, ou le nom d'un "Combo"
+  ```
+
+Vérifie toujours l'ID exact et le tarif actuels du modèle choisi avant de
+l'activer — les prix/IDs affichés ailleurs datent vite.

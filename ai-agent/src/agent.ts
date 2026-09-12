@@ -2,13 +2,14 @@ import OpenAI from "openai";
 import type { ChatCompletionMessageParam, ChatCompletionTool, ChatCompletionContentPart } from "openai/resources/index.js";
 import { allTools, type ToolDef } from "./tools.js";
 
-// Defaults to a local Ollama install (its OpenAI-compatible endpoint) — free,
-// unlimited, runs on your own machine. Point LLM_BASE_URL/LLM_API_KEY at a
-// cloud provider instead (OpenRouter, etc.) if you'd rather use one.
-export const BASE_URL = process.env.LLM_BASE_URL ?? "http://localhost:11434/v1";
-export const MODEL = process.env.LLM_MODEL ?? "qwen3:4b-instruct";
+// Defaults to OpenRouter's free-model router (needs LLM_API_KEY). A local
+// Ollama install is free and uncapped but needs real CPU/GPU headroom — set
+// LLM_BASE_URL=http://localhost:11434/v1 (no key needed) if your machine can
+// handle it; it choked and froze on a modest PC, hence not the default.
+export const BASE_URL = process.env.LLM_BASE_URL ?? "https://openrouter.ai/api/v1";
+export const MODEL = process.env.LLM_MODEL ?? "openrouter/free";
 const client = new OpenAI({
-  apiKey: process.env.LLM_API_KEY ?? "ollama", // Ollama ignores this; required by the SDK regardless.
+  apiKey: process.env.LLM_API_KEY ?? "ollama", // ignored by Ollama; required by the SDK regardless.
   baseURL: BASE_URL,
 });
 
@@ -36,14 +37,18 @@ const toolSchemas: ChatCompletionTool[] = allTools.map((t) => ({
 export type ChatMessage = ChatCompletionMessageParam;
 
 /**
- * Best-effort startup check for the common case (default local Ollama URL):
- * is Ollama actually running, and is the configured model pulled? Returns a
- * human-readable problem description, or null if everything looks fine (or
- * the base URL isn't the local-Ollama shape, in which case we skip checking
- * and let a real request surface any issue instead).
+ * Best-effort startup check: for a local Ollama URL, is Ollama actually
+ * running and is the configured model pulled? For anything else (a cloud
+ * provider), is an API key set? Returns a human-readable problem
+ * description, or null if everything looks fine.
  */
 export async function checkBackendReady(): Promise<string | null> {
-  if (!/^https?:\/\/(localhost|127\.0\.0\.1):11434\//.test(BASE_URL)) return null;
+  const isLocalOllama = /^https?:\/\/(localhost|127\.0\.0\.1):11434\//.test(BASE_URL);
+  if (!isLocalOllama) {
+    return process.env.LLM_API_KEY
+      ? null
+      : "LLM_API_KEY manquante dans .env pour ce fournisseur cloud.";
+  }
 
   const tagsUrl = BASE_URL.replace(/\/v1\/?$/, "/api/tags");
   let names: string[];
