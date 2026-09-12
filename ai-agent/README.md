@@ -23,6 +23,22 @@ Tape ta demande dans le prompt `>`. `reset` pour effacer la mémoire, `exit`
 pour quitter. Une seule conversation (`cli`) — pas de panneau latéral en
 terminal, réservé à l'interface web.
 
+### Raccourci Bureau (Windows, 1 clic)
+
+Une fois `npm install` et `.env` faits (étape ci-dessus), crée le raccourci
+une seule fois :
+
+```powershell
+cd ai-agent
+powershell -ExecutionPolicy Bypass -File create-desktop-shortcut.ps1
+```
+
+Un raccourci "Agent autonome" apparaît sur ton Bureau. Double-clic dessus :
+ça installe les dépendances si besoin, lance le serveur dans une fenêtre
+(à laisser ouverte — la fermer arrête l'agent), et ouvre l'interface dans ton
+navigateur par défaut. Si tu as personnalisé `PORT`/`HOST` dans `.env`,
+modifie l'adresse en dur dans `start-web.bat`.
+
 ### Interface web (`npm run web`)
 
 Ouvre http://127.0.0.1:3939 dans ton navigateur. Panneau latéral gauche façon
@@ -81,6 +97,8 @@ l'agent de le lire avec `read_file` — pas de bouton pièce jointe en terminal.
   build), multi-conversations
 - `src/attachments.ts` — traitement des pièces jointes (image → vision,
   PDF → extraction de texte, texte/code → inséré tel quel)
+- `start-web.bat` + `create-desktop-shortcut.ps1` — lancement en 1 clic sous
+  Windows (voir "Raccourci Bureau" ci-dessus)
 
 ## Étendre l'agent
 
