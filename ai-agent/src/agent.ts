@@ -80,6 +80,9 @@ export async function runAgentTurn(
           result = `Erreur : ${(err as Error).message}`;
         }
       }
+      console.error(
+        `[debug] iter ${i + 1}: ${call.function.name}(${call.function.arguments}) -> ${result.slice(0, 300)}${result.length > 300 ? "…" : ""}`,
+      );
       messages.push({ role: "tool", tool_call_id: call.id, content: result });
     }
   }
