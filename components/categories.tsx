@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { categories } from '@/lib/content'
 
@@ -18,10 +19,10 @@ export function Categories() {
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2">
           {categories.map((cat) => (
-            <a
+            <Link
               key={cat.slug}
               id={cat.slug}
-              href={`#blog`}
+              href={`/categories/${cat.slug}`}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               <div className="relative aspect-[16/9] overflow-hidden">
@@ -51,7 +52,7 @@ export function Categories() {
                   <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

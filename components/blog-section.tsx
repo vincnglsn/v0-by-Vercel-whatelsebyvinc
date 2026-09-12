@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { Clock } from 'lucide-react'
 import { articles } from '@/lib/content'
 
@@ -32,7 +33,7 @@ export function BlogSection() {
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           {/* Featured article */}
           <article className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card">
-            <a href="#blog" className="relative aspect-[16/10] overflow-hidden">
+            <Link href={`/guides/${featured.slug}`} className="relative aspect-[16/10] overflow-hidden">
               <Image
                 src={featured.image}
                 alt={featured.title}
@@ -43,7 +44,7 @@ export function BlogSection() {
               <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
                 À la une
               </span>
-            </a>
+            </Link>
             <div className="flex flex-1 flex-col p-6">
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <span className="font-medium text-primary">{featured.category}</span>
@@ -56,19 +57,19 @@ export function BlogSection() {
                 </span>
               </div>
               <h3 className="mt-3 font-serif text-2xl font-semibold leading-snug text-card-foreground">
-                <a href="#blog" className="hover:text-primary">
+                <Link href={`/guides/${featured.slug}`} className="hover:text-primary">
                   {featured.title}
-                </a>
+                </Link>
               </h3>
               <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">
                 {featured.excerpt}
               </p>
-              <a
-                href="#blog"
+              <Link
+                href={`/guides/${featured.slug}`}
                 className="mt-5 inline-flex text-sm font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-primary"
               >
                 Lire le test complet
-              </a>
+              </Link>
             </div>
           </article>
 
@@ -76,8 +77,8 @@ export function BlogSection() {
           <div className="flex flex-col divide-y divide-border">
             {rest.map((article) => (
               <article key={article.slug} className="group flex gap-4 py-5 first:pt-0">
-                <a
-                  href="#blog"
+                <Link
+                  href={`/guides/${article.slug}`}
                   className="relative hidden aspect-square w-28 shrink-0 overflow-hidden rounded-xl sm:block"
                 >
                   <Image
@@ -87,7 +88,7 @@ export function BlogSection() {
                     sizes="112px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                </a>
+                </Link>
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <span className="font-medium text-primary">{article.category}</span>
@@ -98,9 +99,9 @@ export function BlogSection() {
                     </span>
                   </div>
                   <h3 className="mt-1.5 font-serif text-lg font-semibold leading-snug text-card-foreground">
-                    <a href="#blog" className="hover:text-primary">
+                    <Link href={`/guides/${article.slug}`} className="hover:text-primary">
                       {article.title}
-                    </a>
+                    </Link>
                   </h3>
                   <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
                     {article.excerpt}
