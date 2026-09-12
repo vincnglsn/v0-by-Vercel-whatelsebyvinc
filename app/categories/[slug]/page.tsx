@@ -2,11 +2,20 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Clock } from 'lucide-react'
+import { ArrowUpRight, Clock } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { Newsletter } from '@/components/newsletter'
 import { categories, getArticlesByCategoryName, getCategoryBySlug, type Article } from '@/lib/content'
+
+function slugify(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
 
 const siteUrl = 'https://whatelsebyvinc.com'
 
@@ -36,30 +45,58 @@ function groupBySubcategory(articles: Article[]) {
   return { noSubcategory, subcategoryGroups: [...bySubcategory.entries()] }
 }
 
-function SubcategoryBanner({ name, articles }: { name: string; articles: Article[] }) {
-  const thumbnails = articles.slice(0, 3)
-
+function SubcategoryOverview({
+  subcategoryGroups,
+}: {
+  subcategoryGroups: [string, Article[]][]
+}) {
   return (
-    <div className="mb-6 flex items-center gap-4 overflow-hidden rounded-2xl border border-border bg-muted/40 p-4">
-      <div className="flex shrink-0 -space-x-4">
-        {thumbnails.map((article, index) => (
-          <div
-            key={article.slug}
-            className="relative size-16 overflow-hidden rounded-xl border-2 border-background shadow-sm sm:size-20"
-            style={{ zIndex: thumbnails.length - index }}
-          >
-            <Image src={article.image} alt="" fill sizes="80px" className="object-cover" />
+    <div className="mb-16 grid gap-6 sm:grid-cols-2">
+      {subcategoryGroups.map(([subcategory, articles]) => (
+        <Link
+          key={subcategory}
+          href={`#${slugify(subcategory)}`}
+          className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          <div className="relative aspect-[16/9] overflow-hidden">
+            <Image
+              src={articles[0].image}
+              alt={`Objets de la sous-catégorie ${subcategory}`}
+              fill
+              sizes="(max-width: 640px) 100vw, 50vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
           </div>
-        ))}
-      </div>
-      <div className="flex flex-1 items-baseline justify-between gap-4">
-        <h2 className="font-serif text-2xl font-semibold tracking-tight text-foreground">
-          {name}
-        </h2>
-        <span className="whitespace-nowrap text-sm text-muted-foreground">
-          {articles.length} {articles.length > 1 ? 'objets' : 'objet'}
-        </span>
-      </div>
+          <div className="flex flex-1 flex-col p-6">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="font-serif text-xl font-semibold text-card-foreground">
+                {subcategory}
+              </h2>
+              <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                {articles.length} {articles.length > 1 ? 'objets' : 'objet'}
+              </span>
+            </div>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-foreground">
+              Voir les objets
+              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
+          </div>
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+function SubcategoryHeading({ name, count }: { name: string; count: number }) {
+  return (
+    <div
+      id={slugify(name)}
+      className="mb-6 flex scroll-mt-24 items-baseline justify-between gap-4 border-b border-border/60 pb-3"
+    >
+      <h3 className="font-serif text-2xl font-semibold tracking-tight text-foreground">{name}</h3>
+      <span className="whitespace-nowrap text-sm text-muted-foreground">
+        {count} {count > 1 ? 'objets' : 'objet'}
+      </span>
     </div>
   )
 }
@@ -198,14 +235,17 @@ export default async function CategoryPage({
 
         <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           {categoryArticles.length > 0 ? (
-            <div className="space-y-16">
-              {subcategoryGroups.map(([subcategory, articles]) => (
-                <div key={subcategory}>
-                  <SubcategoryBanner name={subcategory} articles={articles} />
-                  <ArticleGrid articles={articles} />
-                </div>
-              ))}
-            </div>
+            <>
+              <SubcategoryOverview subcategoryGroups={subcategoryGroups} />
+              <div className="space-y-16">
+                {subcategoryGroups.map(([subcategory, articles]) => (
+                  <div key={subcategory}>
+                    <SubcategoryHeading name={subcategory} count={articles.length} />
+                    <ArticleGrid articles={articles} />
+                  </div>
+                ))}
+              </div>
+            </>
           ) : (
             <p className="text-muted-foreground">
               Les premiers tests de cette catégorie arrivent bientôt.
