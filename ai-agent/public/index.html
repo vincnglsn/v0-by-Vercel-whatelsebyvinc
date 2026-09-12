@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agent autonome</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #2a2e38;
+    --text: #e6e8ec;
+    --muted: #8a8f9c;
+    --accent: #4f8cff;
+    --user-bubble: #2a3a5c;
+    --assistant-bubble: #1f232c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 16px;
+  }
+  main {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 32px);
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+  #reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  #reset-btn:hover { color: var(--text); border-color: var(--muted); }
+  #log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    white-space: pre-wrap;
+    line-height: 1.45;
+    font-size: 14.5px;
+  }
+  .msg.user {
+    align-self: flex-end;
+    background: var(--user-bubble);
+  }
+  .msg.assistant {
+    align-self: flex-start;
+    background: var(--assistant-bubble);
+    border: 1px solid var(--border);
+  }
+  .msg.pending { color: var(--muted); font-style: italic; }
+  .msg.error { border-color: #7a3030; color: #ff9b9b; }
+  form {
+    display: flex;
+    gap: 8px;
+    padding: 12px 4px 4px;
+    border-top: 1px solid var(--border);
+  }
+  textarea {
+    flex: 1;
+    resize: none;
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 14.5px;
+    max-height: 140px;
+  }
+  textarea:focus { outline: none; border-color: var(--accent); }
+  button[type="submit"] {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: default; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Agent autonome</h1>
+    <button id="reset-btn" type="button">Oublier (reset)</button>
+  </header>
+  <div id="log"></div>
+  <form id="form">
+    <textarea id="input" rows="1" placeholder="Écris ta demande…" autofocus></textarea>
+    <button type="submit">Envoyer</button>
+  </form>
+</main>
+<script>
+  const log = document.getElementById("log");
+  const form = document.getElementById("form");
+  const input = document.getElementById("input");
+  const resetBtn = document.getElementById("reset-btn");
+
+  function addMessage(role, text, extraClass) {
+    const el = document.createElement("div");
+    el.className = "msg " + role + (extraClass ? " " + extraClass : "");
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  function textFromContent(content) {
+    if (typeof content === "string") return content;
+    if (Array.isArray(content)) {
+      return content.map((c) => (typeof c === "string" ? c : c.text ?? "")).join("");
+    }
+    return "";
+  }
+
+  async function loadHistory() {
+    const res = await fetch("/api/history");
+    const { history } = await res.json();
+    log.innerHTML = "";
+    for (const m of history) {
+      if (m.role === "user") addMessage("user", textFromContent(m.content));
+      else if (m.role === "assistant" && textFromContent(m.content)) {
+        addMessage("assistant", textFromContent(m.content));
+      }
+    }
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const message = input.value.trim();
+    if (!message) return;
+    input.value = "";
+    input.style.height = "auto";
+    addMessage("user", message);
+    const pending = addMessage("assistant", "…", "pending");
+    input.disabled = true;
+    form.querySelector("button").disabled = true;
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
+      const data = await res.json();
+      pending.classList.remove("pending");
+      if (!res.ok) {
+        pending.classList.add("error");
+        pending.textContent = "Erreur : " + (data.error ?? res.status);
+      } else {
+        pending.textContent = data.text || "(réponse vide)";
+      }
+    } catch (err) {
+      pending.classList.remove("pending");
+      pending.classList.add("error");
+      pending.textContent = "Erreur réseau : " + err.message;
+    } finally {
+      input.disabled = false;
+      form.querySelector("button").disabled = false;
+      input.focus();
+    }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      form.requestSubmit();
+    }
+  });
+  input.addEventListener("input", () => {
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+  });
+
+  resetBtn.addEventListener("click", async () => {
+    await fetch("/api/reset", { method: "POST" });
+    log.innerHTML = "";
+  });
+
+  loadHistory();
+</script>
+</body>
+</html>

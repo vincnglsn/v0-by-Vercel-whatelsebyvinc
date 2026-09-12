@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "chat": "tsx src/index.ts",
+    "web": "tsx src/server.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
