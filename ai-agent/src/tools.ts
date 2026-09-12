@@ -140,7 +140,7 @@ export const webSearch: ToolDef = {
     additionalProperties: false,
   },
   run: async (input: { query: string }) => {
-    const res = await fetch(`https://lite.duckduckgo.com/lite/?q=${encodeURIComponent(input.query)}`, {
+    const res = await fetch(`https://duckduckgo.com/html/?q=${encodeURIComponent(input.query)}`, {
       headers: { "User-Agent": "Mozilla/5.0 (compatible; ai-agent-cli/0.1)" },
     });
     if (!res.ok) {
@@ -149,9 +149,9 @@ export const webSearch: ToolDef = {
     const html = await res.text();
     const strip = (s: string) => s.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 
-    // Primary pattern (DuckDuckGo's "result-link" markup).
-    const linkRe = /<a[^>]+class="result-link"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g;
-    const snippetRe = /<td[^>]+class="result-snippet"[^>]*>([\s\S]*?)<\/td>/g;
+    // Primary pattern: DuckDuckGo's no-JS HTML results page (result__a / result__snippet).
+    const linkRe = /<a[^>]+class="[^"]*\bresult__a\b[^"]*"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g;
+    const snippetRe = /<a[^>]+class="[^"]*\bresult__snippet\b[^"]*"[^>]*>([\s\S]*?)<\/a>/g;
     let links = [...html.matchAll(linkRe)].map((m) => ({ url: m[1], title: strip(m[2]) }));
     const snippets = [...html.matchAll(snippetRe)].map((m) => strip(m[1]));
 
@@ -162,10 +162,15 @@ export const webSearch: ToolDef = {
     }
 
     if (links.length === 0) {
-      // Nothing matched at all — surface enough of the raw response to diagnose
-      // (markup change, block page, CAPTCHA...) instead of failing silently.
-      const preview = strip(html).slice(0, 500);
-      return `Aucun résultat extrait (HTTP ${res.status}, ${html.length} octets reçus). Aperçu brut : ${preview}`;
+      // Nothing matched at all — dump the full raw response next to the
+      // project instead of failing silently, so the actual markup can be
+      // inspected and the regex fixed on real data.
+      const { writeFile, mkdir } = await import("node:fs/promises");
+      const debugDir = path.resolve(import.meta.dirname, "../debug");
+      await mkdir(debugDir, { recursive: true });
+      const debugPath = path.join(debugDir, `search-${Date.now()}.html`);
+      await writeFile(debugPath, html, "utf-8");
+      return `Aucun résultat extrait (HTTP ${res.status}, ${html.length} octets reçus). HTML complet sauvegardé dans ${debugPath} pour diagnostic.`;
     }
 
     return links
