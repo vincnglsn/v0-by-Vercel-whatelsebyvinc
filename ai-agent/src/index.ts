@@ -3,9 +3,9 @@ import { createInterface } from "node:readline/promises";
 import { stdin, stdout } from "node:process";
 import { runAgentTurn, type ChatMessage } from "./agent.js";
 
-if (!process.env.ANTHROPIC_API_KEY) {
+if (!process.env.OPENROUTER_API_KEY) {
   console.error(
-    "ANTHROPIC_API_KEY manquante. Copie .env.example vers .env et renseigne ta clé.",
+    "OPENROUTER_API_KEY manquante. Copie .env.example vers .env et renseigne ta clé.",
   );
   process.exit(1);
 }

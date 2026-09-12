@@ -1,50 +1,88 @@
-import Anthropic from "@anthropic-ai/sdk";
-import { allTools } from "./tools.js";
+import OpenAI from "openai";
+import type { ChatCompletionMessageParam, ChatCompletionTool } from "openai/resources/index.js";
+import { allTools, type ToolDef } from "./tools.js";
 
-const client = new Anthropic();
+const client = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
+  defaultHeaders: {
+    // Optional but recommended by OpenRouter for attribution/rate-limit fairness.
+    "HTTP-Referer": "https://github.com/",
+    "X-Title": "ai-agent-cli",
+  },
+});
 
-const SYSTEM_PROMPT = `Tu es un agent autonome. Tu peux chercher sur le web, exécuter du code,
+// Auto-router to a zero-cost model that supports tool calling — avoids
+// hardcoding one specific free model, which OpenRouter's free lineup churns.
+const MODEL = "openrouter/free";
+const MAX_TOOL_ITERATIONS = 8;
+
+const SYSTEM_PROMPT = `Tu es un agent autonome. Tu peux chercher sur le web, exécuter du code JavaScript,
 lire des fichiers dans la base de connaissances locale (knowledge/) et appeler des API externes.
 Décompose les tâches complexes en étapes, utilise les outils quand c'est utile, et donne une
 réponse finale claire et directe une fois le travail terminé.`;
 
-export type ChatMessage = Anthropic.Beta.BetaMessageParam;
+const toolsByName = new Map<string, ToolDef>(allTools.map((t) => [t.name, t]));
+
+const toolSchemas: ChatCompletionTool[] = allTools.map((t) => ({
+  type: "function",
+  function: { name: t.name, description: t.description, parameters: t.parameters },
+}));
+
+export type ChatMessage = ChatCompletionMessageParam;
 
 /**
- * Runs one agent turn (multi-step ReAct loop handled by the SDK's tool
- * runner) and returns the assistant's final text plus the updated history.
+ * Runs one agent turn as a manual ReAct loop: ask the model, execute any
+ * requested tools, feed results back, repeat until it stops calling tools
+ * (or MAX_TOOL_ITERATIONS is hit, to avoid runaway loops on a flaky free model).
  */
 export async function runAgentTurn(
   history: ChatMessage[],
   userInput: string,
 ): Promise<{ text: string; history: ChatMessage[] }> {
-  const messages: ChatMessage[] = [...history, { role: "user", content: userInput }];
+  const messages: ChatMessage[] = [
+    ...(history.length === 0 ? [{ role: "system", content: SYSTEM_PROMPT } as ChatMessage] : history),
+    { role: "user", content: userInput },
+  ];
 
-  const runner = client.beta.messages.toolRunner({
-    model: "claude-opus-5",
-    max_tokens: 16000,
-    system: SYSTEM_PROMPT,
-    tools: allTools,
-    messages,
-  });
+  for (let i = 0; i < MAX_TOOL_ITERATIONS; i++) {
+    const response = await client.chat.completions.create({
+      model: MODEL,
+      messages,
+      tools: toolSchemas,
+    });
 
-  let final: Anthropic.Beta.BetaMessage | undefined;
-  for await (const message of runner) {
-    final = message;
-    // The tool runner does not auto-resume a paused server-tool turn.
-    if (message.stop_reason === "pause_turn") {
-      runner.pushMessages({ role: "assistant", content: message.content });
+    const choice = response.choices[0];
+    if (!choice) {
+      throw new Error("L'agent n'a renvoyé aucune réponse.");
+    }
+    const message = choice.message;
+    messages.push(message);
+
+    if (!message.tool_calls || message.tool_calls.length === 0) {
+      return { text: message.content ?? "", history: messages };
+    }
+
+    for (const call of message.tool_calls) {
+      if (call.type !== "function") continue;
+      const tool = toolsByName.get(call.function.name);
+      let result: string;
+      if (!tool) {
+        result = `Erreur : outil inconnu "${call.function.name}".`;
+      } else {
+        try {
+          const args = call.function.arguments ? JSON.parse(call.function.arguments) : {};
+          result = await tool.run(args);
+        } catch (err) {
+          result = `Erreur : ${(err as Error).message}`;
+        }
+      }
+      messages.push({ role: "tool", tool_call_id: call.id, content: result });
     }
   }
 
-  if (!final) {
-    throw new Error("L'agent n'a produit aucune réponse.");
-  }
-
-  const text = final.content
-    .filter((block): block is Anthropic.Beta.BetaTextBlock => block.type === "text")
-    .map((block) => block.text)
-    .join("\n");
-
-  return { text, history: [...messages, { role: "assistant", content: final.content }] };
+  return {
+    text: "L'agent a atteint la limite d'itérations d'outils sans conclure.",
+    history: messages,
+  };
 }

@@ -1,17 +1,18 @@
 # Agent autonome — CLI
 
-Agent en ligne de commande basé sur l'API Claude (Anthropic), avec appel
-d'outils : recherche web, exécution de code, lecture de fichiers locaux
-(`knowledge/`) et appels à des API externes.
+Agent en ligne de commande basé sur [OpenRouter](https://openrouter.ai) (API
+compatible OpenAI, passerelle vers de nombreux modèles — dont des modèles
+gratuits), avec appel d'outils : recherche web, exécution de code, lecture de
+fichiers locaux (`knowledge/`) et appels à des API externes.
 
 ## Démarrage
 
 ```bash
 cd ai-agent
-pnpm install   # ou npm install / yarn
+npm install
 cp .env.example .env
-# renseigne ANTHROPIC_API_KEY dans .env
-pnpm chat      # ou npm run chat
+# renseigne OPENROUTER_API_KEY dans .env (clé sur openrouter.ai/keys)
+npm run chat
 ```
 
 Tape ta demande dans le prompt `>`. `exit` pour quitter. La conversation
@@ -19,20 +20,33 @@ garde son historique tant que tu ne relances pas le process.
 
 ## Architecture
 
-- `src/tools.ts` — définition des 4 outils :
+- `src/tools.ts` — définition des 4 outils (format JSON Schema, appel de
+  fonction OpenAI-compatible) :
   - `list_files` / `read_file` : lecture restreinte au dossier `knowledge/`
   - `call_api` : appel HTTP générique (bloque les hôtes privés/locaux)
-  - `web_search`, `code_execution` : outils serveur Anthropic (aucun code à héberger)
-- `src/agent.ts` — boucle agentique (ReAct) via le *tool runner* du SDK Anthropic
+  - `web_search` : recherche best-effort via DuckDuckGo (scraping HTML, sans
+    clé — fragile, à remplacer par une vraie API de recherche si besoin de
+    fiabilité : Tavily, Brave Search, SerpAPI...)
+  - `code_execution` : exécute du JavaScript dans `node:vm` — **pas un vrai
+    sandbox de sécurité**, adapté à un usage local mono-utilisateur, jamais à
+    un agent exposé à des entrées non fiables
+- `src/agent.ts` — boucle agentique (ReAct) manuelle : appelle le modèle,
+  exécute les outils demandés, renvoie les résultats, jusqu'à ce qu'il n'y
+  ait plus d'appel d'outil (ou 8 itérations max, garde-fou anti-boucle)
 - `src/index.ts` — REPL en ligne de commande
 
 ## Étendre l'agent
 
-Ajoute un nouvel outil dans `src/tools.ts` avec `betaZodTool({...})`, puis
-ajoute-le au tableau `allTools`. Le schéma Zod définit automatiquement le
-schéma JSON envoyé au modèle — pas besoin de l'écrire à la main.
+Ajoute un nouvel outil dans `src/tools.ts` (objet `ToolDef` avec `name`,
+`description`, `parameters` en JSON Schema, et `run`), puis ajoute-le au
+tableau `allTools`.
 
 ## Modèle
 
-Utilise `claude-opus-5` par défaut (le plus capable). Pour changer de modèle,
-modifie la constante `model` dans `src/agent.ts`.
+Utilise `openrouter/free` par défaut : le routeur d'OpenRouter qui sélectionne
+automatiquement un modèle gratuit compatible avec l'appel d'outils (évite de
+coder en dur un modèle précis, la liste des modèles gratuits change souvent).
+Pour fixer un modèle précis, remplace la constante `MODEL` dans
+`src/agent.ts` par un ID exact, ex. `"meta-llama/llama-3.3-70b-instruct:free"`
+(voir [openrouter.ai/models](https://openrouter.ai/models) pour la liste à
+jour).
