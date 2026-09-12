@@ -147,15 +147,25 @@ export const webSearch: ToolDef = {
       return `Erreur : recherche web indisponible (HTTP ${res.status}).`;
     }
     const html = await res.text();
-    const linkRe = /<a[^>]+class="result-link"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g;
-    const snippetRe = /<td[^>]+class="result-snippet"[^>]*>([\s\S]*?)<\/td>/g;
     const strip = (s: string) => s.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 
-    const links = [...html.matchAll(linkRe)].map((m) => ({ url: m[1], title: strip(m[2]) }));
+    // Primary pattern (DuckDuckGo's "result-link" markup).
+    const linkRe = /<a[^>]+class="result-link"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g;
+    const snippetRe = /<td[^>]+class="result-snippet"[^>]*>([\s\S]*?)<\/td>/g;
+    let links = [...html.matchAll(linkRe)].map((m) => ({ url: m[1], title: strip(m[2]) }));
     const snippets = [...html.matchAll(snippetRe)].map((m) => strip(m[1]));
 
+    // Fallback: any external link, in case the markup differs from what we expect.
     if (links.length === 0) {
-      return "Aucun résultat (ou format de page inattendu).";
+      const genericRe = /<a[^>]+href="(https?:\/\/(?!duckduckgo\.com)[^"]+)"[^>]*>([^<]+)<\/a>/g;
+      links = [...html.matchAll(genericRe)].map((m) => ({ url: m[1], title: strip(m[2]) }));
+    }
+
+    if (links.length === 0) {
+      // Nothing matched at all — surface enough of the raw response to diagnose
+      // (markup change, block page, CAPTCHA...) instead of failing silently.
+      const preview = strip(html).slice(0, 500);
+      return `Aucun résultat extrait (HTTP ${res.status}, ${html.length} octets reçus). Aperçu brut : ${preview}`;
     }
 
     return links

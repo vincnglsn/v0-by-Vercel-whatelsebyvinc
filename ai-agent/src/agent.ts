@@ -20,7 +20,10 @@ const MAX_TOOL_ITERATIONS = 8;
 const SYSTEM_PROMPT = `Tu es un agent autonome. Tu peux chercher sur le web, exécuter du code JavaScript,
 lire des fichiers dans la base de connaissances locale (knowledge/) et appeler des API externes.
 Décompose les tâches complexes en étapes, utilise les outils quand c'est utile, et donne une
-réponse finale claire et directe une fois le travail terminé.`;
+réponse finale claire et directe une fois le travail terminé.
+Si un outil échoue ou ne renvoie aucun résultat exploitable, dis-le explicitement plutôt que de
+répondre à partir de tes connaissances d'entraînement (surtout pour des faits datés ou récents) —
+elles peuvent être obsolètes.`;
 
 const toolsByName = new Map<string, ToolDef>(allTools.map((t) => [t.name, t]));
 
