@@ -1,3 +1,5 @@
+import { VisitCounter } from '@/components/visit-counter'
+
 const footerNav = [
   {
     title: 'Univers',
@@ -69,6 +71,9 @@ export function SiteFooter() {
             <a href="#" className="hover:text-foreground">Politique de confidentialité</a>
             <a href="/#a-propos" className="hover:text-foreground">Politique d&apos;affiliation</a>
           </div>
+        </div>
+        <div className="mt-4 flex justify-center sm:justify-end">
+          <VisitCounter />
         </div>
       </div>
     </footer>
