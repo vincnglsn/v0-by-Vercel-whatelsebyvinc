@@ -87,11 +87,21 @@ aucun coût, aucune donnée envoyée à un service tiers) :
   chaque réponse pour la réécouter à la demande. Fonctionne partout (PC,
   iPhone, via Tailscale ou non) — c'est juste de la lecture audio.
 - **🎤 Dicter** (bouton à côté du trombone) : transcrit ta voix dans le champ
-  de texte. **Nécessite une connexion sécurisée (HTTPS, ou `localhost`)** —
-  les navigateurs bloquent l'accès au micro autrement. Fonctionne direct sur
-  `http://127.0.0.1:3939` en local ; pour que ça marche aussi sur iPhone via
-  Tailscale, voir "HTTPS via Tailscale" ci-dessous. Le bouton disparaît tout
-  seul si le navigateur ne supporte pas la reconnaissance vocale.
+  de texte, sans l'envoyer — tu relis et cliques Envoyer toi-même.
+- **🗣️ Mode vocal** (bouton à côté du micro) : conversation mains libres.
+  Un clic l'active : tu parles, ta phrase part automatiquement dès que tu
+  arrêtes de parler, la réponse de l'agent est lue à voix haute, puis le
+  micro se rallume tout seul pour ta réplique suivante — sans toucher au
+  clavier. Un clic sur le bouton (ou une erreur de micro) coupe le mode.
+  Ignore la case "Lecture auto" pendant qu'il est actif (il lit de toute
+  façon chaque réponse).
+
+  🎤 et 🗣️ **nécessitent une connexion sécurisée (HTTPS, ou `localhost`)** —
+  les navigateurs bloquent l'accès au micro autrement. Fonctionnent direct
+  sur `http://127.0.0.1:3939` en local ; pour que ça marche aussi sur iPhone
+  via Tailscale, voir "HTTPS via Tailscale" ci-dessous. Les deux boutons
+  disparaissent tout seuls si le navigateur ne supporte pas la
+  reconnaissance vocale.
 
 ## Sur iPhone (PWA + Tailscale)
 
