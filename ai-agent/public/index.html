@@ -123,6 +123,12 @@
     font-weight: 600;
     margin: 0;
   }
+  #voice-settings {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
   #auto-read-label {
     display: flex;
     align-items: center;
@@ -131,6 +137,14 @@
     color: var(--muted);
     cursor: pointer;
     user-select: none;
+  }
+  #voice-rate-select {
+    font-size: 13px;
+    color: var(--muted);
+    background: var(--bg, transparent);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 4px;
   }
   #log {
     flex: 1;
@@ -312,10 +326,18 @@
 <main>
   <header>
     <h1>Agent autonome</h1>
-    <label id="auto-read-label">
-      <input id="auto-read-toggle" type="checkbox" />
-      🔊 Lecture auto
-    </label>
+    <div id="voice-settings">
+      <select id="voice-rate-select" title="Vitesse de lecture">
+        <option value="0.8">Voix : lente</option>
+        <option value="0.95" selected>Voix : normale</option>
+        <option value="1.15">Voix : rapide</option>
+        <option value="1.35">Voix : très rapide</option>
+      </select>
+      <label id="auto-read-label">
+        <input id="auto-read-toggle" type="checkbox" />
+        🔊 Lecture auto
+      </label>
+    </div>
   </header>
   <div id="log"></div>
   <div id="attachment-chip">
@@ -345,6 +367,7 @@
   const attachmentRemoveBtn = document.getElementById("attachment-remove");
   const micBtn = document.getElementById("mic-btn");
   const autoReadToggle = document.getElementById("auto-read-toggle");
+  const voiceRateSelect = document.getElementById("voice-rate-select");
 
   const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
   let pendingFile = null;
@@ -355,9 +378,21 @@
     localStorage.setItem("ai-agent:autoRead", autoReadToggle.checked ? "1" : "0");
   });
 
+  const savedRate = localStorage.getItem("ai-agent:speechRate");
+  if (savedRate && [...voiceRateSelect.options].some((o) => o.value === savedRate)) {
+    voiceRateSelect.value = savedRate;
+  }
+  voiceRateSelect.addEventListener("change", () => {
+    localStorage.setItem("ai-agent:speechRate", voiceRateSelect.value);
+  });
+
   function pickFrenchVoice() {
-    const voices = speechSynthesis.getVoices();
-    return voices.find((v) => v.lang && v.lang.toLowerCase().startsWith("fr")) || voices[0] || null;
+    const voices = speechSynthesis.getVoices().filter((v) => v.lang && v.lang.toLowerCase().startsWith("fr"));
+    if (voices.length === 0) return speechSynthesis.getVoices()[0] || null;
+    // On Windows, Chrome/Edge usually offer both the system's built-in SAPI
+    // voice (robotic) and a network "Google français" voice (much more
+    // natural) — prefer the latter when available.
+    return voices.find((v) => /google/i.test(v.name)) || voices[0];
   }
 
   // The reply text is Markdown (**gras**, listes, `code`, ## titres...) —
@@ -392,6 +427,7 @@
     const voice = pickFrenchVoice();
     if (voice) utterance.voice = voice;
     utterance.lang = voice ? voice.lang : "fr-FR";
+    utterance.rate = parseFloat(voiceRateSelect.value) || 1;
     if (onEnd) {
       utterance.addEventListener("end", onEnd);
       utterance.addEventListener("error", onEnd);

@@ -82,6 +82,10 @@ l'agent de le lire avec `read_file` — pas de bouton pièce jointe en terminal.
 
 **Voix** (interface web uniquement, via les API vocales du navigateur —
 aucun coût, aucune donnée envoyée à un service tiers) :
+- **Sélecteur de vitesse** (en-tête) : lente / normale / rapide / très
+  rapide. Choisit aussi, quand elle est disponible, la voix française
+  "Google" (réseau) plutôt que la voix système Windows par défaut, nettement
+  plus robotique.
 - **🔊 Lecture auto** (case à cocher dans l'en-tête) : l'agent lit sa réponse
   à voix haute automatiquement. Un bouton "🔊 Écouter" apparaît aussi sous
   chaque réponse pour la réécouter à la demande. Fonctionne partout (PC,
