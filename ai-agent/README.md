@@ -80,6 +80,19 @@ uniquement) :
 En ligne de commande, dépose plutôt le fichier dans `knowledge/` et demande à
 l'agent de le lire avec `read_file` — pas de bouton pièce jointe en terminal.
 
+**Voix** (interface web uniquement, via les API vocales du navigateur —
+aucun coût, aucune donnée envoyée à un service tiers) :
+- **🔊 Lecture auto** (case à cocher dans l'en-tête) : l'agent lit sa réponse
+  à voix haute automatiquement. Un bouton "🔊 Écouter" apparaît aussi sous
+  chaque réponse pour la réécouter à la demande. Fonctionne partout (PC,
+  iPhone, via Tailscale ou non) — c'est juste de la lecture audio.
+- **🎤 Dicter** (bouton à côté du trombone) : transcrit ta voix dans le champ
+  de texte. **Nécessite une connexion sécurisée (HTTPS, ou `localhost`)** —
+  les navigateurs bloquent l'accès au micro autrement. Fonctionne direct sur
+  `http://127.0.0.1:3939` en local ; pour que ça marche aussi sur iPhone via
+  Tailscale, voir "HTTPS via Tailscale" ci-dessous. Le bouton disparaît tout
+  seul si le navigateur ne supporte pas la reconnaissance vocale.
+
 ## Sur iPhone (PWA + Tailscale)
 
 Pas d'app iOS native (ça demande Xcode + Mac + compte développeur Apple).
@@ -114,6 +127,35 @@ barre d'adresse.
 Ton PC doit rester allumé avec le serveur lancé pour que ça réponde — ce
 n'est pas un service hébergé en permanence quelque part.
 
+### HTTPS via Tailscale (pour le micro sur iPhone)
+
+`http://<nom-tailscale>:3939` fonctionne pour tout sauf le micro (🎤 Dicter)
+— les navigateurs exigent HTTPS pour l'accès micro dès qu'on n'est pas en
+local. Tailscale fournit un vrai certificat gratuit pour ton nom de machine :
+
+1. Sur [login.tailscale.com/admin/dns](https://login.tailscale.com/admin/dns),
+   active **"HTTPS Certificates"**
+2. Sur le PC, dans `ai-agent/` :
+   ```powershell
+   tailscale cert gagner-1k26ild0cjr.tailXXXX.ts.net
+   ```
+   (remplace par ton nom Tailscale complet — visible sur
+   login.tailscale.com/admin/machines) — génère deux fichiers `.crt` et `.key`
+   dans le dossier courant
+3. Dans `.env` :
+   ```
+   TLS_CERT_FILE=./gagner-1k26ild0cjr.tailXXXX.ts.net.crt
+   TLS_KEY_FILE=./gagner-1k26ild0cjr.tailXXXX.ts.net.key
+   ```
+4. Relance le serveur — il affiche `https://` au démarrage au lieu de `http://`
+5. Sur l'iPhone, va sur `https://<nom-tailscale>:3939` (bien **https**, pas
+   http) et refais "Ajouter à l'écran d'accueil" — l'ancien raccourci pointe
+   encore vers l'URL http
+
+Le certificat expire au bout de quelques mois (durée standard Let's Encrypt)
+— si le micro s'arrête de fonctionner sur iPhone après un moment, relance la
+commande `tailscale cert` de l'étape 2.
+
 ## Architecture
 
 - `src/tools.ts` — définition des 4 outils (format JSON Schema, appel de
@@ -134,9 +176,12 @@ n'est pas un service hébergé en permanence quelque part.
 - `src/memory.ts` — persistance des conversations, une par fichier sous
   `memory/conversations/` (non versionné — données personnelles)
 - `src/index.ts` — REPL en ligne de commande (conversation unique `cli`)
-- `src/server.ts` + `public/index.html` — serveur HTTP minimal (sans
-  framework) et interface web à panneau latéral (HTML/CSS/JS inline, sans
-  build), multi-conversations
+- `src/server.ts` + `public/index.html` — serveur HTTP/HTTPS minimal (sans
+  framework, bascule en HTTPS si `TLS_CERT_FILE`/`TLS_KEY_FILE` sont
+  renseignés) et interface web à panneau latéral (HTML/CSS/JS inline, sans
+  build), multi-conversations. Voix (lecture + dictée) implémentée
+  entièrement côté navigateur via les API `speechSynthesis` /
+  `SpeechRecognition` — rien côté serveur.
 - `src/attachments.ts` — traitement des pièces jointes (image → vision,
   PDF → extraction de texte, texte/code → inséré tel quel)
 - `start-web.bat` + `create-desktop-shortcut.ps1` — lancement en 1 clic sous

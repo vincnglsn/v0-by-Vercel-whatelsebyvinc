@@ -1,5 +1,6 @@
 import "dotenv/config";
-import { createServer } from "node:http";
+import { createServer as createHttpServer, type IncomingMessage, type ServerResponse } from "node:http";
+import { createServer as createHttpsServer } from "node:https";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { ChatCompletionContentPart } from "openai/resources/index.js";
@@ -43,7 +44,7 @@ const STATIC_FILES: Record<string, string> = {
 // decoded file at 8 MB; base64 adds ~33% overhead) plus JSON framing.
 const MAX_BODY_BYTES = 12 * 1024 * 1024;
 
-async function readJsonBody(req: import("node:http").IncomingMessage): Promise<unknown> {
+async function readJsonBody(req: IncomingMessage): Promise<unknown> {
   const chunks: Buffer[] = [];
   let total = 0;
   for await (const chunk of req) {
@@ -57,12 +58,12 @@ async function readJsonBody(req: import("node:http").IncomingMessage): Promise<u
   return raw ? JSON.parse(raw) : {};
 }
 
-function sendJson(res: import("node:http").ServerResponse, status: number, body: unknown): void {
+function sendJson(res: ServerResponse, status: number, body: unknown): void {
   res.writeHead(status, { "Content-Type": "application/json" });
   res.end(JSON.stringify(body));
 }
 
-const server = createServer(async (req, res) => {
+async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise<void> {
   try {
     const url = new URL(req.url ?? "/", "http://localhost");
 
@@ -147,9 +148,25 @@ const server = createServer(async (req, res) => {
     console.error(err);
     sendJson(res, 500, { error: (err as Error).message });
   }
-});
+}
+
+// HTTPS (via a Tailscale cert, typically) if TLS_CERT_FILE/TLS_KEY_FILE are
+// set — needed for microphone access (voice input) from any device other
+// than the server itself, since browsers only allow it in a secure context
+// (HTTPS, or localhost). Plain HTTP otherwise.
+const certFile = process.env.TLS_CERT_FILE;
+const keyFile = process.env.TLS_KEY_FILE;
+const protocol = certFile && keyFile ? "https" : "http";
+
+const server =
+  certFile && keyFile
+    ? createHttpsServer(
+        { cert: await readFile(certFile), key: await readFile(keyFile) },
+        handleRequest,
+      )
+    : createHttpServer(handleRequest);
 
 server.listen(PORT, HOST, () => {
   console.log(`Modèle : ${MODEL}`);
-  console.log(`Agent autonome disponible sur http://${HOST}:${PORT}`);
+  console.log(`Agent autonome disponible sur ${protocol}://${HOST}:${PORT}`);
 });

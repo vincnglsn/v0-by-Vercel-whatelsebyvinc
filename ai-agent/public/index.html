@@ -113,11 +113,24 @@
   header {
     padding: 12px 4px;
     border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
   }
   header h1 {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
+  }
+  #auto-read-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
   }
   #log {
     flex: 1;
@@ -200,6 +213,39 @@
     flex-shrink: 0;
   }
   #attach-btn:hover { color: var(--text); }
+  #mic-btn {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  #mic-btn:hover { color: var(--text); }
+  #mic-btn.listening {
+    background: #5c2a2a;
+    border-color: #ff6b6b;
+    color: #ff9b9b;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+  .speak-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 2px 4px;
+    margin-top: 4px;
+    display: block;
+  }
+  .speak-btn:hover { color: var(--text); }
   textarea {
     flex: 1;
     resize: none;
@@ -246,6 +292,10 @@
 <main>
   <header>
     <h1>Agent autonome</h1>
+    <label id="auto-read-label">
+      <input id="auto-read-toggle" type="checkbox" />
+      🔊 Lecture auto
+    </label>
   </header>
   <div id="log"></div>
   <div id="attachment-chip">
@@ -256,6 +306,7 @@
     <input id="file-input" type="file" hidden
       accept="image/*,.pdf,.txt,.md,.csv,.json,.js,.ts,.tsx,.jsx,.py,.html,.css,.yaml,.yml,.xml,.log" />
     <button id="attach-btn" type="button" title="Joindre un fichier">📎</button>
+    <button id="mic-btn" type="button" title="Dicter">🎤</button>
     <textarea id="input" rows="1" placeholder="Écris ta demande…" autofocus></textarea>
     <button type="submit">Envoyer</button>
   </form>
@@ -271,9 +322,87 @@
   const attachmentChip = document.getElementById("attachment-chip");
   const attachmentNameEl = document.getElementById("attachment-name");
   const attachmentRemoveBtn = document.getElementById("attachment-remove");
+  const micBtn = document.getElementById("mic-btn");
+  const autoReadToggle = document.getElementById("auto-read-toggle");
 
   const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
   let pendingFile = null;
+
+  // --- Voice output (TTS) — works everywhere, no permissions needed. ---
+  autoReadToggle.checked = localStorage.getItem("ai-agent:autoRead") === "1";
+  autoReadToggle.addEventListener("change", () => {
+    localStorage.setItem("ai-agent:autoRead", autoReadToggle.checked ? "1" : "0");
+  });
+
+  function pickFrenchVoice() {
+    const voices = speechSynthesis.getVoices();
+    return voices.find((v) => v.lang && v.lang.toLowerCase().startsWith("fr")) || voices[0] || null;
+  }
+
+  function speak(text) {
+    if (!("speechSynthesis" in window) || !text) return;
+    speechSynthesis.cancel(); // don't overlap with a previous utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voice = pickFrenchVoice();
+    if (voice) utterance.voice = voice;
+    utterance.lang = voice ? voice.lang : "fr-FR";
+    speechSynthesis.speak(utterance);
+  }
+
+  function addSpeakButton(bubbleEl, text) {
+    if (!("speechSynthesis" in window)) return;
+    const btn = document.createElement("button");
+    btn.className = "speak-btn";
+    btn.type = "button";
+    btn.title = "Écouter";
+    btn.textContent = "🔊 Écouter";
+    btn.addEventListener("click", () => speak(text));
+    bubbleEl.appendChild(btn);
+  }
+
+  // --- Voice input (STT) — needs a secure context (HTTPS or localhost); the
+  // browser simply won't expose the API otherwise, so hide the button. ---
+  const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let recognizer = null;
+  let listening = false;
+
+  if (!SpeechRecognitionCtor) {
+    micBtn.style.display = "none";
+  } else {
+    recognizer = new SpeechRecognitionCtor();
+    recognizer.lang = "fr-FR";
+    recognizer.interimResults = false;
+    recognizer.maxAlternatives = 1;
+
+    recognizer.addEventListener("result", (e) => {
+      const transcript = e.results[0][0].transcript;
+      input.value = (input.value ? input.value + " " : "") + transcript;
+      input.dispatchEvent(new Event("input"));
+    });
+    recognizer.addEventListener("end", () => {
+      listening = false;
+      micBtn.classList.remove("listening");
+    });
+    recognizer.addEventListener("error", () => {
+      listening = false;
+      micBtn.classList.remove("listening");
+    });
+
+    micBtn.addEventListener("click", () => {
+      if (listening) {
+        recognizer.stop();
+        return;
+      }
+      listening = true;
+      micBtn.classList.add("listening");
+      try {
+        recognizer.start();
+      } catch {
+        listening = false;
+        micBtn.classList.remove("listening");
+      }
+    });
+  }
 
   let currentId = localStorage.getItem("ai-agent:lastConversation") || null;
 
@@ -355,7 +484,8 @@
     for (const m of messages) {
       if (m.role === "user") addMessage("user", m.content);
       else if (m.role === "assistant" && hasVisibleContent(m.content)) {
-        addMessage("assistant", m.content);
+        const bubble = addMessage("assistant", m.content);
+        if (typeof m.content === "string") addSpeakButton(bubble, m.content);
       }
     }
     renderSidebar();
@@ -456,7 +586,12 @@
         pending.classList.add("error");
         pending.textContent = "Erreur : " + (data.error ?? res.status);
       } else {
-        pending.textContent = data.text || "(réponse vide)";
+        const text = data.text || "(réponse vide)";
+        pending.textContent = text;
+        if (data.text) {
+          addSpeakButton(pending, data.text);
+          if (autoReadToggle.checked) speak(data.text);
+        }
       }
     } catch (err) {
       pending.classList.remove("pending");
