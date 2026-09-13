@@ -9,7 +9,6 @@ const navLinks = [
   { label: 'Maison', href: '/#maison' },
   { label: 'Extérieur', href: '/#exterieur' },
   { label: 'Animalerie', href: '/#animalerie' },
-  { label: 'Le blog', href: '/#blog' },
   { label: 'À propos', href: '/#a-propos' },
 ]
 

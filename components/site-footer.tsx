@@ -11,7 +11,6 @@ const footerNav = [
   {
     title: 'Le site',
     links: [
-      { label: 'Le blog', href: '/#blog' },
       { label: 'À propos', href: '/#a-propos' },
       { label: 'Newsletter', href: '/#newsletter' },
     ],
