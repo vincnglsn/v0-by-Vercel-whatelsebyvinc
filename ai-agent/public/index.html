@@ -401,6 +401,34 @@
   // agent hearing its own voice through PC speakers (no headset = no echo
   // cancellation between speechSynthesis output and the mic input).
 
+  // In conversation mode, recognition runs continuously with interim
+  // results — a single sentence has natural pauses shorter than the
+  // browser's own end-of-speech detection, which otherwise cuts it into
+  // several separate (and separately sent) fragments. Final chunks pile up
+  // in voiceBuffer and are only sent once speech has actually stopped for
+  // VOICE_SILENCE_MS.
+  let voiceBuffer = "";
+  let voiceSilenceTimer = null;
+  const VOICE_SILENCE_MS = 1300;
+
+  function scheduleVoiceCommit() {
+    clearTimeout(voiceSilenceTimer);
+    voiceSilenceTimer = setTimeout(commitVoiceUtterance, VOICE_SILENCE_MS);
+  }
+
+  function commitVoiceUtterance() {
+    clearTimeout(voiceSilenceTimer);
+    voiceSilenceTimer = null;
+    const transcript = voiceBuffer.trim();
+    voiceBuffer = "";
+    stopListening();
+    if (!transcript || looksLikeEcho(transcript)) return;
+    input.value = transcript;
+    input.dispatchEvent(new Event("input"));
+    voiceModeBusy = true;
+    form.requestSubmit();
+  }
+
   function normalizeForEchoCheck(s) {
     return s.toLowerCase().replace(/[.,!?;:'"()\-]/g, " ").replace(/\s+/g, " ").trim();
   }
@@ -420,6 +448,8 @@
   function startListening() {
     if (listening) return;
     listening = true;
+    recognizer.continuous = voiceModeActive;
+    recognizer.interimResults = voiceModeActive;
     micBtn.classList.add("listening");
     if (voiceModeActive) voiceModeBtn.classList.add("listening");
     try {
@@ -439,6 +469,9 @@
   function endVoiceMode() {
     voiceModeActive = false;
     voiceModeBusy = false;
+    clearTimeout(voiceSilenceTimer);
+    voiceSilenceTimer = null;
+    voiceBuffer = "";
     voiceModeBtn.classList.remove("active", "listening", "speaking");
     speechSynthesis.cancel();
     stopListening();
@@ -456,28 +489,33 @@
     recognizer.maxAlternatives = 1;
 
     recognizer.addEventListener("result", (e) => {
-      const transcript = e.results[0][0].transcript;
       if (voiceModeActive) {
-        if (looksLikeEcho(transcript)) {
-          // Picked up its own reply through the speakers — ignore it and
-          // let the "end" handler below restart listening.
-          return;
+        // Continuous + interim mode: append each newly-final chunk to the
+        // buffer, and treat any result (final or not) as "still talking" —
+        // reset the silence timer so a mid-sentence pause doesn't cut it off.
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) {
+            voiceBuffer += (voiceBuffer ? " " : "") + e.results[i][0].transcript;
+          }
         }
-        input.value = transcript;
-        input.dispatchEvent(new Event("input"));
-        voiceModeBusy = true;
-        form.requestSubmit();
-      } else {
-        input.value = (input.value ? input.value + " " : "") + transcript;
-        input.dispatchEvent(new Event("input"));
+        scheduleVoiceCommit();
+        return;
       }
+      const transcript = e.results[0][0].transcript;
+      input.value = (input.value ? input.value + " " : "") + transcript;
+      input.dispatchEvent(new Event("input"));
     });
     recognizer.addEventListener("end", () => {
       listening = false;
       micBtn.classList.remove("listening");
       voiceModeBtn.classList.remove("listening");
-      // Recognition can end on its own (silence timeout) without a result —
-      // keep the hands-free loop alive unless we're mid-reply already.
+      // Recognition can end on its own (e.g. continuous mode's own upper
+      // time limit) with unsent buffered speech — commit it rather than
+      // silently dropping it.
+      if (voiceModeActive && voiceBuffer.trim() && !voiceModeBusy) {
+        commitVoiceUtterance();
+        return;
+      }
       if (voiceModeActive && !voiceModeBusy) startListening();
     });
     recognizer.addEventListener("error", (e) => {
