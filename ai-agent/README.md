@@ -96,6 +96,11 @@ aucun coût, aucune donnée envoyée à un service tiers) :
   Ignore la case "Lecture auto" pendant qu'il est actif (il lit de toute
   façon chaque réponse).
 
+  Sans casque, le micro du PC peut capter la réponse lue par les
+  enceintes et la reprendre pour une nouvelle question — l'agent se
+  répond alors à lui-même. Un filtre ignore l'écho évident, mais un
+  casque/écouteurs reste la solution la plus fiable en mode vocal.
+
   🎤 et 🗣️ **nécessitent une connexion sécurisée (HTTPS, ou `localhost`)** —
   les navigateurs bloquent l'accès au micro autrement. Fonctionnent direct
   sur `http://127.0.0.1:3939` en local ; pour que ça marche aussi sur iPhone

@@ -397,6 +397,25 @@
   // is always spoken, and listening restarts once the reply finishes.
   let voiceModeActive = false;
   let voiceModeBusy = false; // waiting for a reply or currently speaking it
+  let lastSpokenText = ""; // last reply read aloud — used to filter out the
+  // agent hearing its own voice through PC speakers (no headset = no echo
+  // cancellation between speechSynthesis output and the mic input).
+
+  function normalizeForEchoCheck(s) {
+    return s.toLowerCase().replace(/[.,!?;:'"()\-]/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  function looksLikeEcho(transcript) {
+    if (!lastSpokenText) return false;
+    const heard = normalizeForEchoCheck(transcript);
+    const spoken = normalizeForEchoCheck(lastSpokenText);
+    if (heard.length < 3) return false;
+    if (spoken.includes(heard)) return true;
+    const heardWords = heard.split(" ");
+    const spokenWords = new Set(spoken.split(" "));
+    const common = heardWords.filter((w) => spokenWords.has(w)).length;
+    return common / heardWords.length > 0.7;
+  }
 
   function startListening() {
     if (listening) return;
@@ -439,6 +458,11 @@
     recognizer.addEventListener("result", (e) => {
       const transcript = e.results[0][0].transcript;
       if (voiceModeActive) {
+        if (looksLikeEcho(transcript)) {
+          // Picked up its own reply through the speakers — ignore it and
+          // let the "end" handler below restart listening.
+          return;
+        }
         input.value = transcript;
         input.dispatchEvent(new Event("input"));
         voiceModeBusy = true;
@@ -492,11 +516,16 @@
   // conversation mode is on — resumes the hands-free loop when it is.
   function resumeVoiceModeAfter(text) {
     if (!voiceModeActive) return;
+    lastSpokenText = text;
     voiceModeBtn.classList.add("speaking");
     speak(text, () => {
       voiceModeBtn.classList.remove("speaking");
-      voiceModeBusy = false;
-      if (voiceModeActive) startListening();
+      // Small pause so residual audio from the speakers has time to fade
+      // before the mic listens again — cuts down on the agent hearing itself.
+      setTimeout(() => {
+        voiceModeBusy = false;
+        if (voiceModeActive) startListening();
+      }, 600);
     });
   }
 
