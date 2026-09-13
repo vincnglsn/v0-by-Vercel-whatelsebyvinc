@@ -1,8 +1,6 @@
 import { SiteHeader } from '@/components/site-header'
 import { Hero } from '@/components/hero'
 import { Categories } from '@/components/categories'
-import { BlogSection } from '@/components/blog-section'
-import { TopPicks } from '@/components/top-picks'
 import { AboutSection } from '@/components/about-section'
 import { Newsletter } from '@/components/newsletter'
 import { SiteFooter } from '@/components/site-footer'
@@ -57,8 +55,6 @@ export default function Page() {
       <main>
         <Hero />
         <Categories />
-        <BlogSection />
-        <TopPicks />
         <AboutSection />
         <Newsletter />
       </main>
