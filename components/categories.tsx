@@ -12,8 +12,8 @@ export function Categories() {
             Explorer par univers
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Quatre familles d&apos;objets connectés, une seule promesse&nbsp;:
-            des sélections testées, sans blabla marketing.
+            Différents univers de produits, une seule promesse&nbsp;:
+            des choix rigoureux, sans blabla marketing.
           </p>
         </div>
 
