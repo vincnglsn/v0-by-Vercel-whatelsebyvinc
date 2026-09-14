@@ -40,7 +40,7 @@ export function SiteFooter() {
               <span className="text-sm font-medium text-primary">by Vinc</span>
             </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Objets high-tech et maison connectée, testés depuis le Vaucluse.
+              Objets du quotidien, sélectionnés depuis le Vaucluse.
               Ce qui vaut le coup, et ce qui finit au fond d&apos;un tiroir.
             </p>
           </div>
