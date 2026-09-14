@@ -13,6 +13,7 @@ const footerNav = [
   {
     title: 'Le site',
     links: [
+      { label: 'Fiches Produits', href: '/fiches-produits' },
       { label: 'À propos', href: '/#a-propos' },
       { label: 'Newsletter', href: '/#newsletter' },
     ],

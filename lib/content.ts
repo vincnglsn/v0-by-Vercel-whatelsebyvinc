@@ -17,6 +17,7 @@ export type Article = {
   date: string
   image: string
   featured?: boolean
+  affiliateLink?: string
   content: string[]
 }
 
@@ -70,6 +71,7 @@ export const articles: Article[] = [
     date: '2026-02-18',
     image: '/images/cat-maison.png',
     featured: true,
+    affiliateLink: "https://amazon.fr",
     content: [
       'J\'ai installé quatre aspirateurs robots chez moi entre novembre et février, un par mois environ, pour éviter de comparer des impressions à froid. Même appartement, mêmes pièces, un chat qui perd ses poils toute l\'année : le terrain était clairement plus difficile qu\'un salon témoin en boutique.',
       'Premier critère qui fait vraiment la différence au quotidien : la navigation. Les modèles équipés d\'un lidar cartographient la pièce en un seul passage et évitent les chaises, les câbles et les gamelles. Les modèles à navigation gyroscopique, moins chers, se débrouillent bien sur un sol dégagé mais butent régulièrement contre les pieds de table basse — sans dégât, mais avec du bruit et des trajets moins efficaces.',

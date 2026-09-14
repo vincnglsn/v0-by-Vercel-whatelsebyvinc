@@ -3,12 +3,14 @@
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 const navLinks = [
   { label: 'High-Tech', href: '/#high-tech' },
   { label: 'Maison', href: '/#maison' },
   { label: 'Extérieur', href: '/#exterieur' },
   { label: 'Animalerie', href: '/#animalerie' },
+  { label: 'Fiches Produits', href: '/fiches-produits' },
   { label: 'À propos', href: '/#a-propos' },
 ]
 
@@ -40,7 +42,8 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-4 md:flex">
+          <ThemeToggle />
           <Button render={<a href="/#newsletter" />} nativeButton={false} size="sm">
             S&apos;abonner
           </Button>

@@ -162,6 +162,19 @@ export default async function ArticlePage({
             />
           </div>
 
+          {article.affiliateLink && (
+            <div className="mt-8 flex justify-center">
+              <Button
+                render={<a href={article.affiliateLink} target="_blank" rel="noopener noreferrer" />}
+                nativeButton={false}
+                size="lg"
+                className="w-full sm:w-auto"
+              >
+                Voir le prix
+              </Button>
+            </div>
+          )}
+
           <div className="prose-content mt-8 space-y-5 text-base leading-relaxed text-foreground/90">
             {article.content.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
