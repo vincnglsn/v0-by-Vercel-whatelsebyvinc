@@ -164,9 +164,9 @@ export default async function ArticlePage({
             />
           </div>
 
-                    <div className="mt-8 flex justify-center">
+                              <div className="mt-8 flex justify-center">
             <Button
-              render={<a href={article.affiliateLink || `https://www.amazon.fr/s?k=${encodeURIComponent(article.title)}&tag=whatelsebyvin-21`} target="_blank" rel="noopener noreferrer" />}
+              render={<a href={article.affiliateLink || `https://www.amazon.fr/s?k=${encodeURIComponent(article.title.split(' : ')[0].split(' - ')[0].split(' — ')[0])}&tag=whatelsebyvin-21`} target="_blank" rel="noopener noreferrer" />}
               nativeButton={false}
               size="lg"
               className="w-full sm:w-auto"
