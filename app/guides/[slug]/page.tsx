@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft, Clock } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { BackButton } from '@/components/back-button'
 import { Newsletter } from '@/components/newsletter'
 import { Button } from '@/components/ui/button'
 import {
@@ -118,6 +119,7 @@ export default async function ArticlePage({
       <SiteHeader />
       <main>
         <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
+          <BackButton />
           <nav aria-label="Fil d'ariane" className="text-sm text-muted-foreground">
             <ol className="flex flex-wrap items-center gap-1">
               <li>

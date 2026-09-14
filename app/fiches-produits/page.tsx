@@ -1,5 +1,6 @@
 ﻿import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { BackButton } from '@/components/back-button'
 import { BlogSection } from '@/components/blog-section'
 
 export const metadata = {

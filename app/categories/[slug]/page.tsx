@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { ArrowUpRight, Clock } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { BackButton } from '@/components/back-button'
 import { Newsletter } from '@/components/newsletter'
 import { categories, getArticlesByCategoryName, getCategoryBySlug, type Article } from '@/lib/content'
 
@@ -212,7 +213,8 @@ export default async function CategoryPage({
       <main>
         <section className="border-b border-border/60 bg-muted/30">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
-            <nav aria-label="Fil d'ariane" className="text-sm text-muted-foreground">
+            <BackButton />
+          <nav aria-label="Fil d'ariane" className="text-sm text-muted-foreground">
               <ol className="flex flex-wrap items-center gap-1">
                 <li>
                   <Link href="/" className="hover:text-foreground">
