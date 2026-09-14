@@ -69,7 +69,7 @@ export const articles: Article[] = [
     category: 'Maison',
     readingTime: 9,
     date: '2026-02-18',
-    image: '/images/cat-maison.png',
+    image: '/images/irobot-roomba-plus-415-combo.jpg',
     featured: true,
     affiliateLink: "https://amazon.fr",
     content: [
@@ -88,7 +88,7 @@ export const articles: Article[] = [
     category: 'High-Tech',
     readingTime: 7,
     date: '2026-02-04',
-    image: '/images/cat-hightech.png',
+    image: '/images/Fontaine a Eau Chat sans Fil.jpg',
     content: [
       'Passé un certain prix, les écouteurs sans fil vendent surtout une marque et un écosystème. J\'ai voulu savoir à partir de quel budget on obtient un son propre, une réduction de bruit qui fonctionne vraiment dans le métro ou en open space, et une autonomie qui tient une journée de travail.',
       'Le son d\'abord : sur des écouteurs à moins de 100 €, les basses sont souvent poussées pour impressionner en magasin, au détriment des médiums où se joue la voix humaine. Les modèles que je retiens gardent un rendu plus neutre, avec un égaliseur dans l\'appli pour ajuster si besoin.',
@@ -122,7 +122,7 @@ export const articles: Article[] = [
     category: 'Animalerie',
     readingTime: 8,
     date: '2026-01-09',
-    image: '/images/cat-animalerie.png',
+    image: '/images/Distributeur Croquettes Chat Automatique WiFi 2,4 GHz.jpg',
     content: [
       'Mon chat mange à heures fixes, et s\'en plaint bruyamment si ce n\'est pas le cas. C\'est ce qui m\'a poussé à essayer les distributeurs connectés plutôt que de compter sur un voisin pour un simple week-end.',
       'La programmation des repas est le cœur du produit : nombre de portions, taille de la portion, et répartition dans la journée. Sur les modèles testés, la précision variait sensiblement — l\'un d\'eux distribuait parfois 10 à 15 % de plus que la portion réglée, ce qui devient un problème sur plusieurs semaines pour un chat au régime.',
@@ -156,7 +156,7 @@ export const articles: Article[] = [
     category: 'Extérieur',
     readingTime: 7,
     date: '2025-12-02',
-    image: '/images/cat-exterieur.png',
+    image: '/images/vosker-vkx-camera-surveillance-exterieure.jpg',
     content: [
       'Une caméra de surveillance extérieure se juge rarement sur la fiche produit, où la résolution en mégapixels prend toute la place. Après plusieurs mois d\'installation réelle, voici les cinq critères qui ont vraiment compté chez moi.',
       'La vision nocturne d\'abord : au-delà de la résolution annoncée, ce qui change tout c\'est la portée réelle des LED infrarouges (souvent surestimée de 30 à 50 % par rapport à l\'annonce) et la présence ou non d\'un mode couleur nocturne, qui aide bien plus à identifier une silhouette qu\'une image en noir et blanc.',
@@ -280,7 +280,7 @@ export const articles: Article[] = [
     subcategory: 'Montres & bracelets connectés',
     readingTime: 2,
     date: '2026-08-04',
-    image: '/images/xiaomi-redmi-watch-6.jpg',
+    image: '/images/xiaomi-redmi-redmi-watch-6.jpg',
     content: [
       'Grande dalle AMOLED de 2,07 pouces montant à 2 000 nits, boîtier aluminium de 9,9 mm seulement, double GPS L1 et étanchéité 5 ATM. Xiaomi annonce jusqu\'à 24 jours d\'autonomie en usage modéré, ce qui la place dans une catégorie que les montres Apple et Samsung ne touchent pas. Bluetooth 5.4 pour les appels et les notifications, compatible Android et iOS.',
       'Autour de 100 €, c\'est l\'un des meilleurs rapports écran/autonomie du marché. En revanche l\'écosystème d\'applications est pauvre : elle affiche et elle mesure, elle ne fait pas tourner d\'applis tierces.',
@@ -325,7 +325,7 @@ export const articles: Article[] = [
     subcategory: 'TV & divertissement',
     readingTime: 2,
     date: '2026-07-26',
-    image: '/images/tcl-c1-videoprojecteur.jpg',
+    image: '/images/tcl-c1-videoprojecteur-google-tv.jpg',
     content: [
       'Projecteur compact sous Google TV, certifié Netflix — ce qui n\'est pas anodin, beaucoup de projecteurs chinois ne le sont pas et obligent à bricoler. Il accepte un signal 4K, se pilote comme une box Android et se trouve régulièrement autour de 250 à 280 €. Objectif à haute transparence pour gratter en netteté et en luminosité.',
       'Le compromis : La dalle est en 1080p natif : la 4K est acceptée en entrée puis redimensionnée. Les luminosités annoncées sont également optimistes, comme sur tout le segment. À ce prix c\'est un très bon projecteur d\'appoint, pas un remplaçant de téléviseur en plein jour.',
@@ -340,7 +340,7 @@ export const articles: Article[] = [
     subcategory: 'TV & divertissement',
     readingTime: 2,
     date: '2026-07-23',
-    image: '/images/amazon-fire-tv-stick-4k-max.jpg',
+    image: '/images/amazon-fire-tv-stick-4k-max-wi-fi-6e.jpg',
     content: [
       'La clé HDMI la plus rapide de la gamme Fire TV : 4K HDR avec Dolby Vision et Dolby Atmos, Wi-Fi 6E pour aller chercher la bande passante sur la fréquence 6 GHz, et une navigation nettement plus fluide que les modèles d\'entrée de gamme. Alexa est intégrée à la télécommande, et l\'ambient display transforme la télé éteinte en cadre photo.',
       'Ce qu\'on oublie de préciser sur la fiche produit : Le Wi-Fi 6E ne sert que si votre box gère la bande 6 GHz. Et l\'interface pousse en permanence le contenu Amazon : c\'est le prix à payer pour la fluidité.',
@@ -370,7 +370,7 @@ export const articles: Article[] = [
     subcategory: 'TV & divertissement',
     readingTime: 2,
     date: '2026-07-17',
-    image: '/images/ultimea-poseidon-d60.jpg',
+    image: '/images/ultimea-poseidon-d60-ensemble-5-1.jpg',
     content: [
       'Un kit complet plutôt qu\'une simple barre : la barre principale, un caisson de basses sans fil avec haut-parleur de 5,25 pouces orienté vers le bas, et deux enceintes satellites arrière pour un vrai 5.1. Puissance nominale annoncée à 120 W, réglage du niveau surround et pilotage par application, avec la technologie maison BassMX sur le grave.',
       'Mon avis : Le Dolby Atmos est ici virtualisé, sans haut-parleurs dirigés vers le plafond : on gagne en enveloppement, pas en hauteur réelle. Pour le prix d\'une barre milieu de gamme seule, on a quand même de vraies enceintes arrière — et ça, ça s\'entend tout de suite.',
