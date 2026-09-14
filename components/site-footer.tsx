@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { VisitCounter } from '@/components/visit-counter'
 
 const footerNav = [
