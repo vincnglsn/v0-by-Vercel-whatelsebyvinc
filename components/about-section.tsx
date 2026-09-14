@@ -12,12 +12,12 @@ export function AboutSection() {
             <p>
               Moi, Vinc, un passionné de tech installé dans le Vaucluse. J&apos;ai
               lancé What Else parce que j&apos;en avais assez des avis creux et des
-              «&nbsp;tops&nbsp;» rédigés sans jamais avoir touché le produit.
+              «&nbsp;tops&nbsp;» rédigés sur catalogue.
             </p>
             <p>
-              Ici, chaque objet est acheté ou testé pour de vrai, chez moi, dans
-              la durée. Je vous partage ce que je garde, ce que je renvoie, et
-              surtout <span className="font-medium text-foreground">pourquoi</span>.
+              Ici, chaque objet passe entre mes mains, s&apos;invite chez moi et
+              partage ma routine. Je vous dis tout sur ce qui vaut vraiment le
+              coup, ce qui déçoit, et surtout <span className="font-medium text-foreground">pourquoi</span>.
               La suite s&apos;écrit au fil de mes trouvailles.
             </p>
           </div>
