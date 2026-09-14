@@ -22,7 +22,7 @@ export function Hero() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button render={<a href="#blog" />} nativeButton={false} size="lg">
-              Découvrir les tests
+              Découvrir les objets traités
               <ArrowRight className="size-4" />
             </Button>
             <Button
@@ -37,7 +37,7 @@ export function Hero() {
           <dl className="mt-10 flex gap-8">
             <div>
               <dt className="text-2xl font-semibold text-foreground">85+</dt>
-              <dd className="text-sm text-muted-foreground">produits testés</dd>
+              <dd className="text-sm text-muted-foreground">produits traités</dd>
             </div>
             <div>
               <dt className="text-2xl font-semibold text-foreground">4</dt>

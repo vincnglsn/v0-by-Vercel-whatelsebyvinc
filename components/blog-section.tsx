@@ -21,10 +21,10 @@ export function BlogSection() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
             <h2 className="font-serif text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Le blog&nbsp;: tests et guides d&apos;achat
+              Fiches produits et objets traités
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Des avis détaillés, écrits après un vrai usage. C&apos;est ici que
+              Des fiches détaillées, écrites après un vrai usage. C&apos;est ici que
               se trouve le détail que la grille Pinterest ne montre pas.
             </p>
           </div>

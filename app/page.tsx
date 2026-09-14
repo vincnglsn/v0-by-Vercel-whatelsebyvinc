@@ -2,6 +2,7 @@ import { SiteHeader } from '@/components/site-header'
 import { Hero } from '@/components/hero'
 import { Categories } from '@/components/categories'
 import { AboutSection } from '@/components/about-section'
+import { BlogSection } from '@/components/blog-section'
 import { Newsletter } from '@/components/newsletter'
 import { SiteFooter } from '@/components/site-footer'
 import { articles, categories } from '@/lib/content'
@@ -56,6 +57,7 @@ export default function Page() {
         <Hero />
         <Categories />
         <AboutSection />
+        <BlogSection />
         <Newsletter />
       </main>
       <SiteFooter />
