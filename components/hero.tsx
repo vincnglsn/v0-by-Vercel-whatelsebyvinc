@@ -21,7 +21,7 @@ export function Hero() {
             qui finit au fond d&apos;un tiroir.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button render={<a href="#blog" />} nativeButton={false} size="lg">
+            <Button render={<a href="/fiches-produits" />} nativeButton={false} size="lg">
               Découvrir les objets traités
               <ArrowRight className="size-4" />
             </Button>
