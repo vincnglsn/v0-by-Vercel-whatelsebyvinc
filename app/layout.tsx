@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: '%s | What Else by Vinc',
   },
   description:
-    'Vinc, du Vaucluse, teste et sélectionne les meilleurs objets high-tech, gadgets pour la maison connectée, l\'extérieur et vos animaux. Avis honnêtes, bons plans et guides d\'achat.',
+    'Vinc, du Vaucluse, découvre et sélectionne les meilleurs objets high-tech, gadgets pour la maison connectée, l\'extérieur et vos animaux. Avis honnêtes, bons plans et guides d\'achat.',
   keywords: [
     'objets high-tech',
     'maison connectée',

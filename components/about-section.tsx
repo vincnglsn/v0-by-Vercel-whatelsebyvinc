@@ -36,7 +36,7 @@ export function AboutSection() {
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             Cela ne change jamais mon avis&nbsp;: je ne recommande que ce que
             j&apos;utiliserais moi-même. C&apos;est ce qui me permet de continuer
-            à tester en toute indépendance.
+            à évaluer ces produits en toute indépendance.
           </p>
         </aside>
       </div>

@@ -75,7 +75,7 @@ export const articles: Article[] = [
       'Premier critère qui fait vraiment la différence au quotidien : la navigation. Les modèles équipés d\'un lidar cartographient la pièce en un seul passage et évitent les chaises, les câbles et les gamelles. Les modèles à navigation gyroscopique, moins chers, se débrouillent bien sur un sol dégagé mais butent régulièrement contre les pieds de table basse — sans dégât, mais avec du bruit et des trajets moins efficaces.',
       'La station d\'auto-vidage change tout sur la durée. Sans elle, il faut vider le bac tous les deux ou trois passages à cause des poils de chat. Avec, je n\'y touche que toutes les six à huit semaines. C\'est le poste où je recommande de ne pas économiser, même si ça veut dire prendre un modèle plus simple sur la navigation.',
       'Sur l\'autonomie, les quatre modèles tenaient largement un appartement de 70 m² en une charge, avec reprise automatique en cas de batterie faible. La vraie différence se joue sur le bruit en mode automatique : un des modèles dépassait clairement les autres, au point de devenir gênant en visio.',
-      'Au final, je garde deux modèles sur quatre : celui avec lidar et auto-vidage pour un usage quotidien sans y penser, et un modèle d\'entrée de gamme sans station pour qui veut tester la robotisation sans y mettre le prix. Les deux autres sont repartis en revente — corrects, mais dépassés par la concurrence sur ce budget.',
+      'Au final, je garde deux modèles sur quatre : celui avec lidar et auto-vidage pour un usage quotidien sans y penser, et un modèle d\'entrée de gamme sans station pour qui veut s\'essayer à la robotisation sans y mettre le prix. Les deux autres sont repartis en revente — corrects, mais dépassés par la concurrence sur ce budget.',
     ],
   },
   {
@@ -122,7 +122,7 @@ export const articles: Article[] = [
     date: '2026-01-09',
     image: '/images/cat-animalerie.png',
     content: [
-      'Mon chat mange à heures fixes, et s\'en plaint bruyamment si ce n\'est pas le cas. C\'est ce qui m\'a poussé à tester les distributeurs connectés plutôt que de compter sur un voisin pour un simple week-end.',
+      'Mon chat mange à heures fixes, et s\'en plaint bruyamment si ce n\'est pas le cas. C\'est ce qui m\'a poussé à essayer les distributeurs connectés plutôt que de compter sur un voisin pour un simple week-end.',
       'La programmation des repas est le cœur du produit : nombre de portions, taille de la portion, et répartition dans la journée. Sur les modèles testés, la précision variait sensiblement — l\'un d\'eux distribuait parfois 10 à 15 % de plus que la portion réglée, ce qui devient un problème sur plusieurs semaines pour un chat au régime.',
       'La caméra intégrée change vraiment l\'usage : voir que le repas a bien été distribué et que l\'animal est venu manger rassure plus que n\'importe quelle notification. Sur les modèles sans caméra, on programme et on espère — sur ceux avec caméra, on vérifie et on ajuste en direct via l\'appli si besoin.',
       'Point moins mis en avant par les fabricants : le bruit du mécanisme de distribution. Un chat un peu craintif peut mettre plusieurs jours à s\'habituer au bruit de la vis sans fin qui libère les croquettes. Les modèles les plus silencieux valent le coup, surtout pour un usage nocturne.',

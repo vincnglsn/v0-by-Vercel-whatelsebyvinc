@@ -25,7 +25,7 @@ const jsonLd = {
       '@id': `${siteUrl}/#vinc`,
       name: 'Vinc',
       description:
-        'Testeur d\'objets high-tech et de matériel pour la maison connectée, basé dans le Vaucluse.',
+        'Passionné d\'objets high-tech et de matériel pour la maison connectée, basé dans le Vaucluse.',
     },
     ...categories.map((cat) => ({
       '@type': 'CollectionPage',

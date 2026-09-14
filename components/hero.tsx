@@ -16,7 +16,7 @@ export function Hero() {
             <span className="text-primary">vraiment</span> le coup.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Je m&apos;appelle Vinc. Je teste des objets pour améliorer votre
+            Je m&apos;appelle Vinc. Je sélectionne des objets pour améliorer votre
             quotidien, puis je vous dis honnêtement ce que je garde&nbsp;— et ce
             qui finit au fond d&apos;un tiroir.
           </p>
