@@ -67,10 +67,10 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} What Else by Vinc. Tous droits réservés.</p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <a href="#" className="hover:text-foreground">Mentions légales</a>
-            <a href="#" className="hover:text-foreground">Politique de confidentialité</a>
-            <a href="/#a-propos" className="hover:text-foreground">Politique d&apos;affiliation</a>
+          <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm text-muted-foreground sm:mt-0">
+            <Link href="/mentions-legales" className="hover:text-foreground">Mentions légales</Link>
+            <Link href="/confidentialite" className="hover:text-foreground">Politique de confidentialité</Link>
+            <Link href="/mentions-legales#affiliation" className="hover:text-foreground">Politique d'affiliation</Link>
           </div>
         </div>
         <div className="mt-4 flex justify-center sm:justify-end">
