@@ -168,7 +168,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'iphone-17-pro-256-go',
-    title: 'iPhone 15 Pro 256 Go',
+    title: 'iPhone 17 Pro 256 Go',
     excerpt:
       'Écran OLED Super Retina XDR de 6,3 pouces à 120 Hz adaptatif, puce A19 Pro gravée en 3 nm et 12 Go de RAM.',
     category: 'High-Tech',
@@ -183,7 +183,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'galaxy-s26',
-    title: 'Galaxy S24 Ultra',
+    title: 'Galaxy S26',
     excerpt:
       'Format compact assumé : 6,3 pouces Dynamic AMOLED 2X en 120 Hz adaptatif, puce Exynos 2600 gravée en 2 nm et 12 Go de RAM.',
     category: 'High-Tech',
@@ -198,7 +198,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'pixel-10-pro',
-    title: 'Pixel 8 Pro',
+    title: 'Pixel 10 Pro',
     excerpt:
       'Écran Super Actua OLED 6,3 pouces 120 Hz, puce Tensor G5 et 16 Go de RAM — la RAM est là pour faire tourner les modèles d\'IA en local, pas pour le multitâche.',
     category: 'High-Tech',
@@ -213,7 +213,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'poco-f8-ultra',
-    title: 'POCO F6 Pro',
+    title: 'POCO F8 Ultra',
     excerpt:
       'Le rapport fiche technique / prix le plus agressif de la sélection.',
     category: 'High-Tech',
@@ -228,7 +228,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'watch-ultra-3',
-    title: 'Apple Watch Ultra 2',
+    title: 'Watch Ultra 3',
     excerpt:
       'Le modèle costaud de la gamme, avec la plus grosse autonomie jamais atteinte par une Apple Watch : jusqu\'à 42 heures en usage normal, 72 heures en mode économie d\'énergie.',
     category: 'High-Tech',
@@ -243,7 +243,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'watch-series-11',
-    title: 'Apple Watch Series 9',
+    title: 'Watch Series 11',
     excerpt:
       'La génération qui a apporté deux vraies nouveautés santé : les notifications d\'hypertension, qui alertent en cas de signes de tension élevée chronique, et le…',
     category: 'High-Tech',
@@ -303,7 +303,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'tv-f-65-2026',
-    title: 'TV LG OLED 65"',
+    title: 'TV F 65" (2026)',
     excerpt:
       '165 cm de diagonale en 4K UHD avec HDR10, finition métallique et cadre fin, le tout sous Fire OS 8 avec le contrôle vocal Alexa et la compatibilité Apple AirPlay.',
     category: 'High-Tech',
@@ -408,7 +408,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'echo-dot-max',
-    title: 'Echo Studio',
+    title: 'Echo Dot Max',
     excerpt:
       'La sphère haut de gamme de la gamme Dot : un tweeter de 20 mm et un woofer de 63 mm pour une réponse annoncée à partir de 53 Hz, du Wi-Fi 6E et surtout un hub…',
     category: 'High-Tech',
@@ -888,7 +888,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'l40s-pro-ultra',
-    title: 'Dreame L20 Ultra',
+    title: 'L40s Pro Ultra',
     excerpt:
       '19 000 Pa d\'aspiration annoncés et une station tout-en-un qui vide le bac, lave les serpillières et les sèche.',
     category: 'Maison',
@@ -918,7 +918,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'roomba-plus-415-combo-base-autowash',
-    title: 'iRobot Roomba Combo + base AutoWash',
+    title: 'Roomba Plus 415 Combo + base AutoWash',
     excerpt:
       '20 000 Pa d\'aspiration et deux patins rotatifs DualClean à 200 tours/minute, avec un mode SmartScrub qui appuie davantage sur les taches récalcitrantes.',
     category: 'Maison',
