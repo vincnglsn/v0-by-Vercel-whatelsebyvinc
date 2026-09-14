@@ -1,4 +1,4 @@
-﻿import { Analytics } from '@vercel/analytics/next'
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Fraunces } from 'next/font/google'
 import './globals.css'
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
     template: '%s | What Else by Vinc',
   },
   description:
-    'Vinc, du Vaucluse, découvre et sélectionne les meilleurs objets high-tech, gadgets pour la maison connectée, l''extérieur et vos animaux. Avis honnêtes, bons plans et guides d''achat.',
+    'Vinc, du Vaucluse, découvre et sélectionne les meilleurs objets high-tech, gadgets pour la maison connectée, l\'extérieur et vos animaux. Avis honnêtes, bons plans et guides d\'achat.',
   keywords: [
     'objets high-tech',
     'maison connectée',
     'domotique',
     'gadgets connectés',
     'avis produits high-tech',
-    'guide d''achat maison connectée',
+    'guide d\'achat maison connectée',
     'objets connectés extérieur',
     'accessoires connectés animaux',
   ],
@@ -48,13 +48,13 @@ export const metadata: Metadata = {
     siteName: 'What Else by Vinc',
     title: 'What Else by Vinc — Objets high-tech et maison connectée testés',
     description:
-      'Avis honnêtes et sélections d''objets high-tech pour la maison connectée, l''extérieur et vos animaux. Ce qui vaut le coup, et ce qui finit au fond d''un tiroir.',
+      'Avis honnêtes et sélections d\'objets high-tech pour la maison connectée, l\'extérieur et vos animaux. Ce qui vaut le coup, et ce qui finit au fond d\'un tiroir.',
     images: [
       {
         url: '/images/hero-smarthome.png',
         width: 1200,
         height: 630,
-        alt: 'Intérieur chaleureux équipé d''objets connectés',
+        alt: 'Intérieur chaleureux équipé d\'objets connectés',
       },
     ],
   },
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'What Else by Vinc — Objets high-tech et maison connectée',
     description:
-      'Avis honnêtes et sélections d''objets high-tech pour la maison connectée.',
+      'Avis honnêtes et sélections d\'objets high-tech pour la maison connectée.',
     images: ['/images/hero-smarthome.png'],
   },
   generator: 'v0.app',
@@ -90,7 +90,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" className={${inter.variable}  scroll-smooth} suppressHydrationWarning>
+    <html lang="fr" className={`${inter.variable} ${fraunces.variable} scroll-smooth`} suppressHydrationWarning>
       <body className="bg-background font-sans text-foreground antialiased selection:bg-primary/20">
         <ThemeProvider
           attribute="class"
