@@ -1327,5 +1327,10 @@ export const topPicks = [
     product: 'Écouteurs à réduction de bruit',
     reason: 'Le son et l\'ANC d\'un modèle premium à moins de la moitié du prix.',
     category: 'High-Tech',
-  },
 ]
+
+export function getAffiliateLink(article: Article) {
+  if (article.affiliateLink) return article.affiliateLink
+  const tag = process.env.NEXT_PUBLIC_AMAZON_TAG || 'whatelsebyvin-21'
+  return `https://www.amazon.fr/s?k=${encodeURIComponent(article.title)}&tag=${tag}`
+}

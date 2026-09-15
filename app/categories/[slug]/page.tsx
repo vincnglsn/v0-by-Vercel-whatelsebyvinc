@@ -7,7 +7,14 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { BackButton } from '@/components/back-button'
 import { Newsletter } from '@/components/newsletter'
-import { categories, getArticlesByCategoryName, getCategoryBySlug, type Article } from '@/lib/content'
+import {
+  categories,
+  getArticleBySlug,
+  getArticlesByCategoryName,
+  getCategoryBySlug,
+  getAffiliateLink,
+  type Article,
+} from '@/lib/content'
 
 function slugify(value: string) {
   return value
@@ -106,12 +113,11 @@ function ArticleGrid({ articles }: { articles: Article[] }) {
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {articles.map((article) => (
-        <Link
+        <article
           key={article.slug}
-          href={`/guides/${article.slug}`}
           className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-shadow hover:shadow-md"
         >
-          <div className="relative aspect-[16/10] overflow-hidden">
+          <Link href={`/guides/${article.slug}`} className="relative aspect-[16/10] overflow-hidden">
             <Image
               src={article.image}
               alt={article.title}
@@ -119,7 +125,7 @@ function ArticleGrid({ articles }: { articles: Article[] }) {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
-          </div>
+          </Link>
           <div className="flex flex-1 flex-col p-6">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <time dateTime={article.date}>{formatDate(article.date)}</time>
@@ -129,14 +135,34 @@ function ArticleGrid({ articles }: { articles: Article[] }) {
                 {article.readingTime} min
               </span>
             </div>
-            <h3 className="mt-2 font-serif text-lg font-semibold leading-snug text-card-foreground group-hover:text-primary">
-              {article.title}
+            <h3 className="mt-2 font-serif text-lg font-semibold leading-snug text-card-foreground">
+              <Link href={`/guides/${article.slug}`} className="hover:text-primary">
+                {article.title}
+              </Link>
             </h3>
-            <p className="mt-2 flex-1 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
-              {article.excerpt}
-            </p>
+            <div className="mt-2 flex-1">
+              <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                {article.excerpt}
+              </p>
+            </div>
+            <div className="mt-4 flex items-center gap-4">
+              <Link
+                href={`/guides/${article.slug}`}
+                className="inline-flex text-sm font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-primary"
+              >
+                Lire le test
+              </Link>
+              <a
+                href={getAffiliateLink(article)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+              >
+                Voir sur Amazon
+              </a>
+            </div>
           </div>
-        </Link>
+        </article>
       ))}
     </div>
   )

@@ -1,11 +1,11 @@
-﻿'use client'
+'use client'
 
 import { useState, useMemo, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Clock, Search, Filter } from 'lucide-react'
-import { articles, categories } from '@/lib/content'
+import { articles, categories, getAffiliateLink } from '@/lib/content'
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('fr-FR', {
@@ -124,12 +124,22 @@ function BlogSectionInner() {
                   <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">
                     {featured.excerpt}
                   </p>
-                  <Link
-                    href={/guides/ + featured.slug}
-                    className="mt-5 inline-flex text-sm font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-primary"
-                  >
-                    Lire le test complet
-                  </Link>
+                  <div className="mt-5 flex items-center gap-4">
+                    <Link
+                      href={`/guides/` + featured.slug}
+                      className="inline-flex text-sm font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-primary"
+                    >
+                      Lire le test complet
+                    </Link>
+                    <a
+                      href={getAffiliateLink(featured)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                    >
+                      Voir sur Amazon
+                    </a>
+                  </div>
                 </div>
               </article>
             )}
@@ -164,9 +174,27 @@ function BlogSectionInner() {
                         {article.title}
                       </Link>
                     </h3>
-                    <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-                      {article.excerpt}
-                    </p>
+                    <div className="mt-1.5 flex-1">
+                      <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                        {article.excerpt}
+                      </p>
+                    </div>
+                    <div className="mt-3 flex items-center gap-4">
+                      <Link
+                        href={`/guides/` + article.slug}
+                        className="inline-flex text-sm font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-primary"
+                      >
+                        Lire le test
+                      </Link>
+                      <a
+                        href={getAffiliateLink(article)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+                      >
+                        Voir sur Amazon
+                      </a>
+                    </div>
                   </div>
                 </article>
               ))}

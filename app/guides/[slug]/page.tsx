@@ -14,6 +14,7 @@ import {
   getArticlesByCategoryName,
   getCategoryBySlug,
   getCategorySlugByName,
+  getAffiliateLink,
 } from '@/lib/content'
 
 const siteUrl = 'https://whatelsebyvinc.com'
@@ -166,7 +167,7 @@ export default async function ArticlePage({
 
                     <div className="mt-8 flex justify-center">
             <Button
-              render={<a href={article.affiliateLink || `https://www.amazon.fr/s?k=${encodeURIComponent(article.title)}&tag=whatelsebyvin-21`} target="_blank" rel="noopener noreferrer" />}
+              render={<a href={getAffiliateLink(article)} target="_blank" rel="noopener noreferrer" />}
               nativeButton={false}
               size="lg"
               className="w-full sm:w-auto"
