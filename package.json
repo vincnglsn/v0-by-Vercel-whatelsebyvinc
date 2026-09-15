@@ -2,6 +2,7 @@
   "name": "v0-by-vercel-whatelsebyvinc",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.15.0",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -32,11 +33,5 @@
     "tailwindcss": "^4.3.3",
     "typescript": "5.7.3",
     "wrangler": "latest"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "workerd"
-    ]
   }
 }
