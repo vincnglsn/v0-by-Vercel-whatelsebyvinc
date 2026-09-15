@@ -1,6 +1,7 @@
 import { SiteHeader } from '@/components/site-header'
 import { Hero } from '@/components/hero'
 import { Categories } from '@/components/categories'
+import { SubcategoriesCarousel } from '@/components/subcategories-carousel'
 import { AboutSection } from '@/components/about-section'
 import { Newsletter } from '@/components/newsletter'
 import { SiteFooter } from '@/components/site-footer'
@@ -55,6 +56,7 @@ export default function Page() {
       <main>
         <Hero />
         <Categories />
+        <SubcategoriesCarousel />
         <AboutSection />
         <Newsletter />
       </main>

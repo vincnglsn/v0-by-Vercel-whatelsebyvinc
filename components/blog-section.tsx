@@ -1,6 +1,7 @@
 ﻿'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Clock, Search, Filter } from 'lucide-react'
@@ -14,8 +15,15 @@ function formatDate(iso: string) {
   })
 }
 
-export function BlogSection() {
-  const [search, setSearch] = useState('')
+function BlogSectionInner() {
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q') || '';
+  const [search, setSearch] = useState(initialQuery);
+
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q) setSearch(q);
+  }, [searchParams]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
   const filteredArticles = useMemo(() => {
@@ -167,5 +175,14 @@ export function BlogSection() {
         )}
       </div>
     </section>
+  )
+}
+
+
+export function BlogSection() {
+  return (
+    <Suspense fallback={<div className="py-24 text-center">Chargement...</div>}>
+      <BlogSectionInner />
+    </Suspense>
   )
 }
