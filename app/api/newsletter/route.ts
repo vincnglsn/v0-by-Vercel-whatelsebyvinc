@@ -19,32 +19,32 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, message: 'Inscrit avec succès (Mode Simulation)' })
     }
 
-    // Ajouter le contact à l'audience Resend
-    // L'Audience ID peut être défini dans RESEND_AUDIENCE_ID, sinon on prend une audience par défaut (ex: null pour les contacts généraux)
+    // Ajouter le contact à l'audience Resend (si l'ID est configuré)
     const audienceId = process.env.RESEND_AUDIENCE_ID || ''
     
     if (audienceId) {
-      const { error } = await resend.contacts.create({
+      const { error: contactError } = await resend.contacts.create({
         email,
         audienceId,
         unsubscribed: false,
       })
-      if (error) {
-        console.error("Erreur Resend Contacts:", error)
-        return NextResponse.json({ error: "Impossible de s'inscrire à la newsletter." }, { status: 500 })
+      if (contactError) {
+        console.error("Erreur Resend Contacts:", contactError)
+        // On continue tout de même pour essayer d'envoyer l'email
       }
-    } else {
-      // S'il n'y a pas d'audience configurée, on envoie juste un email de notification / bienvenue
-      const { error } = await resend.emails.send({
-        from: 'What Else by Vinc <newsletter@whatelsebyvinc.fr>', // L'utilisateur devra configurer un vrai domaine d'expédition vérifié sur Resend
-        to: [email],
-        subject: 'Bienvenue dans la newsletter What Else by Vinc !',
-        html: '<p>Merci pour votre inscription à la newsletter. Vous recevrez nos bons plans très bientôt !</p>',
-      })
-      if (error) {
-        console.error("Erreur Resend Emails:", error)
-        return NextResponse.json({ error: "Impossible de s'inscrire à la newsletter." }, { status: 500 })
-      }
+    }
+
+    // Envoyer un email de notification / bienvenue
+    const { error: emailError } = await resend.emails.send({
+      from: 'What Else by Vinc <newsletter@whatelsebyvinc.fr>', // Nécessite un domaine vérifié sur Resend, ou onboarding@resend.dev pour les tests
+      to: [email],
+      subject: 'Bienvenue dans la newsletter What Else by Vinc !',
+      html: '<p>Merci pour votre inscription à la newsletter. Vous recevrez nos bons plans très bientôt !</p>',
+    })
+    
+    if (emailError) {
+      console.error("Erreur Resend Emails:", emailError)
+      return NextResponse.json({ error: "Impossible de finaliser l'inscription (erreur d'envoi d'email)." }, { status: 500 })
     }
 
     return NextResponse.json({ success: true, message: 'Inscrit avec succès' })
