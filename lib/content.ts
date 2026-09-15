@@ -70,7 +70,7 @@ export const articles: Article[] = [
     subcategory: 'Électroménager',
     readingTime: 3,
     date: '2026-09-15',
-    image: '/images/silvercrest-monsieur-cuisine-connect.jpg',
+    image: '/images/KitchenAidArtisanRobotPâtissier.jpg',
     featured: true,
     affiliateLink: 'https://www.amazon.fr/dp/B01HK9XSMK',
     content: [
@@ -89,7 +89,7 @@ export const articles: Article[] = [
     subcategory: 'Audio & enceintes connectées',
     readingTime: 2,
     date: '2026-09-14',
-    image: '/images/amazon-echo-dot-nouvelle-generation.jpg',
+    image: '/images/echoshow5.jpg',
     affiliateLink: 'https://www.amazon.fr/dp/B09B2S8WKD',
     content: [
       "L'Echo Show 5 est l'écran connecté le plus compact de la gamme Amazon. Avec son format 5,5 pouces, il trouve naturellement sa place sur une table de chevet ou un coin de bureau sans envahir l'espace. Le son a été nettement amélioré sur cette 3ème génération, avec des basses plus profondes et des voix plus claires.",
