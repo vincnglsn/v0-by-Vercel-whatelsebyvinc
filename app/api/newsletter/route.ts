@@ -13,10 +13,11 @@ export async function POST(request: Request) {
     }
 
     if (!process.env.RESEND_API_KEY) {
-      // Pour les tests en local si la clé n'est pas configurée
-      console.warn('RESEND_API_KEY is not defined. Simulating success.')
-      await new Promise((resolve) => setTimeout(resolve, 800))
-      return NextResponse.json({ success: true, message: 'Inscrit avec succès (Mode Simulation)' })
+      console.error("ERREUR CRITIQUE: RESEND_API_KEY n'est pas définie dans les variables d'environnement Vercel.")
+      return NextResponse.json(
+        { error: "Configuration email manquante côté serveur. Veuillez contacter l'administrateur." },
+        { status: 500 }
+      )
     }
 
     // Ajouter le contact à l'audience Resend (si l'ID est configuré)
