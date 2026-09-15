@@ -62,6 +62,43 @@ export const categories: Category[] = [
 
 export const articles: Article[] = [
   {
+    slug: 'kitchenaid-artisan-robot-cuisine',
+    title: 'KitchenAid Artisan — Le robot pâtissier de référence',
+    excerpt:
+      'Inusable, puissant et iconique. Le KitchenAid Artisan justifie son prix par une durabilité exceptionnelle et des performances professionnelles à la maison.',
+    category: 'Maison',
+    subcategory: 'Électroménager',
+    readingTime: 3,
+    date: '2026-09-15',
+    image: '/images/silvercrest-monsieur-cuisine-connect.jpg',
+    featured: true,
+    affiliateLink: 'https://www.amazon.fr/dp/B01HK9XSMK',
+    content: [
+      "S'il y a un appareil qui trône fièrement sur le plan de travail, c'est bien le KitchenAid Artisan. Ce n'est pas qu'un objet design avec sa conception entièrement en métal coulé, c'est surtout un véritable char d'assaut conçu pour durer des décennies.",
+      "Sa particularité technique réside dans son moteur à transmission directe. Contrairement aux robots classiques qui utilisent des courroies, le KitchenAid transmet toute sa puissance directement aux accessoires. Résultat : pétrir des pâtes lourdes comme la pâte à pain ou à brioche se fait sans aucun effort et sans que le moteur ne force ou surchauffe.",
+      "Le système à mouvement planétaire assure un mélange parfaitement homogène en allant chercher les ingrédients sur les bords du bol. Vendu avec les trois accessoires essentiels (fouet à fils, batteur plat et crochet pétrisseur) et un grand bol en inox de 4,8 L, il couvre 99% des besoins en pâtisserie.",
+      "Le point à retenir : C'est un investissement important, mais c'est généralement le dernier robot pâtissier que vous achèterez. Un produit fiable, robuste, qui traverse les années sans prendre une ride."
+    ],
+  },
+  {
+    slug: 'echo-show-5-3e-generation',
+    title: 'Echo Show 5 (3e génération) — L\'écran connecté compact',
+    excerpt:
+      'L\'écran connecté compact d\'Amazon parfait pour la table de nuit ou le bureau. Contrôle vocal, domotique et appels vidéo au bout des doigts.',
+    category: 'High-Tech',
+    subcategory: 'Audio & enceintes connectées',
+    readingTime: 2,
+    date: '2026-09-14',
+    image: '/images/amazon-echo-dot-nouvelle-generation.jpg',
+    affiliateLink: 'https://www.amazon.fr/dp/B09B2S8WKD',
+    content: [
+      "L'Echo Show 5 est l'écran connecté le plus compact de la gamme Amazon. Avec son format 5,5 pouces, il trouve naturellement sa place sur une table de chevet ou un coin de bureau sans envahir l'espace. Le son a été nettement amélioré sur cette 3ème génération, avec des basses plus profondes et des voix plus claires.",
+      "Le vrai plus de ce modèle : il centralise le contrôle de votre maison connectée. Plus besoin de chercher son téléphone pour allumer les lumières ou vérifier la caméra de surveillance, un simple coup d'œil ou une commande vocale à Alexa suffit.",
+      "Côté design, l'écran est incliné de manière optimale pour les appels vidéo ou pour consulter la météo le matin. La caméra intégrée possède un cache physique, un détail rassurant pour protéger son intimité dans une chambre.",
+      "Mon conseil : C'est le réveil connecté ultime. Si vous avez déjà des ampoules connectées ou des prises intelligentes, l'Echo Show 5 devient vite indispensable au quotidien."
+    ],
+  },
+  {
     slug: 'aspirateur-robot-2026-comparatif',
     title: 'Aspirateur robot : 4 modèles testés pendant 3 mois',
     excerpt:
