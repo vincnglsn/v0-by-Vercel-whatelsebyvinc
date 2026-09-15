@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
     // Envoyer un email de notification / bienvenue
     const { error: emailError } = await resend.emails.send({
-      from: 'What Else by Vinc <newsletter@whatelsebyvinc.fr>', // Nécessite un domaine vérifié sur Resend, ou onboarding@resend.dev pour les tests
+      from: 'What Else by Vinc <newsletter@whatelsebyvinc.com>', // Nécessite un domaine vérifié sur Resend, ou onboarding@resend.dev pour les tests
       to: [email],
       subject: 'Bienvenue dans la newsletter What Else by Vinc !',
       html: '<p>Merci pour votre inscription à la newsletter. Vous recevrez nos bons plans très bientôt !</p>',
