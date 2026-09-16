@@ -67,10 +67,10 @@ export const articles: Article[] = [
     excerpt:
       'Inusable, puissant et iconique. Le KitchenAid Artisan justifie son prix par une durabilité exceptionnelle et des performances professionnelles à la maison.',
     category: 'Maison',
-    subcategory: 'Électroménager',
+    subcategory: 'Cuisine',
     readingTime: 3,
     date: '2026-09-15',
-    image: '/images/KitchenAidArtisanRobotPâtissier.jpg',
+    image: '/images/kitchenaid-artisan.jpg',
     featured: true,
     affiliateLink: 'https://www.amazon.fr/dp/B01HK9XSMK',
     content: [
