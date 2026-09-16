@@ -1364,6 +1364,7 @@ export const topPicks = [
     product: 'Écouteurs à réduction de bruit',
     reason: 'Le son et l\'ANC d\'un modèle premium à moins de la moitié du prix.',
     category: 'High-Tech',
+  },
 ]
 
 export function getAffiliateLink(article: Article) {
