@@ -15,10 +15,10 @@ export function AboutSection() {
               «&nbsp;tops&nbsp;» rédigés sur catalogue.
             </p>
             <p>
-              Ici, chaque objet passe entre mes mains, s&apos;invite chez moi et
-              partage ma routine. Je vous dis tout sur ce qui vaut vraiment le
+              Ici, je passe au crible les meilleurs objets du marché pour vous
+              les présenter. Je vous dis tout sur ce qui vaut vraiment le
               coup, ce qui déçoit, et surtout <span className="font-medium text-foreground">pourquoi</span>.
-              La suite s&apos;écrit au fil de mes trouvailles.
+              La suite s&apos;écrit au fil de mes sélections.
             </p>
           </div>
         </div>
@@ -35,8 +35,8 @@ export function AboutSection() {
           </p>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             Cela ne change jamais mon avis&nbsp;: je ne recommande que ce que
-            j&apos;utiliserais moi-même. C&apos;est ce qui me permet de continuer
-            à évaluer ces produits en toute indépendance.
+            je sélectionne avec soin. C&apos;est ce qui me permet de continuer
+            à découvrir ces produits en toute indépendance.
           </p>
         </aside>
       </div>

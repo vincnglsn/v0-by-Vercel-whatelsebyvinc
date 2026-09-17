@@ -9,7 +9,7 @@ export function Hero() {
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground">
             <MapPin className="size-3.5 text-primary" />
-            Testé et sélectionné depuis le Vaucluse
+            Sélectionné et présenté depuis le Vaucluse
           </p>
           <h1 className="mt-6 font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             Les objets du quotidien qui valent{' '}
@@ -17,8 +17,8 @@ export function Hero() {
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
             Je m&apos;appelle Vinc. Je sélectionne des objets pour améliorer votre
-            quotidien, puis je vous dis honnêtement ce que je garde&nbsp;— et ce
-            qui finit au fond d&apos;un tiroir.
+            quotidien, puis je vous présente honnêtement leurs véritables atouts
+            et ce qui les démarque sur le marché.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button render={<a href="/fiches-produits" />} nativeButton={false} size="lg">
@@ -63,7 +63,7 @@ export function Hero() {
           </div>
           <div className="absolute -bottom-4 -left-4 hidden max-w-[200px] rounded-xl border border-border bg-card p-4 shadow-md sm:block">
             <p className="text-sm font-medium text-card-foreground">
-              &ldquo;Ce qui vaut le coup, et ce qui finit au tiroir.&rdquo;
+              &ldquo;SÃ©lectionner ce qui vaut vraiment le coup.&rdquo;
             </p>
             <p className="mt-1 text-xs text-muted-foreground">— la ligne de conduite</p>
           </div>
