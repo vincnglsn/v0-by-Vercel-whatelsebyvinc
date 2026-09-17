@@ -18,7 +18,7 @@ const jsonLd = {
       url: siteUrl,
       name: 'What Else by Vinc',
       description:
-        'Objets high-tech et maison connectée testés et sélectionnés depuis le Vaucluse.',
+        'Objets high-tech et maison connectée sélectionnés avec soin depuis le Vaucluse.',
       inLanguage: 'fr-FR',
     },
     {

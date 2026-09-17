@@ -21,7 +21,7 @@ const siteUrl = 'https://whatelsebyvinc.com'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'What Else by Vinc — Objets high-tech et maison connectée testés',
+    default: 'What Else by Vinc — Objets high-tech et maison connectée sélectionnés',
     template: '%s | What Else by Vinc',
   },
   description:
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     url: siteUrl,
     siteName: 'What Else by Vinc',
-    title: 'What Else by Vinc — Objets high-tech et maison connectée testés',
+    title: 'What Else by Vinc — Objets high-tech et maison connectée sélectionnés',
     description:
       'Avis honnêtes et sélections d\'objets high-tech pour la maison connectée, l\'extérieur et vos animaux. Ce qui vaut le coup, et ce qui finit au fond d\'un tiroir.',
     images: [
