@@ -2,26 +2,27 @@
 
 import { useRef } from 'react'
 import Link from 'next/link'
-import { ChevronLeft, ChevronRight, Smartphone, Watch, Tv, Speaker, Laptop, Utensils, ChefHat, Sparkles, Heart, ShieldCheck, Briefcase, Plus, Camera, TreePine, Lightbulb, Cat, Dog } from 'lucide-react'
+import Image from 'next/image'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const subcategories = [
-  { name: 'Téléphonie', icon: Smartphone },
-  { name: 'Montres & bracelets connectés', icon: Watch },
-  { name: 'TV & divertissement', icon: Tv },
-  { name: 'Audio & enceintes', icon: Speaker },
-  { name: 'PC & Portables', icon: Laptop },
-  { name: 'Arts de la table', icon: Utensils },
-  { name: 'Cuisine', icon: ChefHat },
-  { name: 'Entretiens', icon: Sparkles },
-  { name: 'Bien-être', icon: Heart },
-  { name: 'Sécurités', icon: ShieldCheck },
-  { name: 'Bureau', icon: Briefcase },
-  { name: 'Caméras', icon: Camera },
-  { name: 'Jardins', icon: TreePine },
-  { name: 'Lumières', icon: Lightbulb },
-  { name: 'Chat', icon: Cat },
-  { name: 'Chien', icon: Dog },
-  { name: 'Autres', icon: Plus },
+  { name: 'Téléphonie', image: '/images/apple-iphone-17-pro-256-go.jpg' },
+  { name: 'Montres & bracelets connectés', image: '/images/apple-watch-ultra-3.jpg' },
+  { name: 'TV & divertissement', image: '/images/xiaomi-tv-f-65-pouces.jpg' },
+  { name: 'Audio & enceintes', image: '/images/sonos-era-100.jpg' },
+  { name: 'PC & Portables', image: '/images/asus-zenbook-14-ryzen7.jpg' },
+  { name: 'Arts de la table', image: '/images/pure-living-service-de-table-24-pieces.jpg' },
+  { name: 'Cuisine', image: '/images/kitchenaid-artisan.jpg' },
+  { name: 'Entretiens', image: '/images/dreame-l40s-pro-ultra.jpg' },
+  { name: 'Bien-être', image: '/images/levoit-purificateur-air-core-200s.jpg' },
+  { name: 'Sécurités', image: '/images/nuki-smart-lock-ultra.jpg' },
+  { name: 'Bureau', image: '/images/teslyar-organisateur-bureau-bois.jpg' },
+  { name: 'Caméras', image: '/images/imou-2k-camera-interieure.jpg' },
+  { name: 'Jardins', image: '/images/sunseeker-s4-robot-tondeuse.jpg' },
+  { name: 'Lumières', image: '/images/govee-guirlande-lumineuse-exterieure.jpg' },
+  { name: 'Chat', image: '/images/feandrea-arbre-a-chat.jpg' },
+  { name: 'Chien', image: '/images/eheyciga-panier-chien-orthopedique.jpg' },
+  { name: 'Autres', image: '/images/cat-maison.png' },
 ]
 
 export function SubcategoriesCarousel() {
@@ -68,15 +69,20 @@ export function SubcategoriesCarousel() {
             className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 pt-1"
           >
             {subcategories.map((sub) => {
-              const Icon = sub.icon
               return (
                 <Link
                   key={sub.name}
                   href={`/fiches-produits?q=${encodeURIComponent(sub.name)}`}
                   className="group flex w-[140px] shrink-0 snap-start flex-col items-center gap-3 rounded-2xl border border-border bg-card p-4 text-center transition-all hover:border-primary/50 hover:shadow-md"
                 >
-                  <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                    <Icon className="size-6" />
+                  <div className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-transparent transition-colors group-hover:border-primary">
+                    <Image 
+                      src={sub.image} 
+                      alt={sub.name} 
+                      fill 
+                      sizes="64px" 
+                      className="object-cover" 
+                    />
                   </div>
                   <span className="text-sm font-medium leading-tight text-card-foreground">
                     {sub.name}
