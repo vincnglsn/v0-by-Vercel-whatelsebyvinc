@@ -53,7 +53,7 @@ export function Hero() {
         <div className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border shadow-sm sm:aspect-[5/4] lg:aspect-[4/5]">
             <Image
-              src="/images/slide_01_hook_4x5.jpg"
+              src="/images/cat-maison.png"
               alt="Sélection d'objets du quotidien"
               fill
               priority
@@ -63,7 +63,7 @@ export function Hero() {
           </div>
           <div className="absolute -bottom-4 -left-4 hidden max-w-[200px] rounded-xl border border-border bg-card p-4 shadow-md sm:block">
             <p className="text-sm font-medium text-card-foreground">
-              &ldquo;SÃ©lectionner ce qui vaut vraiment le coup.&rdquo;
+              &ldquo;Sélectionner ce qui vaut vraiment le coup.&rdquo;
             </p>
             <p className="mt-1 text-xs text-muted-foreground">— la ligne de conduite</p>
           </div>
