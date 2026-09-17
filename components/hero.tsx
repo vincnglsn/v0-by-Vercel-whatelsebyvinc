@@ -22,7 +22,7 @@ export function Hero() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button render={<a href="/fiches-produits" />} nativeButton={false} size="lg">
-              Découvrir les objets traités
+              Découvrir nos sélections
               <ArrowRight className="size-4" />
             </Button>
             <Button
@@ -37,7 +37,7 @@ export function Hero() {
           <dl className="mt-10 flex gap-8">
             <div>
               <dt className="text-2xl font-semibold text-foreground">85+</dt>
-              <dd className="text-sm text-muted-foreground">produits traités</dd>
+              <dd className="text-sm text-muted-foreground">produits sélectionnés</dd>
             </div>
             <div>
               <dt className="text-2xl font-semibold text-foreground">4</dt>
@@ -60,12 +60,6 @@ export function Hero() {
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
-          </div>
-          <div className="absolute -bottom-4 -left-4 hidden max-w-[200px] rounded-xl border border-border bg-card p-4 shadow-md sm:block">
-            <p className="text-sm font-medium text-card-foreground">
-              &ldquo;Sélectionner ce qui vaut vraiment le coup.&rdquo;
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">— la ligne de conduite</p>
           </div>
         </div>
       </div>
