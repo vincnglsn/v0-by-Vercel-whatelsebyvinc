@@ -53,8 +53,8 @@ export function Hero() {
         <div className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border shadow-sm sm:aspect-[5/4] lg:aspect-[4/5]">
             <Image
-              src="/images/hero-smarthome.png"
-              alt="Salon chaleureux équipé d'objets connectés à la lumière du soir"
+              src="/images/slide_01_hook_4x5.jpg"
+              alt="Sélection d'objets du quotidien"
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
