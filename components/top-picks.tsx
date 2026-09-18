@@ -1,5 +1,6 @@
+import Link from 'next/link'
 import { Award } from 'lucide-react'
-import { topPicks } from '@/lib/content'
+import { topPicks, categories } from '@/lib/content'
 
 export function TopPicks() {
   return (
@@ -35,9 +36,12 @@ export function TopPicks() {
               <p className="mt-3 flex-1 text-sm leading-relaxed text-background/70">
                 {pick.reason}
               </p>
-              <span className="mt-4 inline-flex w-fit rounded-full bg-background/10 px-2.5 py-1 text-xs font-medium text-background/80">
+              <Link 
+                href={`/categories/${categories.find(c => c.name === pick.category)?.slug || ''}`}
+                className="mt-4 inline-flex w-fit rounded-full bg-background/10 px-2.5 py-1 text-xs font-medium text-background/80 hover:bg-background/20 transition-colors"
+              >
                 {pick.category}
-              </span>
+              </Link>
             </div>
           ))}
         </div>

@@ -4,6 +4,16 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { articles, categories } from '@/lib/content'
+
+function slugify(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
 
 const subcategories = [
   { name: 'Téléphonie', image: '/images/apple-iphone-17-pro-256-go.jpg' },
@@ -24,6 +34,14 @@ const subcategories = [
   { name: 'Chien', image: '/images/eheyciga-panier-chien-orthopedique.jpg' },
   { name: 'Autres', image: '/images/cat-maison.png' },
 ]
+
+function getCategoryUrl(subName: string) {
+  const article = articles.find(a => a.subcategory === subName)
+  if (!article) return '#'
+  const cat = categories.find(c => c.name === article.category)
+  if (!cat) return '#'
+  return `/categories/${cat.slug}#${slugify(subName)}`
+}
 
 export function SubcategoriesCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -72,7 +90,7 @@ export function SubcategoriesCarousel() {
               return (
                 <Link
                   key={sub.name}
-                  href={`/fiches-produits?q=${encodeURIComponent(sub.name)}`}
+                  href={getCategoryUrl(sub.name)}
                   className="group flex w-[140px] shrink-0 snap-start flex-col items-center gap-3 rounded-2xl border border-border bg-card p-4 text-center transition-all hover:border-primary/50 hover:shadow-md"
                 >
                   <div className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-transparent transition-colors group-hover:border-primary">

@@ -91,7 +91,7 @@ function BlogSectionInner() {
             {/* Featured article */}
             {featured && (
               <article className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card">
-                <Link href={/guides/ + featured.slug} className="relative aspect-[16/10] overflow-hidden">
+                <Link href={`/guides/${featured.slug}`} className="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={featured.image}
                     alt={featured.title}
@@ -107,7 +107,12 @@ function BlogSectionInner() {
                 </Link>
                 <div className="flex flex-1 flex-col p-6">
                   <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                    <span className="font-medium text-primary">{featured.category}</span>
+                    <Link 
+                      href={`/categories/${categories.find(c => c.name === featured.category)?.slug || ''}`}
+                      className="font-medium text-primary hover:underline"
+                    >
+                      {featured.category}
+                    </Link>
                     <span aria-hidden>•</span>
                     <time dateTime={featured.date}>{formatDate(featured.date)}</time>
                     <span aria-hidden>•</span>
@@ -117,7 +122,7 @@ function BlogSectionInner() {
                     </span>
                   </div>
                   <h3 className="mt-3 font-serif text-2xl font-semibold leading-snug text-card-foreground">
-                    <Link href={/guides/ + featured.slug} className="hover:text-primary">
+                    <Link href={`/guides/${featured.slug}`} className="hover:text-primary">
                       {featured.title}
                     </Link>
                   </h3>
@@ -149,7 +154,7 @@ function BlogSectionInner() {
               {rest.map((article) => (
                 <article key={article.slug} className="group flex gap-4 py-5 first:pt-0">
                   <Link
-                    href={/guides/ + article.slug}
+                    href={`/guides/${article.slug}`}
                     className="relative hidden aspect-square w-28 shrink-0 overflow-hidden rounded-xl sm:block"
                   >
                     <Image
@@ -162,7 +167,12 @@ function BlogSectionInner() {
                   </Link>
                   <div className="flex flex-col justify-center">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span className="font-medium text-primary">{article.category}</span>
+                      <Link 
+                        href={`/categories/${categories.find(c => c.name === article.category)?.slug || ''}`}
+                        className="font-medium text-primary hover:underline"
+                      >
+                        {article.category}
+                      </Link>
                       <span aria-hidden>•</span>
                       <span className="inline-flex items-center gap-1">
                         <Clock className="size-3.5" />
@@ -170,7 +180,7 @@ function BlogSectionInner() {
                       </span>
                     </div>
                     <h3 className="mt-1.5 font-serif text-lg font-semibold leading-snug text-card-foreground">
-                      <Link href={/guides/ + article.slug} className="hover:text-primary">
+                      <Link href={`/guides/${article.slug}`} className="hover:text-primary">
                         {article.title}
                       </Link>
                     </h3>
