@@ -1605,8 +1605,8 @@ export const topPicks = [
   },
   {
     slug: 'echo-show-5-3e-generation-l',
-    title: 'Echo Show 5 (3e génération) — L\',
-    excerpt: 'Découvrez notre avis sur Echo Show 5 (3e génération) — L\. Un excellent choix dans la catégorie Audio & enceintes connectées.',
+    title: 'Echo Show 5 (3e génération) — L',
+    excerpt: 'Découvrez notre avis sur Echo Show 5 (3e génération) — L. Un excellent choix dans la catégorie Audio & enceintes connectées.',
     category: 'High-Tech',
     subcategory: 'Audio & enceintes connectées',
     readingTime: 2,
@@ -2268,8 +2268,8 @@ export const topPicks = [
   },
   {
     slug: 'epson-ecotank-et-2862-imprimante-a-reservoirs-d',
-    title: 'Epson EcoTank ET-2862 — Imprimante à Réservoirs d\',
-    excerpt: 'Découvrez notre avis sur Epson EcoTank ET-2862 — Imprimante à Réservoirs d\. Un excellent choix dans la catégorie Bureau.',
+    title: 'Epson EcoTank ET-2862 — Imprimante à Réservoirs d',
+    excerpt: 'Découvrez notre avis sur Epson EcoTank ET-2862 — Imprimante à Réservoirs d. Un excellent choix dans la catégorie Bureau.',
     category: 'Maison',
     subcategory: 'Bureau',
     readingTime: 2,
@@ -2277,7 +2277,7 @@ export const topPicks = [
     image: '/images/epson-ecotank-et-2862.jpg',
     affiliateLink: 'https://amzn.to/46RcKkl',
     content: [
-      "Voici notre présentation détaillée pour Epson EcoTank ET-2862 — Imprimante à Réservoirs d\.",
+      "Voici notre présentation détaillée pour Epson EcoTank ET-2862 — Imprimante à Réservoirs d.",
       "Ce produit de la catégorie Bureau est conçu pour répondre à tous vos besoins.",
       "Idéal pour une utilisation au quotidien, il a été sélectionné avec soin.",
       "Retrouvez toutes ses caractéristiques complètes en cliquant sur le lien ci-dessous."
