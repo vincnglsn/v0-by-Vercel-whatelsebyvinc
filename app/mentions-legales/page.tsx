@@ -16,7 +16,7 @@ export default function MentionsLegalesPage() {
         <div className="prose-content mt-8 space-y-6 text-muted-foreground">
           <h2 className="text-xl font-medium text-foreground">1. Éditeur du site</h2>
           <p>
-            Le site <strong>Vinc Select</strong> (accessible sur select.whatelsebyvinc.com) est édité par Vinc (What Else by Vinc), situé dans le Vaucluse (France).
+            Le site <strong>Select de What Else by Vinc</strong> (accessible sur select.whatelsebyvinc.com) est édité par Vinc (What Else by Vinc), situé dans le Vaucluse (France).
           </p>
           <h2 className="text-xl font-medium text-foreground">2. Hébergement</h2>
           <p>
