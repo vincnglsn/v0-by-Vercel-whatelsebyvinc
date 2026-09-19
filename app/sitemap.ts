@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { articles, categories } from '@/lib/content'
 
-const siteUrl = 'https://whatelsebyvinc.com'
+const siteUrl = 'https://select.whatelsebyvinc.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

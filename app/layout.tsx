@@ -16,7 +16,7 @@ const fraunces = Fraunces({
   display: 'swap',
 })
 
-const siteUrl = 'https://whatelsebyvinc.com'
+const siteUrl = 'https://select.whatelsebyvinc.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

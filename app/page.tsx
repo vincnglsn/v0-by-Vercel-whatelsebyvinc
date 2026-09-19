@@ -7,7 +7,7 @@ import { Newsletter } from '@/components/newsletter'
 import { SiteFooter } from '@/components/site-footer'
 import { articles, categories } from '@/lib/content'
 
-const siteUrl = 'https://whatelsebyvinc.com'
+const siteUrl = 'https://select.whatelsebyvinc.com'
 
 const jsonLd = {
   '@context': 'https://schema.org',
