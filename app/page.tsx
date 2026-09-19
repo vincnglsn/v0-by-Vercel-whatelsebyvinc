@@ -16,7 +16,7 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
       url: siteUrl,
-      name: 'What Else by Vinc',
+      name: 'Vinc Select',
       description:
         'Objets high-tech et maison connectée sélectionnés avec soin depuis le Vaucluse.',
       inLanguage: 'fr-FR',

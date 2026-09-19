@@ -1,4 +1,4 @@
-﻿import { SiteHeader } from '@/components/site-header'
+import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 
 export const metadata = {
@@ -15,7 +15,7 @@ export default function ConfidentialitePage() {
         </h1>
         <div className="prose-content mt-8 space-y-6 text-muted-foreground">
           <p>
-            Sur <strong>What Else by Vinc</strong>, nous attachons une grande importance à la confidentialité de vos données personnelles.
+            Sur <strong>Vinc Select</strong>, nous attachons une grande importance à la confidentialité de vos données personnelles.
           </p>
           <h2 className="text-xl font-medium text-foreground">1. Collecte des données</h2>
           <p>

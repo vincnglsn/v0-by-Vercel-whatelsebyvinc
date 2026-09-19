@@ -21,8 +21,8 @@ const siteUrl = 'https://whatelsebyvinc.com'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'What Else by Vinc — Objets high-tech et maison connectée sélectionnés',
-    template: '%s | What Else by Vinc',
+    default: 'Vinc Select — Objets high-tech et maison connectée sélectionnés',
+    template: '%s | Vinc Select',
   },
   description:
     'Vinc, du Vaucluse, découvre et sélectionne les meilleurs objets high-tech, gadgets pour la maison connectée, l\'extérieur et vos animaux. Avis honnêtes, bons plans et guides d\'achat.',
@@ -45,8 +45,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'fr_FR',
     url: siteUrl,
-    siteName: 'What Else by Vinc',
-    title: 'What Else by Vinc — Objets high-tech et maison connectée sélectionnés',
+    siteName: 'Vinc Select',
+    title: 'Vinc Select — Objets high-tech et maison connectée sélectionnés',
     description:
       'Avis honnêtes et sélections d\'objets high-tech pour la maison connectée, l\'extérieur et vos animaux. Ce qui vaut le coup, et ce qui finit au fond d\'un tiroir.',
     images: [
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'What Else by Vinc — Objets high-tech et maison connectée',
+    title: 'Vinc Select — Objets high-tech et maison connectée',
     description:
       'Avis honnêtes et sélections d\'objets high-tech pour la maison connectée.',
     images: ['/images/hero-smarthome.png'],

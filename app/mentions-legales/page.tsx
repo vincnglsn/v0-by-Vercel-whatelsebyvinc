@@ -1,4 +1,4 @@
-﻿import { SiteHeader } from '@/components/site-header'
+import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 
 export const metadata = {
@@ -16,7 +16,7 @@ export default function MentionsLegalesPage() {
         <div className="prose-content mt-8 space-y-6 text-muted-foreground">
           <h2 className="text-xl font-medium text-foreground">1. Éditeur du site</h2>
           <p>
-            Le site <strong>What Else by Vinc</strong> (whatelsebyvinc.com) est édité par Vinc, situé dans le Vaucluse (France).
+            Le site <strong>Vinc Select</strong> (actuellement sur whatelsebyvinc.com) est édité par Vinc (What Else by Vinc), situé dans le Vaucluse (France).
           </p>
           <h2 className="text-xl font-medium text-foreground">2. Hébergement</h2>
           <p>

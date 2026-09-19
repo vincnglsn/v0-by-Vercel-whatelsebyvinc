@@ -22,9 +22,9 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <a href="/" className="flex items-baseline gap-2">
           <span className="font-serif text-xl font-semibold tracking-tight text-foreground">
-            What Else
+            Vinc
           </span>
-          <span className="text-sm font-medium text-primary">by Vinc</span>
+          <span className="text-sm font-medium text-primary">Select</span>
         </a>
 
         <nav aria-label="Navigation principale" className="hidden md:block">
