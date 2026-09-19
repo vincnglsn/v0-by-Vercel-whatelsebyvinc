@@ -1801,7 +1801,7 @@ export const topPicks = [
     image: '/images/huawei-matepad-air-12-oled.jpg',
     affiliateLink: 'https://amzn.to/4gwr1c1',
     content: [
-      "Voici notre présentation détaillée pour "Huawei MatePad Air 12"" OLED".",
+      "Voici notre présentation détaillée pour Huawei MatePad Air 12 OLED.",
       "Ce produit de la catégorie PC & Portables est conçu pour répondre à tous vos besoins.",
       "Idéal pour une utilisation au quotidien, il a été sélectionné avec soin.",
       "Retrouvez toutes ses caractéristiques complètes en cliquant sur le lien ci-dessous."
@@ -1937,7 +1937,7 @@ export const topPicks = [
     image: '/images/xiaomi-tv-f-65-pouces.jpg',
     affiliateLink: 'https://www.amazon.fr/dp/B0F457MQCQ?tag=whatelsebyvin-21',
     content: [
-      "Voici notre présentation détaillée pour "XIAOMI TV F 65"" (2026)".",
+      "Voici notre présentation détaillée pour XIAOMI TV F 65 (2026).",
       "Ce produit de la catégorie TV & divertissement est conçu pour répondre à tous vos besoins.",
       "Idéal pour une utilisation au quotidien, il a été sélectionné avec soin.",
       "Retrouvez toutes ses caractéristiques complètes en cliquant sur le lien ci-dessous."
