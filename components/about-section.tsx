@@ -6,12 +6,12 @@ export function AboutSection() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.2fr_1fr] lg:py-24">
         <div>
           <h2 className="font-serif text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Qui se cache derrière What Else&nbsp;?
+            Qui se cache derrière Select&nbsp;?
           </h2>
           <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
             <p>
               Moi, Vinc, un passionné de tech installé dans le Vaucluse. J&apos;ai
-              lancé What Else parce que j&apos;en avais assez des avis creux et des
+              lancé Select parce que j&apos;en avais assez des avis creux et des
               «&nbsp;tops&nbsp;» rédigés sur catalogue.
             </p>
             <p>
