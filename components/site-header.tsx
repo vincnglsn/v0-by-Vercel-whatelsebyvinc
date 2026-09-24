@@ -24,7 +24,7 @@ export function SiteHeader() {
           <span className="font-serif text-xl font-semibold tracking-tight text-foreground">
             Select
           </span>
-          <span className="text-sm font-medium text-primary">by Vinc</span>
+          <span className="text-sm font-medium text-primary">de : What else by Vinc</span>
         </a>
 
         <nav aria-label="Navigation principale" className="hidden md:block">

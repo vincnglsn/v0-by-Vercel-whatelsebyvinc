@@ -86,7 +86,7 @@ export function Newsletter() {
           </p>
         )}
         <p className="mt-4 text-xs text-muted-foreground">
-          En vous inscrivant, vous acceptez de recevoir la newsletter de Select by Vinc.
+          En vous inscrivant, vous acceptez de recevoir la newsletter de Select de : What else by Vinc.
         </p>
       </div>
     </section>
