@@ -15,7 +15,7 @@ export default function ConfidentialitePage() {
         </h1>
         <div className="prose-content mt-8 space-y-6 text-muted-foreground">
           <p>
-            Chez <strong>Select de What Else by Vinc</strong>, nous prenons la confidentialité de vos données très au sérieux.
+            Chez <strong>Select by Vinc</strong>, nous prenons la confidentialité de vos données très au sérieux.
           </p>
           <h2 className="text-xl font-medium text-foreground">1. Collecte des données</h2>
           <p>

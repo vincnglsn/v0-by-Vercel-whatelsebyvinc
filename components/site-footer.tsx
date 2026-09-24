@@ -39,7 +39,7 @@ export function SiteFooter() {
               <span className="font-serif text-xl font-semibold text-foreground">
                 Select
               </span>
-              <span className="text-sm font-medium text-primary">de What Else by Vinc</span>
+              <span className="text-sm font-medium text-primary">by Vinc</span>
             </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Objets du quotidien, sélectionnés depuis le Vaucluse.
@@ -67,7 +67,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Select de What Else by Vinc. Tous droits réservés.</p>
+          <p>© {new Date().getFullYear()} Select by Vinc. Tous droits réservés.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm text-muted-foreground sm:mt-0">
             <Link href="/mentions-legales" className="hover:text-foreground">Mentions légales</Link>
             <Link href="/confidentialite" className="hover:text-foreground">Politique de confidentialité</Link>
