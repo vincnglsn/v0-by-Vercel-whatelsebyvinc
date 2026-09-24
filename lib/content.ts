@@ -100,9 +100,9 @@ export const articles: Article[] = [
   },
   {
     slug: 'aspirateur-robot-2026-comparatif',
-    title: 'Aspirateur robot : 4 modèles comparés pendant 3 mois',
+    title: 'Aspirateur robot : 4 modèles comparés en détail',
     excerpt:
-      'Autonomie, navigation, station d\'auto-vidage… J\'ai fait tourner quatre robots chez moi tout l\'hiver. Voici lesquels valent leur prix et lesquels finissent au placard.',
+      'Autonomie, navigation, station d\'auto-vidage… J\'ai comparé quatre aspirateurs robots sur les critères qui comptent vraiment au quotidien. Voici lesquels valent leur prix et lesquels ne le valent pas.',
     category: 'Maison',
     readingTime: 9,
     date: '2026-02-18',
@@ -110,11 +110,11 @@ export const articles: Article[] = [
     featured: true,
     affiliateLink: "https://amazon.fr",
     content: [
-      'J\'ai installé quatre aspirateurs robots chez moi entre novembre et février, un par mois environ, pour éviter de comparer des impressions à froid. Même appartement, mêmes pièces, un chat qui perd ses poils toute l\'année : le terrain était clairement plus difficile qu\'un salon témoin en boutique.',
+      'J\'ai comparé quatre aspirateurs robots représentatifs du marché actuel, en croisant fiches techniques, avis vérifiés et retours d\'utilisateurs sur la durée. L\'objectif : repérer ce qui fait vraiment la différence au quotidien, au-delà des chiffres marketing — en particulier sur un terrain exigeant comme les poils d\'animaux, où les écarts entre modèles se voient le plus.',
       'Premier critère qui fait vraiment la différence au quotidien : la navigation. Les modèles équipés d\'un lidar cartographient la pièce en un seul passage et évitent les chaises, les câbles et les gamelles. Les modèles à navigation gyroscopique, moins chers, se débrouillent bien sur un sol dégagé mais butent régulièrement contre les pieds de table basse — sans dégât, mais avec du bruit et des trajets moins efficaces.',
-      'La station d\'auto-vidage change tout sur la durée. Sans elle, il faut vider le bac tous les deux ou trois passages à cause des poils de chat. Avec, je n\'y touche que toutes les six à huit semaines. C\'est le poste où je recommande de ne pas économiser, même si ça veut dire prendre un modèle plus simple sur la navigation.',
-      'Sur l\'autonomie, les quatre modèles tenaient largement un appartement de 70 m² en une charge, avec reprise automatique en cas de batterie faible. La vraie différence se joue sur le bruit en mode automatique : un des modèles dépassait clairement les autres, au point de devenir gênant en visio.',
-      'Au final, je garde deux modèles sur quatre : celui avec lidar et auto-vidage pour un usage quotidien sans y penser, et un modèle d\'entrée de gamme sans station pour qui veut s\'essayer à la robotisation sans y mettre le prix. Les deux autres sont repartis en revente — corrects, mais dépassés par la concurrence sur ce budget.',
+      'La station d\'auto-vidage change tout sur la durée. Sans elle, il faut vider le bac tous les deux ou trois passages à cause des poils de chat. Avec, les utilisateurs rapportent n\'y toucher que toutes les six à huit semaines. C\'est le poste où je recommande de ne pas économiser, même si ça veut dire prendre un modèle plus simple sur la navigation.',
+      'Sur l\'autonomie, les quatre modèles couvrent largement un appartement de 70 m² en une charge, avec reprise automatique en cas de batterie faible. La vraie différence se joue sur le bruit en mode automatique : un des modèles ressort nettement plus bruyant que les autres dans les retours d\'utilisateurs, au point de devenir gênant en visio.',
+      'Au final, je retiens deux modèles sur quatre : celui avec lidar et auto-vidage pour un usage quotidien sans y penser, et un modèle d\'entrée de gamme sans station pour qui veut s\'essayer à la robotisation sans y mettre le prix. Les deux autres restent corrects, mais dépassés par la concurrence sur ce budget.',
     ],
   },
   {
@@ -145,10 +145,10 @@ export const articles: Article[] = [
     image: '/images/cat-exterieur.png',
     content: [
       'L\'éclairage solaire de jardin a mauvaise réputation, et souvent à raison : la moitié des modèles vendus en grande surface ne passent pas un automne pluvieux. Le problème n\'est presque jamais le panneau solaire, mais la batterie et l\'étanchéité du boîtier.',
-      'Premier réflexe avant d\'acheter : vérifier l\'indice de protection (IP). En dessous de IP44, évitez pour un usage extérieur permanent. Les modèles qui ont tenu chez moi toute l\'année affichent IP65 ou plus, avec un joint visible autour du compartiment batterie.',
+      'Premier réflexe avant d\'acheter : vérifier l\'indice de protection (IP). En dessous de IP44, évitez pour un usage extérieur permanent. Les modèles qui reviennent le plus souvent dans les avis positifs sur la durée affichent IP65 ou plus, avec un joint visible autour du compartiment batterie.',
       'Deuxième point, moins visible sur l\'emballage : le type de batterie. Le NiMH rechargeable classique perd sa capacité après une ou deux saisons humides. Les modèles avec batterie lithium tiennent nettement mieux le froid et se rechargent plus vite dès les premiers rayons de soleil, même faibles en hiver.',
       'L\'emplacement du panneau compte autant que le produit lui-même. Un panneau intégré au luminaire capte moins de lumière qu\'un panneau déporté qu\'on peut orienter plein sud. Pour un éclairage d\'allée qui reste allumé toute la nuit en hiver, je recommande systématiquement le panneau déporté.',
-      'Après un hiver complet, les guirlandes et spots que je garde partagent trois points communs : IP65 minimum, batterie lithium, et un capteur crépusculaire qui déclenche l\'allumage automatiquement plutôt qu\'un bouton à activer chaque soir — le détail qui fait qu\'on continue réellement à s\'en servir après le premier mois.',
+      'Les guirlandes et spots qui sortent du lot partagent trois points communs : IP65 minimum, batterie lithium, et un capteur crépusculaire qui déclenche l\'allumage automatiquement plutôt qu\'un bouton à activer chaque soir — le détail qui fait qu\'on continue réellement à s\'en servir après le premier mois.',
     ],
   },
   {
@@ -161,11 +161,11 @@ export const articles: Article[] = [
     date: '2026-01-09',
     image: '/images/Distributeur Croquettes Chat Automatique WiFi 2,4 GHz.jpg',
     content: [
-      'Mon chat mange à heures fixes, et s\'en plaint bruyamment si ce n\'est pas le cas. C\'est ce qui m\'a poussé à essayer les distributeurs connectés plutôt que de compter sur un voisin pour un simple week-end.',
+      'Beaucoup de propriétaires de chats connaissent ce problème : un animal qui mange à heures fixes et qui s\'en plaint bruyamment dès que le rythme change. C\'est ce qui pousse de plus en plus de monde vers les distributeurs connectés plutôt que de compter sur un voisin pour un simple week-end.',
       'La programmation des repas est le cœur du produit : nombre de portions, taille de la portion, et répartition dans la journée. Sur les modèles comparés, la précision variait sensiblement — l\'un d\'eux distribuait parfois 10 à 15 % de plus que la portion réglée, ce qui devient un problème sur plusieurs semaines pour un chat au régime.',
       'La caméra intégrée change vraiment l\'usage : voir que le repas a bien été distribué et que l\'animal est venu manger rassure plus que n\'importe quelle notification. Sur les modèles sans caméra, on programme et on espère — sur ceux avec caméra, on vérifie et on ajuste en direct via l\'appli si besoin.',
       'Point moins mis en avant par les fabricants : le bruit du mécanisme de distribution. Un chat un peu craintif peut mettre plusieurs jours à s\'habituer au bruit de la vis sans fin qui libère les croquettes. Les modèles les plus silencieux valent le coup, surtout pour un usage nocturne.',
-      'Après plusieurs semaines d\'utilisation avec des allers-retours réels, mon distributeur retenu est celui qui combine caméra grand angle, appli fiable sans coupure de connexion, et bac amovible facile à laver — le vrai critère de longévité, plus que le design du boîtier.',
+      'Le modèle que je retiens est celui qui combine caméra grand angle, appli fiable sans coupure de connexion, et bac amovible facile à laver — le vrai critère de longévité d\'après les retours d\'utilisateurs sur la durée, plus que le design du boîtier.',
     ],
   },
   {
