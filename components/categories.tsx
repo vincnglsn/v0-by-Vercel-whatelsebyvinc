@@ -40,7 +40,7 @@ export function Categories() {
                     {cat.name}
                   </h3>
                   <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
-                    {cat.count} tests
+                    {cat.count} objets
                   </span>
                 </div>
                 <p className="mt-1 text-sm font-medium text-primary">{cat.tagline}</p>

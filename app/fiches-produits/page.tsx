@@ -5,7 +5,7 @@ import { BlogSection } from '@/components/blog-section'
 
 export const metadata = {
   title: 'Fiches Produits et Objets Traités',
-  description: 'Découvrez tous les objets traités, testés et sélectionnés.',
+  description: 'Découvrez tous les objets traités et sélectionnés.',
 }
 
 export default function FichesProduitsPage() {

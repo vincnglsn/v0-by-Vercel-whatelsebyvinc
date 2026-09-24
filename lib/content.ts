@@ -27,7 +27,7 @@ export const categories: Category[] = [
     name: 'High-Tech',
     tagline: 'Le gadget qui change vraiment le quotidien',
     description:
-      'Enceintes, écouteurs, chargeurs, accessoires nomades. Les objets high-tech que je garde après les avoir testés — et ceux que je renvoie.',
+      'Enceintes, écouteurs, chargeurs, accessoires nomades. Les objets high-tech que je sélectionne avec soin — et ceux que j\'écarte.',
     image: '/images/cat-hightech.png',
     count: 24,
   },
@@ -54,7 +54,7 @@ export const categories: Category[] = [
     name: 'Animalerie',
     tagline: 'Des compagnons bien équipés',
     description:
-      'Distributeurs de croquettes, fontaines à eau, traceurs GPS, caméras. Le confort de vos animaux, testé au quotidien.',
+      'Distributeurs de croquettes, fontaines à eau, traceurs GPS, caméras. Le confort de vos animaux, au quotidien.',
     image: '/images/cat-animalerie.png',
     count: 9,
   },
@@ -100,7 +100,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'aspirateur-robot-2026-comparatif',
-    title: 'Aspirateur robot : 4 modèles testés pendant 3 mois',
+    title: 'Aspirateur robot : 4 modèles comparés pendant 3 mois',
     excerpt:
       'Autonomie, navigation, station d\'auto-vidage… J\'ai fait tourner quatre robots chez moi tout l\'hiver. Voici lesquels valent leur prix et lesquels finissent au placard.',
     category: 'Maison',
@@ -148,21 +148,21 @@ export const articles: Article[] = [
       'Premier réflexe avant d\'acheter : vérifier l\'indice de protection (IP). En dessous de IP44, évitez pour un usage extérieur permanent. Les modèles qui ont tenu chez moi toute l\'année affichent IP65 ou plus, avec un joint visible autour du compartiment batterie.',
       'Deuxième point, moins visible sur l\'emballage : le type de batterie. Le NiMH rechargeable classique perd sa capacité après une ou deux saisons humides. Les modèles avec batterie lithium tiennent nettement mieux le froid et se rechargent plus vite dès les premiers rayons de soleil, même faibles en hiver.',
       'L\'emplacement du panneau compte autant que le produit lui-même. Un panneau intégré au luminaire capte moins de lumière qu\'un panneau déporté qu\'on peut orienter plein sud. Pour un éclairage d\'allée qui reste allumé toute la nuit en hiver, je recommande systématiquement le panneau déporté.',
-      'Après un hiver complet de test, les guirlandes et spots que je garde partagent trois points communs : IP65 minimum, batterie lithium, et un capteur crépusculaire qui déclenche l\'allumage automatiquement plutôt qu\'un bouton à activer chaque soir — le détail qui fait qu\'on continue réellement à s\'en servir après le premier mois.',
+      'Après un hiver complet, les guirlandes et spots que je garde partagent trois points communs : IP65 minimum, batterie lithium, et un capteur crépusculaire qui déclenche l\'allumage automatiquement plutôt qu\'un bouton à activer chaque soir — le détail qui fait qu\'on continue réellement à s\'en servir après le premier mois.',
     ],
   },
   {
     slug: 'distributeur-croquettes-connecte',
-    title: 'Distributeur de croquettes connecté : mon test complet',
+    title: 'Distributeur de croquettes connecté : mon avis complet',
     excerpt:
-      'Partir en week-end sans culpabiliser. J\'ai testé les distributeurs automatiques avec appli et caméra pour nourrir le chat à distance.',
+      'Partir en week-end sans culpabiliser. J\'ai comparé les distributeurs automatiques avec appli et caméra pour nourrir le chat à distance.',
     category: 'Animalerie',
     readingTime: 8,
     date: '2026-01-09',
     image: '/images/Distributeur Croquettes Chat Automatique WiFi 2,4 GHz.jpg',
     content: [
       'Mon chat mange à heures fixes, et s\'en plaint bruyamment si ce n\'est pas le cas. C\'est ce qui m\'a poussé à essayer les distributeurs connectés plutôt que de compter sur un voisin pour un simple week-end.',
-      'La programmation des repas est le cœur du produit : nombre de portions, taille de la portion, et répartition dans la journée. Sur les modèles testés, la précision variait sensiblement — l\'un d\'eux distribuait parfois 10 à 15 % de plus que la portion réglée, ce qui devient un problème sur plusieurs semaines pour un chat au régime.',
+      'La programmation des repas est le cœur du produit : nombre de portions, taille de la portion, et répartition dans la journée. Sur les modèles comparés, la précision variait sensiblement — l\'un d\'eux distribuait parfois 10 à 15 % de plus que la portion réglée, ce qui devient un problème sur plusieurs semaines pour un chat au régime.',
       'La caméra intégrée change vraiment l\'usage : voir que le repas a bien été distribué et que l\'animal est venu manger rassure plus que n\'importe quelle notification. Sur les modèles sans caméra, on programme et on espère — sur ceux avec caméra, on vérifie et on ajuste en direct via l\'appli si besoin.',
       'Point moins mis en avant par les fabricants : le bruit du mécanisme de distribution. Un chat un peu craintif peut mettre plusieurs jours à s\'habituer au bruit de la vis sans fin qui libère les croquettes. Les modèles les plus silencieux valent le coup, surtout pour un usage nocturne.',
       'Après plusieurs semaines d\'utilisation avec des allers-retours réels, mon distributeur retenu est celui qui combine caméra grand angle, appli fiable sans coupure de connexion, et bac amovible facile à laver — le vrai critère de longévité, plus que le design du boîtier.',
@@ -1017,14 +1017,14 @@ export const articles: Article[] = [
     slug: 'levoit-purificateur-air-core-200s',
     title: 'Purificateur d\'Air Core 200S',
     excerpt:
-      'Purificateur d\'air avec filtre HEPA à 99,97 % d\'efficacité de filtration annoncée (testé par un laboratoire indépendant sur des particules en suspension de 0,1…',
+      'Purificateur d\'air avec filtre HEPA à 99,97 % d\'efficacité de filtration annoncée (certifiée par un laboratoire indépendant sur des particules en suspension de 0,1…',
     category: 'Maison',
     subcategory: 'Bien-être',
     readingTime: 2,
     date: '2026-03-16',
     image: '/images/levoit-purificateur-air-core-200s.jpg',
     content: [
-      'Purificateur d\'air avec filtre HEPA à 99,97 % d\'efficacité de filtration annoncée (testé par un laboratoire indépendant sur des particules en suspension de 0,1 à 0,3 µm : pollen, poussière, squames animales, spores de moisissures). Fonctionnement à 7 W, 3 vitesses, éponge intégrée pour diffuser une huile essentielle. Format compact pensé pour une chambre ou un bureau.',
+      'Purificateur d\'air avec filtre HEPA à 99,97 % d\'efficacité de filtration annoncée (certifiée par un laboratoire indépendant sur des particules en suspension de 0,1 à 0,3 µm : pollen, poussière, squames animales, spores de moisissures). Fonctionnement à 7 W, 3 vitesses, éponge intégrée pour diffuser une huile essentielle. Format compact pensé pour une chambre ou un bureau.',
       'Ce qui compte avant d\'acheter : La fiche Amazon ne mentionne aucune connectivité Wi-Fi ni compatibilité Alexa pour ce modèle : le pilotage semble se faire uniquement via les boutons de l\'appareil. À vérifier avant achat si le contrôle à distance est important pour vous.',
     ],
   },

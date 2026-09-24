@@ -192,7 +192,7 @@ export default async function ArticlePage({
               Tous les articles {category ? category.name : article.category}
             </Button>
             <Button render={<Link href="/#newsletter" />} nativeButton={false}>
-              Recevoir les prochains tests
+              Recevoir les prochaines sélections
             </Button>
           </div>
         </article>

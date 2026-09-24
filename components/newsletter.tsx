@@ -48,7 +48,7 @@ export function Newsletter() {
           Les trouvailles, direct dans votre boîte mail
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
-          Un mail par mois, jamais plus. Les nouveaux tests, les vrais bons
+          Un mail par mois, jamais plus. Les nouvelles sélections, les vrais bons
           plans, et zéro spam. Désabonnement en un clic.
         </p>
 

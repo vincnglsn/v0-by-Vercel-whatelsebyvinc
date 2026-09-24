@@ -150,7 +150,7 @@ function ArticleGrid({ articles }: { articles: Article[] }) {
                 href={`/guides/${article.slug}`}
                 className="inline-flex text-sm font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-primary"
               >
-                Lire le test
+                Lire la fiche
               </Link>
               <a
                 href={getAffiliateLink(article)}
@@ -276,7 +276,7 @@ export default async function CategoryPage({
             </>
           ) : (
             <p className="text-muted-foreground">
-              Les premiers tests de cette catégorie arrivent bientôt.
+              Les premières sélections de cette catégorie arrivent bientôt.
             </p>
           )}
         </section>
