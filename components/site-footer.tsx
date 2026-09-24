@@ -15,6 +15,7 @@ const footerNav = [
     title: 'Le site',
     links: [
       { label: 'Fiches Produits', href: '/fiches-produits' },
+      { label: 'Enregistreur vocal', href: '/outils/enregistreur-vocal' },
       { label: 'À propos', href: '/#a-propos' },
       { label: 'Newsletter', href: '/#newsletter' },
     ],
