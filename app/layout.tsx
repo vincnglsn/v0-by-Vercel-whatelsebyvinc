@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/next'
+import Script from 'next/script'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Fraunces } from 'next/font/google'
 import './globals.css'
@@ -101,6 +102,11 @@ export default function RootLayout({
           {children}
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </ThemeProvider>
+        <Script
+          src="https://veske.io/a.js"
+          data-key="29e0a65c117a4bd1ba2925174a1c3b2f"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
