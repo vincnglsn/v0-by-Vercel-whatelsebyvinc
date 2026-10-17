@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { ArrowRight, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -73,6 +74,15 @@ export function ProductOfTheWeek() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+            <div className="relative mb-8 aspect-square overflow-hidden rounded-xl bg-white">
+              <Image
+                src="/images/moulinex-clickchef.jpg"
+                alt="Moulinex Clickchef, robot cuiseur multifonction compact de 3,6 L"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-contain p-4"
+              />
+            </div>
             <dl className="grid grid-cols-2 gap-6">
               {facts.map((fact) => (
                 <div key={fact.label}>
