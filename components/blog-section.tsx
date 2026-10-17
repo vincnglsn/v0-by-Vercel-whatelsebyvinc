@@ -134,7 +134,7 @@ function BlogSectionInner() {
                       href={`/guides/` + featured.slug}
                       className="inline-flex text-sm font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-primary"
                     >
-                      Lire le test complet
+                      Lire la fiche complète
                     </Link>
                     <a
                       href={getAffiliateLink(featured)}
@@ -194,7 +194,7 @@ function BlogSectionInner() {
                         href={`/guides/` + article.slug}
                         className="inline-flex text-sm font-medium text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-primary"
                       >
-                        Lire le test
+                        Lire la fiche
                       </Link>
                       <a
                         href={getAffiliateLink(article)}

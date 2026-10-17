@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/next'
+import Script from 'next/script'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Fraunces } from 'next/font/google'
 import './globals.css'
@@ -21,8 +22,8 @@ const siteUrl = 'https://select.whatelsebyvinc.com'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Select de What Else by Vinc — Objets high-tech et maison connectée',
-    template: '%s | Select de What Else by Vinc',
+    default: 'Select de : What else by Vinc — Objets high-tech et maison connectée',
+    template: '%s | Select de : What else by Vinc',
   },
   description:
     'Vinc, du Vaucluse, découvre et sélectionne les meilleurs objets high-tech, gadgets pour la maison connectée, l\'extérieur et vos animaux. Avis honnêtes, bons plans et guides d\'achat.',
@@ -45,8 +46,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'fr_FR',
     url: siteUrl,
-    siteName: 'Select de What Else by Vinc',
-    title: 'Select de What Else by Vinc — Objets high-tech et maison connectée',
+    siteName: 'Select de : What else by Vinc',
+    title: 'Select de : What else by Vinc — Objets high-tech et maison connectée',
     description:
       'Avis honnêtes et sélections d\'objets high-tech pour la maison connectée, l\'extérieur et vos animaux. Ce qui vaut le coup, et ce qui finit au fond d\'un tiroir.',
     images: [
@@ -60,7 +61,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Select de What Else by Vinc — Objets high-tech et maison connectée',
+    title: 'Select de : What else by Vinc — Objets high-tech et maison connectée',
     description:
       'Avis honnêtes et sélections d\'objets high-tech pour la maison connectée.',
     images: ['/images/hero-smarthome.png'],
@@ -101,6 +102,11 @@ export default function RootLayout({
           {children}
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </ThemeProvider>
+        <Script
+          src="https://veske.io/a.js"
+          data-key="29e0a65c117a4bd1ba2925174a1c3b2f"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )

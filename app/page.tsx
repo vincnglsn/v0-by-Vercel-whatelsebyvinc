@@ -12,7 +12,7 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
       url: siteUrl,
-      name: 'Select de What Else by Vinc',
+      name: 'Select de : What else by Vinc',
       description: 'Produit de la semaine sélectionné par Vinc, avec avis et questions fréquentes.',
       inLanguage: 'fr-FR',
     },
