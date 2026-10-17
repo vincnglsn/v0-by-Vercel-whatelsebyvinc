@@ -3,18 +3,8 @@ import { VisitCounter } from '@/components/visit-counter'
 
 const footerNav = [
   {
-    title: 'Univers',
-    links: [
-      { label: 'High-Tech', href: '/#high-tech' },
-      { label: 'Maison', href: '/#maison' },
-      { label: 'Extérieur', href: '/#exterieur' },
-      { label: 'Animalerie', href: '/#animalerie' },
-    ],
-  },
-  {
     title: 'Le site',
     links: [
-      { label: 'Fiches Produits', href: '/fiches-produits' },
       { label: 'À propos', href: '/#a-propos' },
       { label: 'Newsletter', href: '/#newsletter' },
     ],
