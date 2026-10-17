@@ -6,11 +6,6 @@ import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 const navLinks = [
-  { label: 'High-Tech', href: '/#high-tech' },
-  { label: 'Maison', href: '/#maison' },
-  { label: 'Extérieur', href: '/#exterieur' },
-  { label: 'Animalerie', href: '/#animalerie' },
-  { label: 'Fiches Produits', href: '/fiches-produits' },
   { label: 'À propos', href: '/#a-propos' },
 ]
 
