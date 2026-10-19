@@ -5,7 +5,7 @@ const footerNav = [
   {
     title: 'Le site',
     links: [
-      { label: 'À propos', href: '/#a-propos' },
+      { label: 'Électroménagers', href: '/electromenagers' },
       { label: 'Newsletter', href: '/#newsletter' },
     ],
   },
