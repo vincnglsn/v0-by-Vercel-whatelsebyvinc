@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 const navLinks = [
-  { label: 'À propos', href: '/#a-propos' },
+  { label: 'Électroménagers', href: '/electromenagers' },
 ]
 
 export function SiteHeader() {

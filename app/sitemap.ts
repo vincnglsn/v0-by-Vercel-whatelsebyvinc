@@ -9,5 +9,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1,
     },
+    {
+      url: `${siteUrl}/electromenagers`,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
   ]
 }
