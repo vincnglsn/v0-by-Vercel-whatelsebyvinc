@@ -1,3 +1,4 @@
+import { SITE_URL } from '@/lib/site'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -5,7 +6,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { archivedProducts } from '@/lib/archive'
 
-const siteUrl = 'https://select.whatelsebyvinc.com'
+const siteUrl = SITE_URL
 
 export const metadata: Metadata = {
   title: 'Électroménagers — produits de la semaine passés | Select de : What else by Vinc',

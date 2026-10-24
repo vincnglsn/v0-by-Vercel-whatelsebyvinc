@@ -1,9 +1,10 @@
+import { SITE_URL } from '@/lib/site'
 import { SiteHeader } from '@/components/site-header'
 import { ProductOfTheWeek } from '@/components/product-of-the-week'
 import { Newsletter } from '@/components/newsletter'
 import { SiteFooter } from '@/components/site-footer'
 
-const siteUrl = 'https://select.whatelsebyvinc.com'
+const siteUrl = SITE_URL
 
 const jsonLd = {
   '@context': 'https://schema.org',

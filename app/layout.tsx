@@ -1,3 +1,4 @@
+import { SITE_URL } from '@/lib/site'
 import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
 import type { Metadata, Viewport } from 'next'
@@ -17,7 +18,7 @@ const fraunces = Fraunces({
   display: 'swap',
 })
 
-const siteUrl = 'https://select.whatelsebyvinc.com'
+const siteUrl = SITE_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
